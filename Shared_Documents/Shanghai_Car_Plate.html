@@ -151,85 +151,179 @@ img {
 <h2><span class="header-section-number">3.1</span> 拟合4个模型 Fit 4 Models</h2>
 <p>为什么拟合4个？因为也就这么多变量了。。。</p>
 <table>
-<caption>Adj <span class="math">\(R^{2}\)</span> of Models</caption>
+<caption>
+Adj <span class="math">\(R^{2}\)</span> of Models
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Model</th>
-<th align="right"><span class="math">\(R^{2} Adj\)</span></th>
+<tr>
+<th style="text-align:left;">
+Model
+</th>
+<th style="text-align:right;">
+<span class="math">\(R^{2} Adj\)</span>
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">AvgPrice~PrevPrice</td>
-<td align="right">0.8170</td>
+<tr>
+<td style="text-align:left;">
+AvgPrice~PrevPrice
+</td>
+<td style="text-align:right;">
+0.8170
+</td>
 </tr>
-<tr class="even">
-<td align="left">AvgPrice~PrevPrice+PrevBidder+Plate</td>
-<td align="right">0.8131</td>
+<tr>
+<td style="text-align:left;">
+AvgPrice~PrevPrice+PrevBidder+Plate
+</td>
+<td style="text-align:right;">
+0.8131
+</td>
 </tr>
-<tr class="odd">
-<td align="left">AvgPrice~PrevPrice+PrevBidder+Plate+Bidder</td>
-<td align="right">0.8090</td>
+<tr>
+<td style="text-align:left;">
+AvgPrice~PrevPrice+PrevBidder+Plate+Bidder
+</td>
+<td style="text-align:right;">
+0.8090
+</td>
 </tr>
-<tr class="even">
-<td align="left">AvgPrice~PrevPrice+PrevBidder+Plate+Bidder+PrevMinPrice</td>
-<td align="right">0.8116</td>
+<tr>
+<td style="text-align:left;">
+AvgPrice~PrevPrice+PrevBidder+Plate+Bidder+PrevMinPrice
+</td>
+<td style="text-align:right;">
+0.8116
+</td>
 </tr>
 </tbody>
 </table>
 <table>
-<caption>Parameter Estimate of Model 1-4</caption>
+<caption>
+Parameter Estimate of Model 1-4
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Variable</th>
-<th align="right">Model 1</th>
-<th align="right">Model 2</th>
-<th align="right">Model 3</th>
-<th align="right">Model 4</th>
+<tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:right;">
+Model 1
+</th>
+<th style="text-align:right;">
+Model 2
+</th>
+<th style="text-align:right;">
+Model 3
+</th>
+<th style="text-align:right;">
+Model 4
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">1.470494e+04</td>
-<td align="right">7175.3251272</td>
-<td align="right">7075.6278084</td>
-<td align="right">7417.0583037</td>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+1.470494e+04
+</td>
+<td style="text-align:right;">
+7175.3251272
+</td>
+<td style="text-align:right;">
+7075.6278084
+</td>
+<td style="text-align:right;">
+7417.0583037
+</td>
 </tr>
-<tr class="even">
-<td align="left">Bidder</td>
-<td align="right">NaN</td>
-<td align="right">NaN</td>
-<td align="right">0.0029741</td>
-<td align="right">-0.0345129</td>
+<tr>
+<td style="text-align:left;">
+Bidder
+</td>
+<td style="text-align:right;">
+NaN
+</td>
+<td style="text-align:right;">
+NaN
+</td>
+<td style="text-align:right;">
+0.0029741
+</td>
+<td style="text-align:right;">
+-0.0345129
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Plate</td>
-<td align="right">NaN</td>
-<td align="right">0.9644115</td>
-<td align="right">0.9768321</td>
-<td align="right">0.5601606</td>
+<tr>
+<td style="text-align:left;">
+Plate
+</td>
+<td style="text-align:right;">
+NaN
+</td>
+<td style="text-align:right;">
+0.9644115
+</td>
+<td style="text-align:right;">
+0.9768321
+</td>
+<td style="text-align:right;">
+0.5601606
+</td>
 </tr>
-<tr class="even">
-<td align="left">PrevBidder</td>
-<td align="right">NaN</td>
-<td align="right">0.0320525</td>
-<td align="right">0.0292701</td>
-<td align="right">0.0629747</td>
+<tr>
+<td style="text-align:left;">
+PrevBidder
+</td>
+<td style="text-align:right;">
+NaN
+</td>
+<td style="text-align:right;">
+0.0320525
+</td>
+<td style="text-align:right;">
+0.0292701
+</td>
+<td style="text-align:right;">
+0.0629747
+</td>
 </tr>
-<tr class="odd">
-<td align="left">PrevMinPrice</td>
-<td align="right">NaN</td>
-<td align="right">NaN</td>
-<td align="right">NaN</td>
-<td align="right">-1.2137834</td>
+<tr>
+<td style="text-align:left;">
+PrevMinPrice
+</td>
+<td style="text-align:right;">
+NaN
+</td>
+<td style="text-align:right;">
+NaN
+</td>
+<td style="text-align:right;">
+NaN
+</td>
+<td style="text-align:right;">
+-1.2137834
+</td>
 </tr>
-<tr class="even">
-<td align="left">PrevPrice</td>
-<td align="right">7.924684e-01</td>
-<td align="right">0.7597233</td>
-<td align="right">0.7593850</td>
-<td align="right">2.0173086</td>
+<tr>
+<td style="text-align:left;">
+PrevPrice
+</td>
+<td style="text-align:right;">
+7.924684e-01
+</td>
+<td style="text-align:right;">
+0.7597233
+</td>
+<td style="text-align:right;">
+0.7593850
+</td>
+<td style="text-align:right;">
+2.0173086
+</td>
 </tr>
 </tbody>
 </table>
@@ -238,29 +332,51 @@ img {
 <div id="-residuals" class="section level2">
 <h2><span class="header-section-number">3.2</span> 模型残差 Residuals</h2>
 <table>
-<caption>Std Dev of Residuals, Model 1-4 (last 20 records)</caption>
+<caption>
+Std Dev of Residuals, Model 1-4 (last 20 records)
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Model</th>
-<th align="right">sd.Residual</th>
+<tr>
+<th style="text-align:left;">
+Model
+</th>
+<th style="text-align:right;">
+sd.Residual
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">Model 1</td>
-<td align="right">2868.360</td>
+<tr>
+<td style="text-align:left;">
+Model 1
+</td>
+<td style="text-align:right;">
+2868.360
+</td>
 </tr>
-<tr class="even">
-<td align="left">Model 2</td>
-<td align="right">2687.104</td>
+<tr>
+<td style="text-align:left;">
+Model 2
+</td>
+<td style="text-align:right;">
+2687.104
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Model 3</td>
-<td align="right">2688.873</td>
+<tr>
+<td style="text-align:left;">
+Model 3
+</td>
+<td style="text-align:right;">
+2688.873
+</td>
 </tr>
-<tr class="even">
-<td align="left">Model 4</td>
-<td align="right">2989.987</td>
+<tr>
+<td style="text-align:left;">
+Model 4
+</td>
+<td style="text-align:right;">
+2989.987
+</td>
 </tr>
 </tbody>
 </table>
@@ -276,149 +392,358 @@ img {
 <li><p>模型4：<strong>79173.45</strong></p></li>
 </ul>
 <p>而平均价和最低价之间的差越来越小，成交区间非常窄。</p>
-<div class="figure">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAHgCAMAAABNUi8GAAAAmVBMVEUAAAAAADoAAGYAAIsAOjoAOmYAOpAAZrY6AAA6ADo6AGY6OgA6ZmY6kJA6kLY6kNtmAABmADpmOgBmOpBmZgBmZmZmtttmtv9/f3+QOgCQOmaQkDqQtpCQ27aQ29uQ2/+2ZgC2kDq225C2/7a2/9u2///bkDrbtrbb25Db/7bb/9vb///l5eX6+vr/tmb/25D//7b//9v///8wRCLoAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAbAklEQVR4nO2dC2PjNnZGNcN07KRp7bTdOm53O9psrW07fvL//7iSly8QBEDokgQh63yZsWQ+zgWJQ/BhOXMoCck4h70bQEgoCEqyDoKSrIOgJOsgKMk6CEqyDoKSrIOgJOsgKMk6CEqyDoKSrIOgJOsgKMk6CEqyDoKSrIOgJOsgKMk6CEqyDoKSrIOgJOsgKMk6CEqyDoKSrIOgJOtckKCvhyY39Tcfj99+lOX7/eHw0H5dmOPXp+VNNPLx+OX7kqXebm/ad8dD27SPx8Ndu+HjdHtmmONayoh3Y0f7OItcoKCHuk+bHjjKN83XhYkQ9HSOw2+3lU0LljIFbQ8/WTgk6LAblgq6wg5dKRclaNNP/YhSdUP9rvm6NBGCnjXIHr/+W8Ti/qUMQb/8Y/P29NOt2+Zhz0SOfAFB7X28dy5Q0Grvtf3UjBMzo0VkVhb0/f7mdX4IDSxlCPr1P6Xwx+M/3YcFjd4Ts4IO+3jvXKKgVbdKX8j56Oa1vWaqrtAOslc/Hm9O9SnKmPDtf26bt3K92vROP7tJ1WdHe1bT4a/N23/4F6tO6a7Q5HR4eL9vDp/WruqbuviXPxvDYL/UpI03pqB//FyfcN9+/st9c4q3yw1afX1qtv6/+kv0mY09ybm8Wsmxj9sz/t1kqZS5REHbPhoLWl2g9ab+dFvdL5gTmuuqu7Jdqu6ZYXaT6mTbXXsNs6RjjvXNx9vtPz9adUpnha6JVY2jNPgkX98qLdvlnUtN2viTIeh/P9arnL79by/oGGSOoM3W/9+jtHl+Y9/kcOl37WgfV01vy1hLpcwlCtoMFNUONE7xcodbSm83b8cTatkON+3EU79Qa4cwmwGlX0hmvd3KktWcWtX6xDipY1Xo23rXnaWbsej45XuzvHlbZCxlt7FabBD06SRbePM+CDoqN1w53vVbL0vFbKzcbHan/NE+fr+vJ9dDvLVUynwWQdszYn0Wak6qkwn1jm5kqWPMbpntWezrkzGrXv7t5z9XZ9hjVaPuIGOms4JJa58h1avVs9rljYtOY6mB0C9mCPoqY93DIOi4XH/vLUdQc+MYubFy5A1LjvZxs448vRovlTKXKGh3ih8L2j8LbKZOJtRf3/rrP2N2M6HtkKonzFmVl69f/3Z/J53TCNrPdFZoYPXFX38Srtvd/S3LcmiDudSkjYMOMpbd1Q+5BkHH5cynl2dubFkzBy3Hp/h2Pbl6vtvnDH+RgtYDglfQdnCdTvD0WXfacghaTamGruNNNfLU5/qxoPVI66jQwE7GkCaq1atOBDWXCgtaHyjHm9Iv6KDOmRtbCro/d4/2cX0A3bUD9WiplLlEQZurPltQ49ajEdSaYJ/1rMco5il+mPV+/++P9eAlD3oaQfuZzgrtt21ftrdJ1Rh8059o+1P8aCnTq+kpvjpQ/nL/cKagURtbCtrxPKAf8htBR0ulzAUKKnfVjpukh7Lp1m7qZILcNzx0I3A/u2yp4uBhPKu6J64uQF+bR+XH5tnVgHVUaFvaUt9um2PlT/WS9k3SaCmDcJzeJFWW/Em+niNo1MbWAv76c/9jo9E+luWrYbR5YmUslTIXJWib/kedZke1pzFxSDrOnmBcCRjPkvof6bVPXoyHMjLrdBAxRKqT8ZhpjLCMOQ7U1kyzRZ2go6Umbfz11hS0kek8QeM2tpXRtY+7a2RZzFwqZS5QUOnfiaDNk0Sz46wJw8dLjGfXw06vnzZ23xuz5ITb3o43g4kx01nBvHxsB61T6+ToQf14KZNQY0cP6p/ap6lnChq3saMLgNE+bgx9aA6kyWVColyQoJ8ke/W0N6eoD4bELbV+EDRZmruN9/tsPijUxHh6u3ipDYKg6XJsTp/5fNay7D5Ru85SmwRBE0YefO7U0Z60PwVdZalNsqqgvxOyJJsL6pvxHAl4iVtsZdxevMybl743EDQvXubNQ9BpEHQBDkFVBSTZ7pJdeZk3D0GnQdAFOARVFZBku0t25WXePASdBkEX4BBUVUCS7S7ZlZd58xB0GgRdgENQVQFJtrtkV17mzUPQaRB0AQ5BVQUk2e6SXXmZNw9Bp0HQBTgEVRWQZLtLduVl3jwEnQZBF+AQVFVAku0u2ZWXefMQdBoEXYBDUFUBSdw2FAi6BIegqgISBE2AQ1BVAQmCJsAhqKqABEET4BBUVUCCoAlwCKoqIEHQBDgEVRWQIGgCHIKqCkgQNAEOQVUFJAiaAIegqgISBE2AQ1BVAQmCJsAhqKqABEET4BBUVUCCoAlwCKoqIEHQBDgEVRWQIGgCHIKqCkgQNAEOQVUFJAiaAIegqgISBE2AQ1BVAQmCJsAhqKqABEET4BBUVUCCoAlwCKoqIEHQBDgEVRWQIGgCHIKqCkgQNAEOQVUFJAiaAIegqgISBE2AQ1BVAQmCJsAhqKqABEET4BBUVUCCoAlwCKoqIEHQBDgEVRWQIGgCHILOF3jx5Nk3Y5QiaqloXHwy511N8xhB8+Jl3rzPOIL6ZiBoAhyCqgpIEDQBDkFVBSQImgCHoKoCEgRNgENQVQEJgibAIaiqgARBE+AQVFVAErUNBYIuwiGoqoAEQRPgEFRVQIKgCXAIqiogQdAEOARVFZDECVoWCLoAh6CqAhIETYBDUFUBCYImwCGoqoAEQRPgEFRVQIKgCXAIqiogQdAEOARVFZBsK2jhWy5zAzJvHoJaQdBlOARVFZAgaAIcgqoKSBA0AQ5BVQUkCJoAh6CqAhIETYBDUFUBCYImwCGoqoAEQRPgEFRVQIKgCXAIqiogQdAEOARVFZAgaAIcgqoKSBA0AQ5BVQUkCJoAh6CqAhIETYBDUFUBCYImwCGoqoAEQRPgEFRVQIKgCXAIqiogQdAEOARVFZAgaAIcgqoKSBA0AQ5BVQUkCJoAh6CqAhIETYBDUFUBCYImwCGoqoAEQRPgEFRVQIKgCXAIqiogQdAEOARVFZAgaAIcgqoKSBA0AQ5BVQUkCJoAh6CqAhIETYBDUFUBCYImwCGoqoAEQRPgEFRVQIKgCXAIqiogQdAEOARVFZAgaAIcgqoKSBA0Ae5aBX27PRweyvLj8fD1yfMSKiBB0AS4KxX0/f6hfP3yvTze1H/cL6ECEgRNgLtSQV+//agGyof3376Xb788OV+CBSQImgB3pYLWqUbR2sPKR+dLsIBkY0F9hmZuQObNuyBBT99+zAh6kPz+vCRF9Z9uReV6JLNoBT1VN0KMoOvzMm/exYygp+oWCUE34GXevEsR9CQPkjK+SSq8d0mZG5B58y5E0LefmxEy38dMCLovb2dBj3L781DdycszeedLqIAEQRPgrlTQc4KgZ/Eybx6CWkHQZTgEVRWQIGgCHIKqCkgQNAEOQVUFJAiaAIegqgISBE2AQ1BVAQmCJsAhqKqABEET4BBUVUCCoAlwCKoqIEHQBDgEVRWQIGgCHIKqCkgQNAEOQVUFJAiaAIegqgISBE2AQ1BVAQmCJsAhqKqABEET4BBUVUCCoAlwCKoqIEHQBDgEVRWQIGgCHIKqCkgQNAEOQVUFJAiaAIegqgKSmG2oLEPQJTgEVRWQIGgCHIKqCkgQNAEOQVUFJAiaAIegqgISBE2AQ1BVAQmCJsAhqKqABEET4BBUVUCCoAlwCKoqIEHQBDgEVRWQIGgCHIKqCkgQNAEOQVUFJAiaAIegqgKSSEH9/yRXCIeg+/IQdAaHoPvyEHQGh6D78hB0Boeg+/IQdAaHoPvyEHQGh6D78hB0Boeg+/IQdAaHoPvyEHQGh6D78hB0Boeg+/IQdAaHoPvyEHQGh6D78hB0Boeg+/IQdAaHoPvyEHQGh6D78hB0BpehoHHbgaBWEDSK5w+CbotD0CiePwi6LW57QV88efbNMFK0fyMyxhWxq0Xylud5aYMs3Kq01Xnr4RhBo3j+MIJui0PQKJ4/CLotDkGjeP4g6LY4BI3i+YOg2+IQNIrnD4Jui0PQKJ4/CLotDkGjeP4g6LY4BI3i+YOg2+IQNIrnT7ygURuCoFYQNIrnD4Jui0PQKJ4/CLotDkGjeP4g6LY4BI3i+YOg2+IQNIrnD4Jui0PQKJ4/sTx/i1Q4BF0rCNoEQXU4BI3i+YOg2+JiBH2/f3j/7XtkyZgCEgRdgkNQI+/3dwjqC4Jui4s6xZ8Ofb4+RZYOFZBsLKhvPQRNwUt+DXp5IyiC7snjJmkGh6D78hB0Boeg+/LS3yTdcw26jIegOhwjaBTPHwTdFoegUTx/EHRbXOxdvJziv/2IrDtTQIKgS3AIOsrx8FC/nA53kYXDBSQIugSHoGZev7RPQd9uHyIrBwtIEHQJDkGNfDzedG+PN+WZ2UXQwHoImoKX/DFT9/Z0GY+ZEHRnXvJPM3VvXxFUyUNQHQ5BY3iBxAsatSUIagVBY3iBIOi2OASN4QWCoNvi4gS9tM+DIujOPH7UGcYh6M48BA3jEHRnHoKGcQi6Mw9BwzgE3ZmHoGEcgu7MQ9AwDkF35iFoGIegO/MQNIxD0J15CBrGIejOPAQN4xB0Z96VCFr0X+azWFBreQRdwkPQMA5Bd+YhaBiHoDvzEDSMy0/Q4hlBVTgEHRXz8AJB0G1xCDoq5uEFgqDb4hB0VMzDCwRBt8VpBX375an+hXn5hL3zJVRAgqALcAg6k/f7WsLjjfyfHJwvoQISBF2AQ9BwTodfqxG0/v+CVyOp8yVYQHJ9gsZsCoJa0Qn69x+1g2+NpM6XGiP5/Vmfov+iWPHc9TR1zqRvW+JzZsk16Iyg/iNAssYIasxjBM2Jt/cIiqDzPIuOoDocgjpYE14gCLotbomg+98kIWimvDwE3f8x04qC2v+cO4Iu4WUi6Pu9PJN3voQKSBB0AQ5BV8vFCGqtgKBLeAhqLODAIejOPAQ1FnDgEHRn3jUJ+hLoVgTNlIegxgIOHILuzENQYwEHDkF35iGosYADh6A78xC0mY+gmfIQtJmPoJnyELSZj6CZ8hC0nT/MQ9CceAjazkfQPHkI2s5H0Dx5CNrOR9A8eQjazkfQPHkI2s5H0Dx5CNrOvyxBIwxFUCsI6mBFNi/Is/EIqsMhqIMV2bwgz8YjqA6HoA5WZPOCPBuPoDocgjpYkc0L8mw8gupwCOpgRTYvyLPxCKrDIaiDFdm8IM+mI6gOh6AOVmTzgjybjqA6HII6WJHNC/JsOoLqcAjqYEU2L8iz6QiqwyGogxXZvCDPpiOoDoegDlZk84I8m46gOhyC9msg6Ho8BG3nI2iePARt5yNonjwEbecjaJ48BG3nrynoeA0EXcJD0HZ2QFCPDQiagoeg7WwEzZOHoO1sBM2Th6DtbATNk4eg7WwEzZOHoO1sBM2Th6DtbATNk4eg3ex+5kUIOm8oglpBUAcrsnkh3gSPoDocgjpYkc0L8SZ4BNXhENTBimxeiDfBI6gOh6AOVmTzQrwJfhdBCwRVFZAgqB6HoOsFQRs8gupwCOpgRTYvxJvQEVSHQ1AHK7J5Id6EjqA6HII6WJHNC/EmdATV4RDUwYpsXog3oSOoDre9oC+ePPtmDCmMr57Z/cxna0ZgvVmWzVucouOd1aZQ4poXX27VzV0T9ylH0ML4aocRdAHvU46gvhnRgnp7FUHn6yKopoAEQdW4MrJ5RVkgqKaA5IIFNRdE0G1xCOpgzTUPQdPhENTBmmsegqbDIeiwLILOB0HNhAUdS7W+oH6ZEDQdLmdBm95EUFcQdK18SkGNWQi6Le4KBXVNR9DI5RDUyL6CFl6ZRv87+5geK4b2zRmKoFYQ1LMGgjqDoEYQ1B8EXSuXK2jg+SuCJsNdn6DOkRFBI5dDUCMI6g+CrpUVBPX0qlZQ1wwEjVwOQY3ECNrPQ1BXXQRVFZBkLmjhlwlBE+IQ1LMGgjqDoEbyFdSYhaDb4j6xoO7VrkjQIqLeObw6CGoEQf1B0LWSm6Bu8RA0cjkENYKg/iDoWtlRUOd6CKrm1UFQI3sKWjx7O3fc7xE9VhjtCwhTROJKAzdbF0E1BST5Cxqoawg6r8CsoEb1fAR1r4mgRhDUHwRdK3sK6lNxOnlyW3WGoLMOxApav4R6zFwXQdcKgs4K2hCa57MIauXaBJWf/a0pqP9DT2N4SNAWmZmgzlUR1EgvqO9i0nhJLOioxJwEqwlqrIyga2VlQSfvgoJO+ycsqOFdfoKOxuoVBTWbZ05G0Lk4BZ2MjsUUt1zQ5h/e2kBQ92UxgnpzcYI6XJrgQgOuU1CH9WcIOmdBrKD1n2wE9VxbI6gRh6DGPj9X0PZeOQ9Bi/HsPQVtsAg6iVpQq4+Dgo6Wkr9hQQf7IwX1XDJMV7AEHTdxcDQoqFEIQdfKBoI23WtNe55aZr7dVNAZDeYFHc7ymQrav0dQI15Bx53VClrMCiprRQlalHOC9iY7BS2m340ELeySOQrq2o1zRnXLXaugppRnCdpJVbgfq2YiaBn8d412FHQYThHUyCDo2LPmnSXVVFnzfbd+Uc4J1cGeXcs5iC+TiqX9hMYpqD22zwo61i3CAFnY+1kW61yEoJM8zx7cWkFH4NUFHVdxC+o4RFYRdOBG/Ow8WtB+c6355wvaL/cpBHU9Cna4ZRpgijR+b37AeAoxxtYYQfshZaGg5teJoKODbg1B7d1pC2rtFqP8nKDG+5dhkrONn0rQybnQOfRECFp/5xN0fGqcF3R0zgsJ2oIdgnb9WfgEHZ0P3IJ6jl2/oOMrgH7ZtQTtvrkyQe3t9As67QBr1eGmxjGQGJO2EdRFGKzr2mc1ZzrMGoK6z9hhQR076MVo7riNiwT1PCX9fIJOd+nkiPcJ6sA5BbXOffN33cZtrQsYJWjbv2FBzdmdLi8jtyd11xK0GNX1CDo6kBC0tCTs3gxjSvCjwb2gjoXOFLTom+eSxTyCihlBjS16NuYW0/fdS2H+YN7Rxu6rbcAYM7zvBZ0e/MPeWktQx9bOJH9BrcO6nO7qM3524RPUzPiacXSZOGpHf/zYQ7fRy0VZOgQ1rZ4RdBjdhxF0NPK6904xvgKwXTJXcAtajL+MhS/Gy49b2O++axO0GAbI+tXogHN+uGbL5IghaNFX8gpajq4ju9ZNeWbnj4bdfrOGLrNu76a4vmZRWE61O6cc/VyiMH2xje4EHR+IIUELY2Yx2a5h9zn286cUtNkqyxDz27MEnf8FjOEcNYyirmsH6+Nxhh9OXj8WO0wZ8VwMCzcas4ruQBqv/jxq2fRTst3bl6LNaK41SDYPQbpZ5hE5HqmrOAWdjtKfStDwteWZH0+Y/RW28HOSCa+PNa5PeKOTgIM/OYcGmjceYptut1ayrmhGFw3NGuaIZ5QuCvMG3tJ+fH3hynCwmJtq+m+ef2azh6Afj4evT+ECkvW2YQvc2h8xj22fD2cXb08YnuNxmG4LOhpvjdWfhyMwKOjLsNbkesGYnLOgx5v6T7CA5OIETcLz4lyCLuFZVOPHJnOC9usaA7VxdSUTnvt3Vr3JxZzjHmCU1QV9/+17+fbLMIQi6Fm8DJoXK6itm3VR3/y1UlrTXiYUO6sLWstZS1phJL8/kwtL0f5dxFgK6LKhoE0YQc/i5dC80En38j9Rj6CLeDk0D0ElCJoAh6CTcJO0iJdD8z63oDxmWsTLoXmfXND3+0/6oD4JL4fmfXJBIwpIEDQBDkFVBSQImgCHoKoCEgRNgNMK6v3ZDoJOgqALcAiqKiBB0AQ4BFUVkCBoApyOF/jYN4JOgqALcAiqKiBB0AQ4BFUVkCBoAhyCqgpIEDQBDkFVBSQImgCHoKoCEgRNgENQVQEJgibAIaiqgARBE+AQVFVAgqAJcAiqKiBB0AQ4BFUVkCBoApxSUP8vqiPoJAi6AKfkIWiJoElwCKoqIEHQBDgEVRWQIGgCHIKqCkgQNAEOQVUFJAiaAIegqgISBE2AQ1BVAQmCJsDtxUPQrXEIuoiHoFvjEHQRD0G3xiHoIh6Cbo1D0EU8BN0ah6CLeAi6NQ5BF/EQdGscgi7iIejWOARdxEPQrXEIuoiHoFvjEHQRD0G3xiHoIh6Cbo1D0EU8BN0ah6CLeAi6NQ5BF/EQdGscgi7iIejWOARdxLskQX05eOeosjIud971NG9rQb1Zucrajc6cd2XNS0nfqErmPXZlm4ugW+Ny511Z81LSN6qSeY9d2eYi6Na43HlX1ryUdEIWBkFJ1kFQknUQlGQdBCVZZzNB324Ph4ey/Hg8fH3qX9qJa+Gqyb88rdi86uVwtyKvmvjl+wq4djv771birdUbfTeoeyOQrQR9v38oX6veOd7Uf9qXbuJKuCpHZY+5ecdvP95+Vhnl3dyTqoEWrvq+xvRbvQ5vtd5om6fvjVC2EvT124/qAHt4/+17fVy1L+3EtXDV5J+Ux6yTV78o4+TVTdQxx7jydPi1RSnHKCdvrd5ocQt6I5Qtr0GrA63tI6Or6qNvLdzHf/yxYJdMeAvPUBNe3ft1Xy7FlX//Ub/T++7mtRNXwy3rDV+2FPT07cdU0JO6x6a4090Spya8129/1V6UudtXXaOpt9bAlc3V3UJBJ7x24mq4Zb3hy4aC1pdfE0F112Ru3Pu//liwS6a81+oOSXdR5mnf/Z1+ew1cuYagU165Um+0uGW94c12gp7qrrYFPen7f4o7Piy4b3Tw9Bdlbt4So0xcuYKgDt5avdHiFvWGP5sJ2hyc1l3NsiPWwv3t/lBHJ5SreXULtYL6eEqjRrhycEGrgIu3Vm80uPclvRHIVoJ2j2tGz12Uz3B8uFL/5M3NO1aneF2nOXkfj9pTvIVrt1P/mMnJW603LvI56LE9nqoDq+6i5uWoPsicuFK/S9y8+kG9bghw89QP6i1cu539d+vwVuuNixSUkFWCoCTrICjJOghKsg6CkqyDoCTrIOiGaR7HWE9yXld/lv2pg6Ab5igfxXi7NZ+u6z8/dJ1B0A3TCDr+AAqCnhcE3TCtoB+P9RB6lJN9/csS1dTTQf3LJVcWBN0wraDyWv/Quv4MkIyg9Zu3WwyNCIJumE7Q09fm10nebh9E0PqDoqX2cylXFgTdMIag9ctr8wGL7lfVal3JXBB0w5in+Oqq8+sf7Qj6enA9fyKuIOiGMW6SZLjsTvH63yu5viDohjEeM8kF5+uhuwZl7IwNgm6Y7kH9XTd4Hu6aGyT5lZ4j42hEEHTDmD/qrK5Bv3yvnTx2z0G5iY8JgpKsg6Ak6yAoyToISrIOgpKsg6Ak6yAoyToISrIOgpKsg6Ak6yAoyToISrIOgpKsg6Ak6/w/x61rgd06GUMAAAAASUVORK5CYII=" />
-
-</div>
 <table>
-<caption>Summary of Differenece between Avg And Min Price by Year</caption>
+<caption>
+Summary of Differenece between Avg And Min Price by Year
+</caption>
 <thead>
-<tr class="header">
-<th align="right">Year</th>
-<th align="right">Min</th>
-<th align="right">P25</th>
-<th align="right">Median</th>
-<th align="right">Mean</th>
-<th align="right">P75</th>
-<th align="right">Max</th>
+<tr>
+<th style="text-align:right;">
+Year
+</th>
+<th style="text-align:right;">
+Min
+</th>
+<th style="text-align:right;">
+P25
+</th>
+<th style="text-align:right;">
+Median
+</th>
+<th style="text-align:right;">
+Mean
+</th>
+<th style="text-align:right;">
+P75
+</th>
+<th style="text-align:right;">
+Max
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">2002</td>
-<td align="right">334</td>
-<td align="right">527.8</td>
-<td align="right">620.5</td>
-<td align="right">2948.00</td>
-<td align="right">993.8</td>
-<td align="right">27750</td>
+<tr>
+<td style="text-align:right;">
+2002
+</td>
+<td style="text-align:right;">
+334
+</td>
+<td style="text-align:right;">
+527.8
+</td>
+<td style="text-align:right;">
+620.5
+</td>
+<td style="text-align:right;">
+2948.00
+</td>
+<td style="text-align:right;">
+993.8
+</td>
+<td style="text-align:right;">
+27750
+</td>
 </tr>
-<tr class="even">
-<td align="right">2003</td>
-<td align="right">745</td>
-<td align="right">932.8</td>
-<td align="right">1412.0</td>
-<td align="right">2353.00</td>
-<td align="right">1938.0</td>
-<td align="right">9928</td>
+<tr>
+<td style="text-align:right;">
+2003
+</td>
+<td style="text-align:right;">
+745
+</td>
+<td style="text-align:right;">
+932.8
+</td>
+<td style="text-align:right;">
+1412.0
+</td>
+<td style="text-align:right;">
+2353.00
+</td>
+<td style="text-align:right;">
+1938.0
+</td>
+<td style="text-align:right;">
+9928
+</td>
 </tr>
-<tr class="odd">
-<td align="right">2004</td>
-<td align="right">333</td>
-<td align="right">851.5</td>
-<td align="right">1404.0</td>
-<td align="right">3163.00</td>
-<td align="right">1750.0</td>
-<td align="right">23430</td>
+<tr>
+<td style="text-align:right;">
+2004
+</td>
+<td style="text-align:right;">
+333
+</td>
+<td style="text-align:right;">
+851.5
+</td>
+<td style="text-align:right;">
+1404.0
+</td>
+<td style="text-align:right;">
+3163.00
+</td>
+<td style="text-align:right;">
+1750.0
+</td>
+<td style="text-align:right;">
+23430
+</td>
 </tr>
-<tr class="even">
-<td align="right">2005</td>
-<td align="right">384</td>
-<td align="right">509.8</td>
-<td align="right">693.0</td>
-<td align="right">1991.00</td>
-<td align="right">1768.0</td>
-<td align="right">10900</td>
+<tr>
+<td style="text-align:right;">
+2005
+</td>
+<td style="text-align:right;">
+384
+</td>
+<td style="text-align:right;">
+509.8
+</td>
+<td style="text-align:right;">
+693.0
+</td>
+<td style="text-align:right;">
+1991.00
+</td>
+<td style="text-align:right;">
+1768.0
+</td>
+<td style="text-align:right;">
+10900
+</td>
 </tr>
-<tr class="odd">
-<td align="right">2006</td>
-<td align="right">252</td>
-<td align="right">437.2</td>
-<td align="right">673.5</td>
-<td align="right">1288.00</td>
-<td align="right">1019.0</td>
-<td align="right">4601</td>
+<tr>
+<td style="text-align:right;">
+2006
+</td>
+<td style="text-align:right;">
+252
+</td>
+<td style="text-align:right;">
+437.2
+</td>
+<td style="text-align:right;">
+673.5
+</td>
+<td style="text-align:right;">
+1288.00
+</td>
+<td style="text-align:right;">
+1019.0
+</td>
+<td style="text-align:right;">
+4601
+</td>
 </tr>
-<tr class="even">
-<td align="right">2007</td>
-<td align="right">323</td>
-<td align="right">454.0</td>
-<td align="right">514.0</td>
-<td align="right">1281.00</td>
-<td align="right">1375.0</td>
-<td align="right">6042</td>
+<tr>
+<td style="text-align:right;">
+2007
+</td>
+<td style="text-align:right;">
+323
+</td>
+<td style="text-align:right;">
+454.0
+</td>
+<td style="text-align:right;">
+514.0
+</td>
+<td style="text-align:right;">
+1281.00
+</td>
+<td style="text-align:right;">
+1375.0
+</td>
+<td style="text-align:right;">
+6042
+</td>
 </tr>
-<tr class="odd">
-<td align="right">2008</td>
-<td align="right">359</td>
-<td align="right">644.5</td>
-<td align="right">869.0</td>
-<td align="right">2434.00</td>
-<td align="right">2068.0</td>
-<td align="right">15270</td>
+<tr>
+<td style="text-align:right;">
+2008
+</td>
+<td style="text-align:right;">
+359
+</td>
+<td style="text-align:right;">
+644.5
+</td>
+<td style="text-align:right;">
+869.0
+</td>
+<td style="text-align:right;">
+2434.00
+</td>
+<td style="text-align:right;">
+2068.0
+</td>
+<td style="text-align:right;">
+15270
+</td>
 </tr>
-<tr class="even">
-<td align="right">2009</td>
-<td align="right">231</td>
-<td align="right">411.2</td>
-<td align="right">463.0</td>
-<td align="right">674.80</td>
-<td align="right">719.5</td>
-<td align="right">2300</td>
+<tr>
+<td style="text-align:right;">
+2009
+</td>
+<td style="text-align:right;">
+231
+</td>
+<td style="text-align:right;">
+411.2
+</td>
+<td style="text-align:right;">
+463.0
+</td>
+<td style="text-align:right;">
+674.80
+</td>
+<td style="text-align:right;">
+719.5
+</td>
+<td style="text-align:right;">
+2300
+</td>
 </tr>
-<tr class="odd">
-<td align="right">2010</td>
-<td align="right">271</td>
-<td align="right">351.5</td>
-<td align="right">385.5</td>
-<td align="right">936.20</td>
-<td align="right">718.2</td>
-<td align="right">5570</td>
+<tr>
+<td style="text-align:right;">
+2010
+</td>
+<td style="text-align:right;">
+271
+</td>
+<td style="text-align:right;">
+351.5
+</td>
+<td style="text-align:right;">
+385.5
+</td>
+<td style="text-align:right;">
+936.20
+</td>
+<td style="text-align:right;">
+718.2
+</td>
+<td style="text-align:right;">
+5570
+</td>
 </tr>
-<tr class="even">
-<td align="right">2011</td>
-<td align="right">208</td>
-<td align="right">341.2</td>
-<td align="right">432.0</td>
-<td align="right">632.60</td>
-<td align="right">628.0</td>
-<td align="right">1935</td>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:right;">
+208
+</td>
+<td style="text-align:right;">
+341.2
+</td>
+<td style="text-align:right;">
+432.0
+</td>
+<td style="text-align:right;">
+632.60
+</td>
+<td style="text-align:right;">
+628.0
+</td>
+<td style="text-align:right;">
+1935
+</td>
 </tr>
-<tr class="odd">
-<td align="right">2012</td>
-<td align="right">-2633</td>
-<td align="right">377.5</td>
-<td align="right">502.5</td>
-<td align="right">468.90</td>
-<td align="right">650.8</td>
-<td align="right">2427</td>
+<tr>
+<td style="text-align:right;">
+2012
+</td>
+<td style="text-align:right;">
+-2633
+</td>
+<td style="text-align:right;">
+377.5
+</td>
+<td style="text-align:right;">
+502.5
+</td>
+<td style="text-align:right;">
+468.90
+</td>
+<td style="text-align:right;">
+650.8
+</td>
+<td style="text-align:right;">
+2427
+</td>
 </tr>
-<tr class="even">
-<td align="right">2013</td>
-<td align="right">92</td>
-<td align="right">176.5</td>
-<td align="right">231.0</td>
-<td align="right">396.40</td>
-<td align="right">365.2</td>
-<td align="right">1423</td>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:right;">
+92
+</td>
+<td style="text-align:right;">
+176.5
+</td>
+<td style="text-align:right;">
+231.0
+</td>
+<td style="text-align:right;">
+396.40
+</td>
+<td style="text-align:right;">
+365.2
+</td>
+<td style="text-align:right;">
+1423
+</td>
 </tr>
-<tr class="odd">
-<td align="right">2014</td>
-<td align="right">1</td>
-<td align="right">75.0</td>
-<td align="right">91.5</td>
-<td align="right">98.08</td>
-<td align="right">118.0</td>
-<td align="right">185</td>
+<tr>
+<td style="text-align:right;">
+2014
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+75.0
+</td>
+<td style="text-align:right;">
+91.5
+</td>
+<td style="text-align:right;">
+98.08
+</td>
+<td style="text-align:right;">
+118.0
+</td>
+<td style="text-align:right;">
+185
+</td>
 </tr>
-<tr class="even">
-<td align="right">2015</td>
-<td align="right">118</td>
-<td align="right">167.0</td>
-<td align="right">216.0</td>
-<td align="right">188.00</td>
-<td align="right">223.0</td>
-<td align="right">230</td>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:right;">
+118
+</td>
+<td style="text-align:right;">
+167.0
+</td>
+<td style="text-align:right;">
+216.0
+</td>
+<td style="text-align:right;">
+188.00
+</td>
+<td style="text-align:right;">
+223.0
+</td>
+<td style="text-align:right;">
+230
+</td>
 </tr>
 </tbody>
 </table>
@@ -454,124 +779,255 @@ img {
 <h2><span class="header-section-number">4.2</span> 确定模型参数 ARIMA parameters</h2>
 <div id="acf" class="section level3">
 <h3><span class="header-section-number">4.2.1</span> 自相关图ACF</h3>
-<div class="figure">
 <img src="data:image/png;base64,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" />
-
-</div>
 <table>
-<caption>ACF</caption>
+<caption>
+ACF
+</caption>
 <thead>
-<tr class="header">
-<th align="right">i</th>
-<th align="right">Lag</th>
-<th align="right">ACF</th>
+<tr>
+<th style="text-align:right;">
+i
+</th>
+<th style="text-align:right;">
+Lag
+</th>
+<th style="text-align:right;">
+ACF
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">0</td>
-<td align="right">0.0000000</td>
-<td align="right">1.0000000</td>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
 </tr>
-<tr class="even">
-<td align="right">1</td>
-<td align="right">0.0833333</td>
-<td align="right">-0.5364979</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.0833333
+</td>
+<td style="text-align:right;">
+-0.5364979
+</td>
 </tr>
-<tr class="odd">
-<td align="right">2</td>
-<td align="right">0.1666667</td>
-<td align="right">0.0295103</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.1666667
+</td>
+<td style="text-align:right;">
+0.0295103
+</td>
 </tr>
-<tr class="even">
-<td align="right">3</td>
-<td align="right">0.2500000</td>
-<td align="right">-0.0368472</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.2500000
+</td>
+<td style="text-align:right;">
+-0.0368472
+</td>
 </tr>
-<tr class="odd">
-<td align="right">4</td>
-<td align="right">0.3333333</td>
-<td align="right">0.0423904</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.3333333
+</td>
+<td style="text-align:right;">
+0.0423904
+</td>
 </tr>
-<tr class="even">
-<td align="right">5</td>
-<td align="right">0.4166667</td>
-<td align="right">0.0025149</td>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.4166667
+</td>
+<td style="text-align:right;">
+0.0025149
+</td>
 </tr>
-<tr class="odd">
-<td align="right">6</td>
-<td align="right">0.5000000</td>
-<td align="right">0.0082030</td>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0.5000000
+</td>
+<td style="text-align:right;">
+0.0082030
+</td>
 </tr>
-<tr class="even">
-<td align="right">7</td>
-<td align="right">0.5833333</td>
-<td align="right">-0.0003025</td>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0.5833333
+</td>
+<td style="text-align:right;">
+-0.0003025
+</td>
 </tr>
-<tr class="odd">
-<td align="right">8</td>
-<td align="right">0.6666667</td>
-<td align="right">-0.0454090</td>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0.6666667
+</td>
+<td style="text-align:right;">
+-0.0454090
+</td>
 </tr>
-<tr class="even">
-<td align="right">9</td>
-<td align="right">0.7500000</td>
-<td align="right">0.0953208</td>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0.7500000
+</td>
+<td style="text-align:right;">
+0.0953208
+</td>
 </tr>
-<tr class="odd">
-<td align="right">10</td>
-<td align="right">0.8333333</td>
-<td align="right">-0.1232463</td>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.8333333
+</td>
+<td style="text-align:right;">
+-0.1232463
+</td>
 </tr>
-<tr class="even">
-<td align="right">11</td>
-<td align="right">0.9166667</td>
-<td align="right">0.1202756</td>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+0.9166667
+</td>
+<td style="text-align:right;">
+0.1202756
+</td>
 </tr>
-<tr class="odd">
-<td align="right">12</td>
-<td align="right">1.0000000</td>
-<td align="right">-0.0859678</td>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+-0.0859678
+</td>
 </tr>
-<tr class="even">
-<td align="right">13</td>
-<td align="right">1.0833333</td>
-<td align="right">0.0550577</td>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+1.0833333
+</td>
+<td style="text-align:right;">
+0.0550577
+</td>
 </tr>
-<tr class="odd">
-<td align="right">14</td>
-<td align="right">1.1666667</td>
-<td align="right">-0.0895252</td>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+1.1666667
+</td>
+<td style="text-align:right;">
+-0.0895252
+</td>
 </tr>
-<tr class="even">
-<td align="right">15</td>
-<td align="right">1.2500000</td>
-<td align="right">0.1425013</td>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+1.2500000
+</td>
+<td style="text-align:right;">
+0.1425013
+</td>
 </tr>
-<tr class="odd">
-<td align="right">16</td>
-<td align="right">1.3333333</td>
-<td align="right">-0.1079814</td>
+<tr>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+1.3333333
+</td>
+<td style="text-align:right;">
+-0.1079814
+</td>
 </tr>
-<tr class="even">
-<td align="right">17</td>
-<td align="right">1.4166667</td>
-<td align="right">0.0392051</td>
+<tr>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+1.4166667
+</td>
+<td style="text-align:right;">
+0.0392051
+</td>
 </tr>
-<tr class="odd">
-<td align="right">18</td>
-<td align="right">1.5000000</td>
-<td align="right">-0.0531547</td>
+<tr>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+1.5000000
+</td>
+<td style="text-align:right;">
+-0.0531547
+</td>
 </tr>
-<tr class="even">
-<td align="right">19</td>
-<td align="right">1.5833333</td>
-<td align="right">0.0996016</td>
+<tr>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+1.5833333
+</td>
+<td style="text-align:right;">
+0.0996016
+</td>
 </tr>
-<tr class="odd">
-<td align="right">20</td>
-<td align="right">1.6666667</td>
-<td align="right">-0.0772887</td>
+<tr>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+1.6666667
+</td>
+<td style="text-align:right;">
+-0.0772887
+</td>
 </tr>
 </tbody>
 </table>
@@ -584,114 +1040,242 @@ img {
 
 </div>
 <table>
-<caption>PACF</caption>
+<caption>
+PACF
+</caption>
 <thead>
-<tr class="header">
-<th align="right">i</th>
-<th align="right">Lag</th>
-<th align="right">PACF</th>
+<tr>
+<th style="text-align:right;">
+i
+</th>
+<th style="text-align:right;">
+Lag
+</th>
+<th style="text-align:right;">
+PACF
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">0.0833333</td>
-<td align="right">-0.5364979</td>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.0833333
+</td>
+<td style="text-align:right;">
+-0.5364979
+</td>
 </tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="right">0.1666667</td>
-<td align="right">-0.3627220</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.1666667
+</td>
+<td style="text-align:right;">
+-0.3627220
+</td>
 </tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="right">0.2500000</td>
-<td align="right">-0.3393394</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0.2500000
+</td>
+<td style="text-align:right;">
+-0.3393394
+</td>
 </tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="right">0.3333333</td>
-<td align="right">-0.2797851</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0.3333333
+</td>
+<td style="text-align:right;">
+-0.2797851
+</td>
 </tr>
-<tr class="odd">
-<td align="right">5</td>
-<td align="right">0.4166667</td>
-<td align="right">-0.2361004</td>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.4166667
+</td>
+<td style="text-align:right;">
+-0.2361004
+</td>
 </tr>
-<tr class="even">
-<td align="right">6</td>
-<td align="right">0.5000000</td>
-<td align="right">-0.1894344</td>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0.5000000
+</td>
+<td style="text-align:right;">
+-0.1894344
+</td>
 </tr>
-<tr class="odd">
-<td align="right">7</td>
-<td align="right">0.5833333</td>
-<td align="right">-0.1405862</td>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0.5833333
+</td>
+<td style="text-align:right;">
+-0.1405862
+</td>
 </tr>
-<tr class="even">
-<td align="right">8</td>
-<td align="right">0.6666667</td>
-<td align="right">-0.1926987</td>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0.6666667
+</td>
+<td style="text-align:right;">
+-0.1926987
+</td>
 </tr>
-<tr class="odd">
-<td align="right">9</td>
-<td align="right">0.7500000</td>
-<td align="right">-0.0572385</td>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0.7500000
+</td>
+<td style="text-align:right;">
+-0.0572385
+</td>
 </tr>
-<tr class="even">
-<td align="right">10</td>
-<td align="right">0.8333333</td>
-<td align="right">-0.1651563</td>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.8333333
+</td>
+<td style="text-align:right;">
+-0.1651563
+</td>
 </tr>
-<tr class="odd">
-<td align="right">11</td>
-<td align="right">0.9166667</td>
-<td align="right">-0.0545309</td>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+0.9166667
+</td>
+<td style="text-align:right;">
+-0.0545309
+</td>
 </tr>
-<tr class="even">
-<td align="right">12</td>
-<td align="right">1.0000000</td>
-<td align="right">-0.0857903</td>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+-0.0857903
+</td>
 </tr>
-<tr class="odd">
-<td align="right">13</td>
-<td align="right">1.0833333</td>
-<td align="right">-0.0355571</td>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+1.0833333
+</td>
+<td style="text-align:right;">
+-0.0355571
+</td>
 </tr>
-<tr class="even">
-<td align="right">14</td>
-<td align="right">1.1666667</td>
-<td align="right">-0.1606541</td>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+1.1666667
+</td>
+<td style="text-align:right;">
+-0.1606541
+</td>
 </tr>
-<tr class="odd">
-<td align="right">15</td>
-<td align="right">1.2500000</td>
-<td align="right">-0.0144222</td>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+1.2500000
+</td>
+<td style="text-align:right;">
+-0.0144222
+</td>
 </tr>
-<tr class="even">
-<td align="right">16</td>
-<td align="right">1.3333333</td>
-<td align="right">-0.0526999</td>
+<tr>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+1.3333333
+</td>
+<td style="text-align:right;">
+-0.0526999
+</td>
 </tr>
-<tr class="odd">
-<td align="right">17</td>
-<td align="right">1.4166667</td>
-<td align="right">-0.0253542</td>
+<tr>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+1.4166667
+</td>
+<td style="text-align:right;">
+-0.0253542
+</td>
 </tr>
-<tr class="even">
-<td align="right">18</td>
-<td align="right">1.5000000</td>
-<td align="right">-0.1251225</td>
+<tr>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+1.5000000
+</td>
+<td style="text-align:right;">
+-0.1251225
+</td>
 </tr>
-<tr class="odd">
-<td align="right">19</td>
-<td align="right">1.5833333</td>
-<td align="right">0.0037262</td>
+<tr>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+1.5833333
+</td>
+<td style="text-align:right;">
+0.0037262
+</td>
 </tr>
-<tr class="even">
-<td align="right">20</td>
-<td align="right">1.6666667</td>
-<td align="right">-0.0566721</td>
+<tr>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+1.6666667
+</td>
+<td style="text-align:right;">
+-0.0566721
+</td>
 </tr>
 </tbody>
 </table>
@@ -716,39 +1300,77 @@ img {
 <div id="-arima-prediction" class="section level3">
 <h3><span class="header-section-number">4.3.1</span> 预测 ARIMA Prediction</h3>
 <table>
-<caption>Predict AvgPrice using ARIMA(2,2,7)</caption>
+<caption>
+Predict AvgPrice using ARIMA(2,2,7)
+</caption>
 <thead>
-<tr class="header">
-<th align="right">Month</th>
-<th align="right">Predicted Mean</th>
-<th align="right">Predicted Std. Error</th>
+<tr>
+<th style="text-align:right;">
+Month
+</th>
+<th style="text-align:right;">
+Predicted Mean
+</th>
+<th style="text-align:right;">
+Predicted Std. Error
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">3</td>
-<td align="right">76225.93</td>
-<td align="right">4910.561</td>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+76225.93
+</td>
+<td style="text-align:right;">
+4910.561
+</td>
 </tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="right">74907.90</td>
-<td align="right">6178.273</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+74907.90
+</td>
+<td style="text-align:right;">
+6178.273
+</td>
 </tr>
-<tr class="odd">
-<td align="right">5</td>
-<td align="right">76137.00</td>
-<td align="right">6973.847</td>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+76137.00
+</td>
+<td style="text-align:right;">
+6973.847
+</td>
 </tr>
-<tr class="even">
-<td align="right">6</td>
-<td align="right">77767.21</td>
-<td align="right">7436.199</td>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+77767.21
+</td>
+<td style="text-align:right;">
+7436.199
+</td>
 </tr>
-<tr class="odd">
-<td align="right">7</td>
-<td align="right">76713.81</td>
-<td align="right">7937.007</td>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+76713.81
+</td>
+<td style="text-align:right;">
+7937.007
+</td>
 </tr>
 </tbody>
 </table>

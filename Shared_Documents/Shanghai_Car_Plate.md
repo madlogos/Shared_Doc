@@ -51,44 +51,124 @@ Friday, April 17, 2015
 ## 拟合4个模型 Fit 4 Models
 为什么拟合4个？因为也就这么多变量了。。。
 
+<table>
+<caption>Adj $R^{2}$ of Models</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Model </th>
+   <th style="text-align:right;"> $R^{2} Adj$ </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> AvgPrice~PrevPrice </td>
+   <td style="text-align:right;"> 0.8170 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AvgPrice~PrevPrice+PrevBidder+Plate </td>
+   <td style="text-align:right;"> 0.8131 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AvgPrice~PrevPrice+PrevBidder+Plate+Bidder </td>
+   <td style="text-align:right;"> 0.8090 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AvgPrice~PrevPrice+PrevBidder+Plate+Bidder+PrevMinPrice </td>
+   <td style="text-align:right;"> 0.8116 </td>
+  </tr>
+</tbody>
+</table>
 
-Table: Adj $R^{2}$ of Models
-
-Model                                                      $R^{2} Adj$
---------------------------------------------------------  ------------
-AvgPrice~PrevPrice                                              0.8170
-AvgPrice~PrevPrice+PrevBidder+Plate                             0.8131
-AvgPrice~PrevPrice+PrevBidder+Plate+Bidder                      0.8090
-AvgPrice~PrevPrice+PrevBidder+Plate+Bidder+PrevMinPrice         0.8116
 
 
-
-
-
-Table: Parameter Estimate of Model 1-4
-
-Variable             Model 1        Model 2        Model 3        Model 4
--------------  -------------  -------------  -------------  -------------
-(Intercept)     1.470494e+04   7175.3251272   7075.6278084   7417.0583037
-Bidder                   NaN            NaN      0.0029741     -0.0345129
-Plate                    NaN      0.9644115      0.9768321      0.5601606
-PrevBidder               NaN      0.0320525      0.0292701      0.0629747
-PrevMinPrice             NaN            NaN            NaN     -1.2137834
-PrevPrice       7.924684e-01      0.7597233      0.7593850      2.0173086
+<table>
+<caption>Parameter Estimate of Model 1-4</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Variable </th>
+   <th style="text-align:right;"> Model 1 </th>
+   <th style="text-align:right;"> Model 2 </th>
+   <th style="text-align:right;"> Model 3 </th>
+   <th style="text-align:right;"> Model 4 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 1.470494e+04 </td>
+   <td style="text-align:right;"> 7175.3251272 </td>
+   <td style="text-align:right;"> 7075.6278084 </td>
+   <td style="text-align:right;"> 7417.0583037 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Bidder </td>
+   <td style="text-align:right;"> NaN </td>
+   <td style="text-align:right;"> NaN </td>
+   <td style="text-align:right;"> 0.0029741 </td>
+   <td style="text-align:right;"> -0.0345129 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Plate </td>
+   <td style="text-align:right;"> NaN </td>
+   <td style="text-align:right;"> 0.9644115 </td>
+   <td style="text-align:right;"> 0.9768321 </td>
+   <td style="text-align:right;"> 0.5601606 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> PrevBidder </td>
+   <td style="text-align:right;"> NaN </td>
+   <td style="text-align:right;"> 0.0320525 </td>
+   <td style="text-align:right;"> 0.0292701 </td>
+   <td style="text-align:right;"> 0.0629747 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> PrevMinPrice </td>
+   <td style="text-align:right;"> NaN </td>
+   <td style="text-align:right;"> NaN </td>
+   <td style="text-align:right;"> NaN </td>
+   <td style="text-align:right;"> -1.2137834 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> PrevPrice </td>
+   <td style="text-align:right;"> 7.924684e-01 </td>
+   <td style="text-align:right;"> 0.7597233 </td>
+   <td style="text-align:right;"> 0.7593850 </td>
+   <td style="text-align:right;"> 2.0173086 </td>
+  </tr>
+</tbody>
+</table>
 
 4个模型的$R^{2}$ Adj差不多。单用前期均价已经能预报了。
 
 ## 模型残差 Residuals
 
-
-Table: Std Dev of Residuals, Model 1-4 (last 20 records)
-
-Model      sd.Residual
---------  ------------
-Model 1       2868.360
-Model 2       2687.104
-Model 3       2688.873
-Model 4       2989.987
+<table>
+<caption>Std Dev of Residuals, Model 1-4 (last 20 records)</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Model </th>
+   <th style="text-align:right;"> sd.Residual </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Model 1 </td>
+   <td style="text-align:right;"> 2868.360 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Model 2 </td>
+   <td style="text-align:right;"> 2687.104 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Model 3 </td>
+   <td style="text-align:right;"> 2688.873 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Model 4 </td>
+   <td style="text-align:right;"> 2989.987 </td>
+  </tr>
+</tbody>
+</table>
 
 而用最后20次拍牌结果验证，残差的方差也差不多。实践下来，还是模型4更接近一些。
 
@@ -106,26 +186,148 @@ Model 4       2989.987
 
 而平均价和最低价之间的差越来越小，成交区间非常窄。
 
-![](Shanghai_Car_Plate_files/figure-html/dif-1.png) 
-
-Table: Summary of Differenece between Avg And Min Price by Year
-
- Year     Min     P25   Median      Mean      P75     Max
------  ------  ------  -------  --------  -------  ------
- 2002     334   527.8    620.5   2948.00    993.8   27750
- 2003     745   932.8   1412.0   2353.00   1938.0    9928
- 2004     333   851.5   1404.0   3163.00   1750.0   23430
- 2005     384   509.8    693.0   1991.00   1768.0   10900
- 2006     252   437.2    673.5   1288.00   1019.0    4601
- 2007     323   454.0    514.0   1281.00   1375.0    6042
- 2008     359   644.5    869.0   2434.00   2068.0   15270
- 2009     231   411.2    463.0    674.80    719.5    2300
- 2010     271   351.5    385.5    936.20    718.2    5570
- 2011     208   341.2    432.0    632.60    628.0    1935
- 2012   -2633   377.5    502.5    468.90    650.8    2427
- 2013      92   176.5    231.0    396.40    365.2    1423
- 2014       1    75.0     91.5     98.08    118.0     185
- 2015     118   167.0    216.0    188.00    223.0     230
+![](Shanghai_Car_Plate_files/figure-html/dif-1.png) <table>
+<caption>Summary of Differenece between Avg And Min Price by Year</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> Year </th>
+   <th style="text-align:right;"> Min </th>
+   <th style="text-align:right;"> P25 </th>
+   <th style="text-align:right;"> Median </th>
+   <th style="text-align:right;"> Mean </th>
+   <th style="text-align:right;"> P75 </th>
+   <th style="text-align:right;"> Max </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 2002 </td>
+   <td style="text-align:right;"> 334 </td>
+   <td style="text-align:right;"> 527.8 </td>
+   <td style="text-align:right;"> 620.5 </td>
+   <td style="text-align:right;"> 2948.00 </td>
+   <td style="text-align:right;"> 993.8 </td>
+   <td style="text-align:right;"> 27750 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2003 </td>
+   <td style="text-align:right;"> 745 </td>
+   <td style="text-align:right;"> 932.8 </td>
+   <td style="text-align:right;"> 1412.0 </td>
+   <td style="text-align:right;"> 2353.00 </td>
+   <td style="text-align:right;"> 1938.0 </td>
+   <td style="text-align:right;"> 9928 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2004 </td>
+   <td style="text-align:right;"> 333 </td>
+   <td style="text-align:right;"> 851.5 </td>
+   <td style="text-align:right;"> 1404.0 </td>
+   <td style="text-align:right;"> 3163.00 </td>
+   <td style="text-align:right;"> 1750.0 </td>
+   <td style="text-align:right;"> 23430 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2005 </td>
+   <td style="text-align:right;"> 384 </td>
+   <td style="text-align:right;"> 509.8 </td>
+   <td style="text-align:right;"> 693.0 </td>
+   <td style="text-align:right;"> 1991.00 </td>
+   <td style="text-align:right;"> 1768.0 </td>
+   <td style="text-align:right;"> 10900 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2006 </td>
+   <td style="text-align:right;"> 252 </td>
+   <td style="text-align:right;"> 437.2 </td>
+   <td style="text-align:right;"> 673.5 </td>
+   <td style="text-align:right;"> 1288.00 </td>
+   <td style="text-align:right;"> 1019.0 </td>
+   <td style="text-align:right;"> 4601 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2007 </td>
+   <td style="text-align:right;"> 323 </td>
+   <td style="text-align:right;"> 454.0 </td>
+   <td style="text-align:right;"> 514.0 </td>
+   <td style="text-align:right;"> 1281.00 </td>
+   <td style="text-align:right;"> 1375.0 </td>
+   <td style="text-align:right;"> 6042 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2008 </td>
+   <td style="text-align:right;"> 359 </td>
+   <td style="text-align:right;"> 644.5 </td>
+   <td style="text-align:right;"> 869.0 </td>
+   <td style="text-align:right;"> 2434.00 </td>
+   <td style="text-align:right;"> 2068.0 </td>
+   <td style="text-align:right;"> 15270 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2009 </td>
+   <td style="text-align:right;"> 231 </td>
+   <td style="text-align:right;"> 411.2 </td>
+   <td style="text-align:right;"> 463.0 </td>
+   <td style="text-align:right;"> 674.80 </td>
+   <td style="text-align:right;"> 719.5 </td>
+   <td style="text-align:right;"> 2300 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2010 </td>
+   <td style="text-align:right;"> 271 </td>
+   <td style="text-align:right;"> 351.5 </td>
+   <td style="text-align:right;"> 385.5 </td>
+   <td style="text-align:right;"> 936.20 </td>
+   <td style="text-align:right;"> 718.2 </td>
+   <td style="text-align:right;"> 5570 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2011 </td>
+   <td style="text-align:right;"> 208 </td>
+   <td style="text-align:right;"> 341.2 </td>
+   <td style="text-align:right;"> 432.0 </td>
+   <td style="text-align:right;"> 632.60 </td>
+   <td style="text-align:right;"> 628.0 </td>
+   <td style="text-align:right;"> 1935 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2012 </td>
+   <td style="text-align:right;"> -2633 </td>
+   <td style="text-align:right;"> 377.5 </td>
+   <td style="text-align:right;"> 502.5 </td>
+   <td style="text-align:right;"> 468.90 </td>
+   <td style="text-align:right;"> 650.8 </td>
+   <td style="text-align:right;"> 2427 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2013 </td>
+   <td style="text-align:right;"> 92 </td>
+   <td style="text-align:right;"> 176.5 </td>
+   <td style="text-align:right;"> 231.0 </td>
+   <td style="text-align:right;"> 396.40 </td>
+   <td style="text-align:right;"> 365.2 </td>
+   <td style="text-align:right;"> 1423 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2014 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 75.0 </td>
+   <td style="text-align:right;"> 91.5 </td>
+   <td style="text-align:right;"> 98.08 </td>
+   <td style="text-align:right;"> 118.0 </td>
+   <td style="text-align:right;"> 185 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2015 </td>
+   <td style="text-align:right;"> 118 </td>
+   <td style="text-align:right;"> 167.0 </td>
+   <td style="text-align:right;"> 216.0 </td>
+   <td style="text-align:right;"> 188.00 </td>
+   <td style="text-align:right;"> 223.0 </td>
+   <td style="text-align:right;"> 230 </td>
+  </tr>
+</tbody>
+</table>
 
 ![](Shanghai_Car_Plate_files/figure-html/dif-2.png) 
 
@@ -149,33 +351,123 @@ Table: Summary of Differenece between Avg And Min Price by Year
 
 ### 自相关图ACF
 
-![](Shanghai_Car_Plate_files/figure-html/ts-4.png) 
-
-Table: ACF
-
-  i         Lag          ACF
----  ----------  -----------
-  0   0.0000000    1.0000000
-  1   0.0833333   -0.5364979
-  2   0.1666667    0.0295103
-  3   0.2500000   -0.0368472
-  4   0.3333333    0.0423904
-  5   0.4166667    0.0025149
-  6   0.5000000    0.0082030
-  7   0.5833333   -0.0003025
-  8   0.6666667   -0.0454090
-  9   0.7500000    0.0953208
- 10   0.8333333   -0.1232463
- 11   0.9166667    0.1202756
- 12   1.0000000   -0.0859678
- 13   1.0833333    0.0550577
- 14   1.1666667   -0.0895252
- 15   1.2500000    0.1425013
- 16   1.3333333   -0.1079814
- 17   1.4166667    0.0392051
- 18   1.5000000   -0.0531547
- 19   1.5833333    0.0996016
- 20   1.6666667   -0.0772887
+![](Shanghai_Car_Plate_files/figure-html/ts-4.png) <table>
+<caption>ACF</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> i </th>
+   <th style="text-align:right;"> Lag </th>
+   <th style="text-align:right;"> ACF </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+   <td style="text-align:right;"> 1.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.0833333 </td>
+   <td style="text-align:right;"> -0.5364979 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.1666667 </td>
+   <td style="text-align:right;"> 0.0295103 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 0.2500000 </td>
+   <td style="text-align:right;"> -0.0368472 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 0.3333333 </td>
+   <td style="text-align:right;"> 0.0423904 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 0.4166667 </td>
+   <td style="text-align:right;"> 0.0025149 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 0.5000000 </td>
+   <td style="text-align:right;"> 0.0082030 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 0.5833333 </td>
+   <td style="text-align:right;"> -0.0003025 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 0.6666667 </td>
+   <td style="text-align:right;"> -0.0454090 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 0.7500000 </td>
+   <td style="text-align:right;"> 0.0953208 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 0.8333333 </td>
+   <td style="text-align:right;"> -0.1232463 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 0.9166667 </td>
+   <td style="text-align:right;"> 0.1202756 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 1.0000000 </td>
+   <td style="text-align:right;"> -0.0859678 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 1.0833333 </td>
+   <td style="text-align:right;"> 0.0550577 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> 1.1666667 </td>
+   <td style="text-align:right;"> -0.0895252 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 1.2500000 </td>
+   <td style="text-align:right;"> 0.1425013 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 16 </td>
+   <td style="text-align:right;"> 1.3333333 </td>
+   <td style="text-align:right;"> -0.1079814 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:right;"> 1.4166667 </td>
+   <td style="text-align:right;"> 0.0392051 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 1.5000000 </td>
+   <td style="text-align:right;"> -0.0531547 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 1.5833333 </td>
+   <td style="text-align:right;"> 0.0996016 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 1.6666667 </td>
+   <td style="text-align:right;"> -0.0772887 </td>
+  </tr>
+</tbody>
+</table>
 
 滞后2阶后自相关值即不超过边界值。故自相关选2阶。
 
@@ -183,32 +475,118 @@ Table: ACF
 
 ![](Shanghai_Car_Plate_files/figure-html/ts-5.png) 
 
-
-
-Table: PACF
-
-  i         Lag         PACF
----  ----------  -----------
-  1   0.0833333   -0.5364979
-  2   0.1666667   -0.3627220
-  3   0.2500000   -0.3393394
-  4   0.3333333   -0.2797851
-  5   0.4166667   -0.2361004
-  6   0.5000000   -0.1894344
-  7   0.5833333   -0.1405862
-  8   0.6666667   -0.1926987
-  9   0.7500000   -0.0572385
- 10   0.8333333   -0.1651563
- 11   0.9166667   -0.0545309
- 12   1.0000000   -0.0857903
- 13   1.0833333   -0.0355571
- 14   1.1666667   -0.1606541
- 15   1.2500000   -0.0144222
- 16   1.3333333   -0.0526999
- 17   1.4166667   -0.0253542
- 18   1.5000000   -0.1251225
- 19   1.5833333    0.0037262
- 20   1.6666667   -0.0566721
+<table>
+<caption>PACF</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> i </th>
+   <th style="text-align:right;"> Lag </th>
+   <th style="text-align:right;"> PACF </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.0833333 </td>
+   <td style="text-align:right;"> -0.5364979 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.1666667 </td>
+   <td style="text-align:right;"> -0.3627220 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 0.2500000 </td>
+   <td style="text-align:right;"> -0.3393394 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 0.3333333 </td>
+   <td style="text-align:right;"> -0.2797851 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 0.4166667 </td>
+   <td style="text-align:right;"> -0.2361004 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 0.5000000 </td>
+   <td style="text-align:right;"> -0.1894344 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 0.5833333 </td>
+   <td style="text-align:right;"> -0.1405862 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 0.6666667 </td>
+   <td style="text-align:right;"> -0.1926987 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 0.7500000 </td>
+   <td style="text-align:right;"> -0.0572385 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 0.8333333 </td>
+   <td style="text-align:right;"> -0.1651563 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 0.9166667 </td>
+   <td style="text-align:right;"> -0.0545309 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 1.0000000 </td>
+   <td style="text-align:right;"> -0.0857903 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 1.0833333 </td>
+   <td style="text-align:right;"> -0.0355571 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> 1.1666667 </td>
+   <td style="text-align:right;"> -0.1606541 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 1.2500000 </td>
+   <td style="text-align:right;"> -0.0144222 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 16 </td>
+   <td style="text-align:right;"> 1.3333333 </td>
+   <td style="text-align:right;"> -0.0526999 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 17 </td>
+   <td style="text-align:right;"> 1.4166667 </td>
+   <td style="text-align:right;"> -0.0253542 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 1.5000000 </td>
+   <td style="text-align:right;"> -0.1251225 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 1.5833333 </td>
+   <td style="text-align:right;"> 0.0037262 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 1.6666667 </td>
+   <td style="text-align:right;"> -0.0566721 </td>
+  </tr>
+</tbody>
+</table>
 
 滞后7阶后偏相关值大体不再超出边界值。（就算超过也就当它随机误差了。）故偏相关选7阶。于是ARIMA(p,d,q)参数是**arima(2,2,7)**
 
@@ -233,16 +611,43 @@ Table: PACF
 
 ### 预测 ARIMA Prediction
 
-
-Table: Predict AvgPrice using ARIMA(2,2,7)
-
- Month   Predicted Mean   Predicted Std. Error
-------  ---------------  ---------------------
-     3         76225.93               4910.561
-     4         74907.90               6178.273
-     5         76137.00               6973.847
-     6         77767.21               7436.199
-     7         76713.81               7937.007
+<table>
+<caption>Predict AvgPrice using ARIMA(2,2,7)</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> Month </th>
+   <th style="text-align:right;"> Predicted Mean </th>
+   <th style="text-align:right;"> Predicted Std. Error </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 76225.93 </td>
+   <td style="text-align:right;"> 4910.561 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 74907.90 </td>
+   <td style="text-align:right;"> 6178.273 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 76137.00 </td>
+   <td style="text-align:right;"> 6973.847 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 77767.21 </td>
+   <td style="text-align:right;"> 7436.199 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 76713.81 </td>
+   <td style="text-align:right;"> 7937.007 </td>
+  </tr>
+</tbody>
+</table>
 
 
 ### 检验 Test
