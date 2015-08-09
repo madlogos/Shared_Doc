@@ -1,0 +1,434 @@
+---
+title: "Recharts UDF"
+author: "`r Sys.info()[['user']]`"
+date: "`r format(Sys.time(),'%x %X')`"
+output: 
+  html_document: 
+    keep_md: yes
+    number_sections: yes
+    toc: yes
+---
+
+# Intro 前言
+
+本工具来源于百度开发的国内顶尖水平的开源d3-js可视项目[Echarts](http://echarts.baidu.com/)([Github Repo](https://github.com/ecomfe/echarts))。Yang Zhou和Taiyun Wei基于该工具开发了[recharts](https://github.com/taiyun/recharts)包，经Yihui Xie[修改](https://github.com/yihui/recharts)后，可通过`htmlwidgets`传递js参数，大大简化了开发难度。但此包开发仍未完成。为了赶紧上手用，基于该包做了一个函数`echartR`，用于制作基础Echart交互图。
+
+# Usage 用法
+## Installation 安装
+- 安装`devtools`
+- 安装recharts (`install_github('yihui/recharts')`)
+- 下载`echartR`文件到本地(位置:  [https://github.com/madlogos/recharts/blob/master/R/echartR.R](https://github.com/madlogos/recharts/blob/master/R/echartR.R))
+- 调用`echartR`脚本(假设我将脚本放在本地GitHub Repo： `source("~/Github/recharts/R/echartR.R")`)
+
+## Grammar 语法
+
+```
+echartR(data,x,y,series=NULL,weight=NULL,type="scatter",stack=FALSE,
+                  title=NULL,subtitle=NULL,symbolList=NULL,
+                  dataZoom=NULL, dataRange=NULL,
+                  xlab=NULL,ylab=NULL,xyflip=FALSE,AxisAtZero=TRUE,scale=TRUE,
+                  palette='aetnagreen',tooltip=TRUE,legend=TRUE,
+                  legend_pos=c('center','top')
+                  toolbox=TRUE,calculable=TRUE))
+```
+
+- **data**: 数据集
+- **x**: x变量
+- **y**: y变量
+- series: Series(系列)变量
+- weight: 权重变量，在气泡图等时用
+- type: 默认scatter，可选'scatter', 'bubble', 'bar', 'line', 'linesmooth', 'map', 'k', 'pie', 'ring', 'area', 'areasmooth', 'chord', 'force', 'tree', 'treemap', 'wordcloud', 'heatmap', 'histogram', 'funnel', 'pyramid'
+    - 如选择map，则控制项必须写作一个长度为3的向量：c('map',`mapType`,`area/point`)。mapType可选'world'、'china'，或简体中文表示的具体中国地名。area/point为area时，用区块颜色表示效应大小；为point时，用点在地图上做标注。默认为c('map','china','area')。
+- stack: 默认FALSE，是否堆积。制作堆积条图、柱图时用
+- title: 标题 
+- subtitle: 副标题
+- symbolList: 图形标志。可使用数组循环使用，但数组长度必须大于等于数据系列的水平数。如设置为NULL或不设置，则循环显示Echarts默认的标志图形列表：c('circle','rectangle','triangle','diamond','emptyCircle','emptyRectangle','emptyTriangle','emptyDiamond')。也可任意指定'heart','droplet','pin','arrow','star5','star6'等非标图形。设为'none'则不显示
+- dataZoom: 数据缩放轴，默认FALSE
+- dataRange: 数据范围漫游范围，默认不打开。如要打开，设置dataRange=c(`高值标签`,`低值标签`)
+- xlab: x轴标题
+- ylab: y轴标题
+- xyflip: 默认FALSE，是否翻转坐标轴
+- AxisAtZero: 默认TRUE，坐标轴是否交叉于零点
+- scale: 默认TRUE，是否基于最大、最小值调整坐标尺度
+- palette: 默认aetnagreen，使用调色板
+    - Aetna palettes: 可用 'aetnagreen', 'aetnablue', 'aetnaviolet', 'aetnaorange', 'aetnateal', 'aetnacranberry'
+    - RColorBrewer palettes(区分大小写): 可用'BrBG', 'PiYG', 'PRGn', 'PuOr', 'RdBu', 'RdGy', 'RdYlBu', 'RdYlGn', 'Spectral', 'Accent', 'Dark2', 'Paired', 'Pastel1', 'Pastel2', 'Set1', 'Set2', 'Set3', 'Blues', 'BuGn', 'BuPu', 'GnBu', 'Greens', 'Greys', 'Oranges', 'OrRd', 'PuBu', 'PuBuGn', 'PuRd', 'Purples', 'RdPu', 'Reds', 'YlGn', 'YlGnBu', 'YlOrBr', 'YlOrRd'
+    - ggthemes palettes: 'calc', 'economist', 'economist_white', 'excel', 'few', 'fivethirtyeight', 'gdocs', 'pander', 'tableau', 'stata', 'tableau20', 'tableau10medium', 'tableaugray', 'tableauprgy', 'tableaublrd', 'tableaugnor', 'tableaucyclic', 'tableau10light', 'tableaublrd12','tableauprgy12', 'tableaugnor12','hc','darkunica', 'solarized','solarized_red', 'solarized_yellow', 'solarized_orange','solarized_magenta','solarized_violet', 'solarized_blue', 'solarized_cyan', 'solarized_green', 'wsj','colorblind', 'trafficlight'
+- tooltip: 默认TRUE，鼠标指针特效
+- legend: 默认TRUE，是否显示图例
+- legend_pos: 图例位置，c("center","top")表示中间顶端位置
+- toolbox: 默认TRUE，是否显示工具箱
+- calculable: 默认TRUE，是否支持拖曳重算(Echarts专利)
+
+# Examples
+```{r import R,message=FALSE,echo=FALSE}
+Sys.setlocale("LC_ALL","Chinese")
+source("~/Github/recharts/R/echartR.R")
+knitr::opts_chunk$set(message=FALSE,warning=FALSE)
+```
+
+## Scatter 散点图
+### Singular-series Scatter 单系列散点图
+```{r mono-series scatter}
+echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length, 
+        type = 'scatter', palette='solarized_magenta',
+        title = 'Scatter - Sepal Width vs Length (iris)', 
+        xlab = 'Sepal Width', ylab = 'Sepal Length')
+```
+
+显示范围从零点开始(`scale`=FALSE)：
+```{r mono-series scatter}
+echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length, scale = F,
+        type = 'scatter', palette='solarized_blue',
+        title = 'Scatter - Sepal Width vs Length (iris)', 
+        xlab = 'Sepal Width', ylab = 'Sepal Length')
+```
+
+### Multi-series Scatter 多系列散点图
+```{r multi-series scatter}
+echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length, series = ~Species,
+        type = 'scatter', palette='aetnaviolet', symbolList='circle',
+        title = 'Scatter - Sepal Width vs Length by Species (iris)',
+        xlab = 'Sepal Width', ylab = 'Sepal Length')
+```
+
+使用三套标志图形(实心点、空心点、方块)区分数据系列
+```{r multi-series scatter with multi-symbols}
+echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length, series = ~Species,
+        type = 'scatter', palette='aetnateal',
+        symbolList=c('circle','emptyCircle','rectangle'),
+        title = 'Scatter - Sepal Width vs Length by Species (iris)',
+        xlab = 'Sepal Width', ylab = 'Sepal Length')
+```
+
+## Bubble 气泡图
+
+气泡图同样来源于散点图。type改为`bubble`即可，如不指定`weight`变量，函数默认指定y为气泡权重。
+
+### Singular-series Bubble 单系列气泡图
+```{r mono-series bubble}
+echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length, 
+        weight = ~Petal.Length,
+        type = 'bubble', palette='solarized_cyan',
+        title = 'Bubble - Sepal Width vs Length weighed by Petal Length (iris)', 
+        xlab = 'Sepal Width', ylab = 'Sepal Length')
+```
+
+### Multi-series Bubble 多系列气泡图
+用`rep('circle',nlevels(iris$Species))`设置3个数据系列均使用实心圆作为标志图形
+```{r multi-series bubble}
+echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length, 
+        weight = ~Petal.Length, series = ~Species, 
+        symbolList=rep('circle',nlevels(iris$Species)),
+        type = 'bubble', palette='tableauGnOr',
+        title = paste("Bubble - Sepal Width vs Length by Species,",
+                      "weighed by Petal Length(iris)"), 
+        xlab = 'Sepal Width', ylab = 'Sepal Length')
+```
+
+## vBar 柱图
+
+先生成一个汇总数据集`dtiris`。
+
+```{r summary data}
+library(reshape2)
+dfiris <- iris
+dfiris$id <- row.names(iris)
+dfiris <- melt(dfiris,id=c("Species","id"))
+names(dfiris) <- c("Species","id","Param","Value")
+dtiris <- dcast(dfiris[,c(1,3,4)],Species+Param~.,value.var="Value",mean)
+names(dtiris) <- c("Species","Param","Mean")
+knitr::kable(dtiris,format='html',caption="Table: Mean of parameters (iris)")
+```
+
+### Unstacked vBar 平铺柱图
+```{r unstack vbar}
+echartR(data = dtiris, x = ~Param, y = ~Mean, 
+        series = ~Species,
+        type = 'bar', palette='fivethirtyeight',
+        title = paste("VBar - Parameter Mean by Species,", "(iris)"), 
+        xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
+```
+
+### Stacked vBar 堆积柱图
+```{r stack vbar}
+echartR(data = dtiris, x = ~Param, y = ~Mean, 
+        series = ~Species, stack=T,
+        type = 'bar', palette='pander',
+        title = paste("VBar - Parameter Mean by Species,", "(iris)"), 
+        xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
+```
+
+堆积与否，也可以简单地通过工具栏的`平铺`、`堆积`按钮切换。非常强大(但也得在函数配置项里正确地码出代码)。
+
+## hBar 条图
+
+条图和柱图的区别只在于`xyflip`开关选项。
+
+### Unstacked hBar 平铺条图
+```{r unstack hbar}
+echartR(data = dtiris, x = ~Param, y = ~Mean, 
+        series = ~Species, xyflip=T,
+        type = 'bar', palette='stata',
+        title = paste("hBar - Parameter Mean by Species", "(iris)"), 
+        xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
+```
+
+### Stacked hBar 堆积条图
+```{r stack hbar}
+echartR(data = dtiris, x = ~Param, y = ~Mean, 
+        series = ~Species, stack=T, xyflip=T,
+        type = 'bar', palette='calc',
+        title = paste("hBar - Parameter Mean by Species", "(iris)"), 
+        xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
+```
+
+## Pie 饼图
+
+用`mtcars`作为作图数据集。
+
+```{r pie data}
+dtcars <- mtcars
+dtcars$car <- row.names(dtcars)
+dtcars$transmission <- as.factor(dtcars$am)
+levels(dtcars$transmission) <- c("Automatic","Manual")
+dtcars$cylinder <- as.factor(dtcars$cyl)
+dtcars$carburetor <-as.factor(dtcars$carb)
+```
+
+```{r pie}
+echartR(dtcars, x = ~transmission,  y = ~car, type='pie',
+        palette='darikunica', 
+        title='Number of Automatic/manual trasmitted cars (mtcars)')
+```
+
+## Ring 环图
+
+环形图是饼图的变形，只需将`type`改为ring。Echarts中只需要把饼图的半径参数扩展为包含内外径的数组即可。
+
+```{r ring}
+echartR(dtcars, x = ~cylinder,  y = ~car, type='ring',
+        palette='hc', title='Numver of Cylinders (mtcars)')
+```
+
+## Line 线图
+
+### Unstacked Line 平铺线图
+打开数据缩放`dataZoom=T`
+```{r line}
+echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='line', dataZoom=T,
+        palette='tableauBlRd', xlab = 'Sample ID', ylab = 'Measure',
+        title='Parameter measures (iris)')
+```
+
+线段平滑，不显示标志图形(`symbolList='none'`)
+```{r linesmooth}
+echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='linesmooth',
+        symbolList=rep('none',10),
+        palette='tableauPrGy', xlab = 'Sample ID', ylab = 'Measure',
+        title='Parameter measures (iris)')
+```
+
+### Stacked Line 堆积线图
+```{r line stacked}
+echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='line',stack=T,
+        palette='tableauBlRd12', xlab = 'Sample ID', ylab = 'Measure',
+        title='Parameter measures (iris)')
+```
+
+线段平滑，不显示标志图形
+```{r line stacked smooth}
+echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='linesmooth',stack=T,
+        palette='tableauGnOr12', xlab = 'Sample ID', ylab = 'Measure',
+        symbolList=rep('none',10),
+        title='Parameter measures (iris)')
+```
+
+## Area 面积图
+Echarts中，面积图本质上被定义为线图，仅通过`itemStyle`参数渲染颜色。
+
+### Unstacked Area 平铺面积图
+```{r area}
+echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='area',
+        palette='BrBG', xlab = 'Sample ID', ylab = 'Measure',
+        title='Parameter measures (iris)')
+```
+
+线段平滑
+```{r areasmooth}
+echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='areasmooth',
+        palette='PiYG', xlab = 'Sample ID', ylab = 'Measure', 
+        symbolList=rep('none',100), dataZoom=T,
+        title='Parameter measures (iris)')
+```
+
+### Stacked Area 堆积面积图
+```{r area stacked}
+echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='area',stack=T,
+        palette='PRGn', xlab = 'Sample ID', ylab = 'Measure',
+        symbolList=rep('emptyCircle',nlevels(dfiris$Param)),
+        title='Parameter measures (iris)')
+```
+
+线段平滑
+```{r area stacked smooth}
+echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='areasmooth',stack=T,
+        palette='PuOr', xlab = 'Sample ID', ylab = 'Measure', 
+        symbolList=rep('none',nlevels(dfiris$Param)),
+        title='Parameter measures (iris)')
+```
+
+## Histogram 直方图
+
+
+
+## Funnel 漏斗图
+
+### Funnel 普通漏斗图
+```{r funnel}
+echartR(dtcars, x = ~carburetor,  y = ~car, type='funnel',
+        palette='RdBu', 
+        title='Number of carburetors of cars (mtcars)')
+```
+
+### Pyramid 金字塔图
+金字塔图即逆序漏斗图
+
+```{r pyramid}
+echartR(dtcars, x = ~carburetor,  y = ~car, type='pyramid',
+        palette='RdGy', 
+        title='Number of carburetors of cars (mtcars)')
+```
+
+## Radar 雷达图
+
+
+
+## Map 地图
+
+```{r map gdp data}
+gdp <- iconv("2014,广东,1103605 
+2014,江苏,1059587 
+2014,山东,967419 
+2014,浙江,653668 
+2014,河南,568786 
+2014,河北,478953 
+2014,辽宁,466018 
+2014,四川,464555 
+2014,湖北,445514 
+2014,湖南,440328 
+2014,福建,391609 
+2014,上海,383554 
+2014,北京,347249 
+2014,安徽,339401 
+2014,内蒙古,289274 
+2014,陕西,287978 
+2014,天津,255950 
+2014,江西,255724 
+2014,广西,255144 
+2014,黑龙江,244829 
+2014,重庆,232230 
+2014,吉林,224715 
+2014,云南,208612 
+2014,山西,207714 
+2014,新疆,150812 
+2014,贵州,150599 
+2014,甘肃,111273 
+2014,海南,56989 
+2014,宁夏,44802 
+2014,青海,37460 
+2014,西藏,14990 
+2013,广东,1003746 
+2013,江苏,955269 
+2013,山东,882974 
+2013,浙江,606609 
+2013,河南,519212 
+2013,河北,456976 
+2013,辽宁,437216 
+2013,四川,424026 
+2013,湖北,398316 
+2013,湖南,395622 
+2013,福建,351347 
+2013,上海,348804 
+2013,北京,314871 
+2013,安徽,307416 
+2013,内蒙古,271788 
+2013,陕西,259078 
+2013,黑龙江,232237 
+2013,广西,232158 
+2013,天津,232031 
+2013,江西,231520 
+2013,吉林,209608 
+2013,重庆,204364 
+2013,山西,203485 
+2013,云南,189255 
+2013,新疆,134991 
+2013,贵州,129284 
+2013,甘肃,101208 
+2013,海南,50805 
+2013,宁夏,41417 
+2013,青海,33925 
+2013,西藏,13041 
+2012,广东,904046 
+2012,江苏,856368 
+2012,山东,792289 
+2012,浙江,549154 
+2012,河南,468900 
+2012,河北,420990 
+2012,辽宁,393607 
+2012,四川,378183 
+2012,湖北,352482 
+2012,湖南,350958 
+2012,上海,319710 
+2012,福建,312107 
+2012,北京,283238 
+2012,安徽,272666 
+2012,内蒙古,251574 
+2012,陕西,228969 
+2012,黑龙江,216896 
+2012,广西,206497 
+2012,江西,205131 
+2012,天津,204259 
+2012,山西,191886 
+2012,吉林,189136 
+2012,重庆,180746 
+2012,云南,163318 
+2012,新疆,118896 
+2012,贵州,108550 
+2012,甘肃,89508 
+2012,海南,45236 
+2012,宁夏,37090
+2012,青海,29997 
+2012,西藏,11105",from='CP936')
+
+dtgdp <- unlist(strsplit(gdp,split=",|\n",perl=T))
+dtgdp <- as.data.frame(t(matrix(dtgdp,nrow=3)),stringsAsFactors=F)
+names(dtgdp) <- c('Year','Prov',"GDP")
+dtgdp$GDP <-as.numeric(dtgdp$GDP)
+dtgdp$Prov <- as.factor(dtgdp$Prov)
+dtgdp$Year<- as.factor(dtgdp$Year)
+
+knitr::kable(dcast(dtgdp,Prov~Year,sum), format='html',
+             caption="Table: 2012-2014 GDP of Provinces in China (Million USD)")
+```
+
+### Area 区块标注
+
+由于汉字的编码问题，无法顺利出图。用世界GDP粗糙演示。
+```{r map}
+worldgdp <- data.frame(country=c('United States of America','China','Japan',
+                                 'Germany','United Kingdom','France','Brazil',
+                                 'Italy','India','Russia','Canada','Australia'),
+                       GDP=c(17418925,10380380,4616335,3859547,2945146,2846889,
+                             2353025,2147952,2049501,1857461,1788717,1444189))
+echartR(worldgdp, x = ~country, y = ~GDP, type=c('map','world','area'),
+        title="Nations with top GDPs (Million USD)",palette='',
+        dataRange=c("High","Low"))
+```
+
+### Point 点标注
+
+
+## Chord 和弦图
+
+## Force 力导向布局图
