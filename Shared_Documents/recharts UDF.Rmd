@@ -4,71 +4,75 @@ author: "`r Sys.info()[['user']]`"
 date: "`r format(Sys.time(),'%x %X')`"
 output: 
   html_document: 
+    css: //ship-oa-001/China_Health_Advisory/Analytics/GUIDE And TOOLS/css/hms_blue.css
+    fig_caption: yes
+    fig_width: 8
     keep_md: yes
     number_sections: yes
     toc: yes
 ---
 
-# Intro Ç°ÑÔ
+# Intro å‰è¨€
 
-±¾¹¤¾ßÀ´Ô´ÓÚ°Ù¶È¿ª·¢µÄ¹úÄÚ¶¥¼âË®Æ½µÄ¿ªÔ´d3-js¿ÉÊÓÏîÄ¿[Echarts](http://echarts.baidu.com/)([Github Repo](https://github.com/ecomfe/echarts))¡£Yang ZhouºÍTaiyun Wei»ùÓÚ¸Ã¹¤¾ß¿ª·¢ÁË[recharts](https://github.com/taiyun/recharts)°ü£¬¾­Yihui Xie[ĞŞ¸Ä](https://github.com/yihui/recharts)ºó£¬¿ÉÍ¨¹ı`htmlwidgets`´«µİjs²ÎÊı£¬´ó´ó¼ò»¯ÁË¿ª·¢ÄÑ¶È¡£µ«´Ë°ü¿ª·¢ÈÔÎ´Íê³É¡£ÎªÁË¸Ï½ôÉÏÊÖÓÃ£¬»ùÓÚ¸Ã°ü×öÁËÒ»¸öº¯Êı`echartR`£¬ÓÃÓÚÖÆ×÷»ù´¡Echart½»»¥Í¼¡£
+æœ¬å·¥å…·æ¥æºäºç™¾åº¦å¼€å‘çš„å›½å†…é¡¶å°–æ°´å¹³çš„å¼€æºd3-jså¯è§†é¡¹ç›®[Echarts](http://echarts.baidu.com/)([Github Repo](https://github.com/ecomfe/echarts))ã€‚Yang Zhouå’ŒTaiyun WeiåŸºäºè¯¥å·¥å…·å¼€å‘äº†[recharts](https://github.com/taiyun/recharts)åŒ…ï¼Œç»Yihui Xie[ä¿®æ”¹](https://github.com/yihui/recharts)åï¼Œå¯é€šè¿‡`htmlwidgets`ä¼ é€’jså‚æ•°ï¼Œå¤§å¤§ç®€åŒ–äº†å¼€å‘éš¾åº¦ã€‚ä½†æ­¤åŒ…å¼€å‘ä»æœªå®Œæˆã€‚ä¸ºäº†èµ¶ç´§ä¸Šæ‰‹ç”¨ï¼ŒåŸºäºè¯¥åŒ…åšäº†ä¸€ä¸ªå‡½æ•°`echartR`ï¼Œç”¨äºåˆ¶ä½œåŸºç¡€Echartäº¤äº’å›¾ã€‚
 
-# Usage ÓÃ·¨
-## Installation °²×°
-- °²×°`devtools`
-- °²×°recharts (`install_github('yihui/recharts')`)
-- ÏÂÔØ`echartR`ÎÄ¼şµ½±¾µØ(Î»ÖÃ:  [https://github.com/madlogos/recharts/blob/master/R/echartR.R](https://github.com/madlogos/recharts/blob/master/R/echartR.R))
-- µ÷ÓÃ`echartR`½Å±¾(¼ÙÉèÎÒ½«½Å±¾·ÅÔÚ±¾µØGitHub Repo£º `source("~/Github/recharts/R/echartR.R")`)
+# Usage ç”¨æ³•
+## Installation å®‰è£…
+- å®‰è£…`devtools`
+- å®‰è£…recharts (`install_github('yihui/recharts')`)
+- ä¸‹è½½`echartR`æ–‡ä»¶åˆ°æœ¬åœ°(ä½ç½®:  [https://github.com/madlogos/recharts/blob/master/R/echartR.R](https://github.com/madlogos/recharts/blob/master/R/echartR.R))
+- è°ƒç”¨`echartR`è„šæœ¬(å‡è®¾æˆ‘å°†è„šæœ¬æ”¾åœ¨æœ¬åœ°GitHub Repoï¼š `source("~/Github/recharts/R/echartR.R")`)
 
-## Grammar Óï·¨
+## Grammar è¯­æ³•
 
 ```
-echartR(data,x,y,series=NULL,weight=NULL,type="scatter",stack=FALSE,
-                  title=NULL,subtitle=NULL,symbolList=NULL,
-                  dataZoom=NULL, dataRange=NULL,
-                  xlab=NULL,ylab=NULL,xyflip=FALSE,AxisAtZero=TRUE,scale=TRUE,
-                  palette='aetnagreen',tooltip=TRUE,legend=TRUE,
-                  legend_pos=c('center','top')
-                  toolbox=TRUE,calculable=TRUE))
+echartR(data, x, y, series=NULL, weight=NULL,
+        type="scatter", stack=FALSE, title=NULL, subtitle=NULL, 
+        symbolList=NULL, dataZoom=NULL, dataRange=NULL,
+        xlab=NULL, ylab=NULL, xyflip=FALSE, AxisAtZero=TRUE, scale=TRUE,
+        palette='aetnagreen', tooltip=TRUE, legend=TRUE,
+        legend_pos=c('center','top'), 
+        toolbox=TRUE,calculable=TRUE))
 ```
 
-- **data**: Êı¾İ¼¯
-- **x**: x±äÁ¿
-- **y**: y±äÁ¿
-- series: Series(ÏµÁĞ)±äÁ¿
-- weight: È¨ÖØ±äÁ¿£¬ÔÚÆøÅİÍ¼µÈÊ±ÓÃ
-- type: Ä¬ÈÏscatter£¬¿ÉÑ¡'scatter', 'bubble', 'bar', 'line', 'linesmooth', 'map', 'k', 'pie', 'ring', 'area', 'areasmooth', 'chord', 'force', 'tree', 'treemap', 'wordcloud', 'heatmap', 'histogram', 'funnel', 'pyramid'
-    - ÈçÑ¡Ôñmap£¬Ôò¿ØÖÆÏî±ØĞëĞ´×÷Ò»¸ö³¤¶ÈÎª3µÄÏòÁ¿£ºc('map',`mapType`,`area/point`)¡£mapType¿ÉÑ¡'world'¡¢'china'£¬»ò¼òÌåÖĞÎÄ±íÊ¾µÄ¾ßÌåÖĞ¹úµØÃû¡£area/pointÎªareaÊ±£¬ÓÃÇø¿éÑÕÉ«±íÊ¾Ğ§Ó¦´óĞ¡£»ÎªpointÊ±£¬ÓÃµãÔÚµØÍ¼ÉÏ×ö±ê×¢¡£Ä¬ÈÏÎªc('map','china','area')¡£
-- stack: Ä¬ÈÏFALSE£¬ÊÇ·ñ¶Ñ»ı¡£ÖÆ×÷¶Ñ»ıÌõÍ¼¡¢ÖùÍ¼Ê±ÓÃ
-- title: ±êÌâ 
-- subtitle: ¸±±êÌâ
-- symbolList: Í¼ĞÎ±êÖ¾¡£¿ÉÊ¹ÓÃÊı×éÑ­»·Ê¹ÓÃ£¬µ«Êı×é³¤¶È±ØĞë´óÓÚµÈÓÚÊı¾İÏµÁĞµÄË®Æ½Êı¡£ÈçÉèÖÃÎªNULL»ò²»ÉèÖÃ£¬ÔòÑ­»·ÏÔÊ¾EchartsÄ¬ÈÏµÄ±êÖ¾Í¼ĞÎÁĞ±í£ºc('circle','rectangle','triangle','diamond','emptyCircle','emptyRectangle','emptyTriangle','emptyDiamond')¡£Ò²¿ÉÈÎÒâÖ¸¶¨'heart','droplet','pin','arrow','star5','star6'µÈ·Ç±êÍ¼ĞÎ¡£ÉèÎª'none'Ôò²»ÏÔÊ¾
-- dataZoom: Êı¾İËõ·ÅÖá£¬Ä¬ÈÏFALSE
-- dataRange: Êı¾İ·¶Î§ÂşÓÎ·¶Î§£¬Ä¬ÈÏ²»´ò¿ª¡£ÈçÒª´ò¿ª£¬ÉèÖÃdataRange=c(`¸ßÖµ±êÇ©`,`µÍÖµ±êÇ©`)
-- xlab: xÖá±êÌâ
-- ylab: yÖá±êÌâ
-- xyflip: Ä¬ÈÏFALSE£¬ÊÇ·ñ·­×ª×ø±êÖá
-- AxisAtZero: Ä¬ÈÏTRUE£¬×ø±êÖáÊÇ·ñ½»²æÓÚÁãµã
-- scale: Ä¬ÈÏTRUE£¬ÊÇ·ñ»ùÓÚ×î´ó¡¢×îĞ¡Öµµ÷Õû×ø±ê³ß¶È
-- palette: Ä¬ÈÏaetnagreen£¬Ê¹ÓÃµ÷É«°å
-    - Aetna palettes: ¿ÉÓÃ 'aetnagreen', 'aetnablue', 'aetnaviolet', 'aetnaorange', 'aetnateal', 'aetnacranberry'
-    - RColorBrewer palettes(Çø·Ö´óĞ¡Ğ´): ¿ÉÓÃ'BrBG', 'PiYG', 'PRGn', 'PuOr', 'RdBu', 'RdGy', 'RdYlBu', 'RdYlGn', 'Spectral', 'Accent', 'Dark2', 'Paired', 'Pastel1', 'Pastel2', 'Set1', 'Set2', 'Set3', 'Blues', 'BuGn', 'BuPu', 'GnBu', 'Greens', 'Greys', 'Oranges', 'OrRd', 'PuBu', 'PuBuGn', 'PuRd', 'Purples', 'RdPu', 'Reds', 'YlGn', 'YlGnBu', 'YlOrBr', 'YlOrRd'
+- **data**: æ•°æ®é›†
+- **x**: xå˜é‡
+- **y**: yå˜é‡
+- series: Series(ç³»åˆ—)å˜é‡
+- weight: æƒé‡å˜é‡ï¼Œåœ¨æ°”æ³¡å›¾ç­‰æ—¶ç”¨
+- type: é»˜è®¤scatterï¼Œå¯é€‰'scatter', 'bubble', 'bar', 'line', 'linesmooth', 'map', 'k', 'pie', 'ring', 'area', 'areasmooth', 'chord', 'force', 'tree', 'treemap', 'wordcloud', 'heatmap', 'histogram', 'funnel', 'pyramid'
+    - å¦‚é€‰æ‹©mapï¼Œåˆ™æ§åˆ¶é¡¹å¿…é¡»å†™ä½œä¸€ä¸ªé•¿åº¦ä¸º3çš„å‘é‡ï¼šc('map',`mapType`,`area/point`)ã€‚mapTypeå¯é€‰'world'ã€'china'ï¼Œæˆ–ç®€ä½“ä¸­æ–‡è¡¨ç¤ºçš„å…·ä½“ä¸­å›½åœ°åã€‚area/pointä¸ºareaæ—¶ï¼Œç”¨åŒºå—é¢œè‰²è¡¨ç¤ºæ•ˆåº”å¤§å°ï¼›ä¸ºpointæ—¶ï¼Œç”¨ç‚¹åœ¨åœ°å›¾ä¸Šåšæ ‡æ³¨ã€‚é»˜è®¤ä¸ºc('map','china','area')ã€‚
+- stack: é»˜è®¤FALSEï¼Œæ˜¯å¦å †ç§¯ã€‚ç”¨äºåˆ¶ä½œå †ç§¯æ¡å›¾ã€æŸ±å›¾ã€çº¿å›¾å’Œé¢ç§¯å›¾ç­‰
+- title: æ ‡é¢˜ 
+- subtitle: å‰¯æ ‡é¢˜
+- symbolList: å›¾å½¢æ ‡å¿—ã€‚å¯ä½¿ç”¨æ•°ç»„å¾ªç¯ä½¿ç”¨ï¼Œä½†æ•°ç»„é•¿åº¦å¿…é¡»å¤§äºç­‰äºæ•°æ®ç³»åˆ—çš„æ°´å¹³æ•°ã€‚å¦‚è®¾ç½®ä¸ºNULLæˆ–ä¸è®¾ç½®ï¼Œåˆ™å¾ªç¯æ˜¾ç¤ºEchartsé»˜è®¤çš„æ ‡å¿—å›¾å½¢åˆ—è¡¨ï¼šc('circle','rectangle','triangle','diamond','emptyCircle','emptyRectangle','emptyTriangle','emptyDiamond')ã€‚ä¹Ÿå¯ä»»æ„æŒ‡å®š'heart','droplet','pin','arrow','star5','star6'ç­‰éæ ‡å›¾å½¢ã€‚è®¾ä¸º'none'åˆ™ä¸æ˜¾ç¤º
+- dataZoom: æ•°æ®ç¼©æ”¾è½´ï¼Œé»˜è®¤FALSE
+- dataRange: æ•°æ®èŒƒå›´æ¼«æ¸¸èŒƒå›´ï¼Œé»˜è®¤ä¸æ‰“å¼€ã€‚å¦‚è¦æ‰“å¼€ï¼Œè®¾ç½®dataRange=c(`é«˜å€¼æ ‡ç­¾`,`ä½å€¼æ ‡ç­¾`)
+- xlab: xè½´æ ‡é¢˜
+- ylab: yè½´æ ‡é¢˜
+- xyflip: é»˜è®¤FALSEï¼Œæ˜¯å¦ç¿»è½¬åæ ‡è½´
+- AxisAtZero: é»˜è®¤TRUEï¼Œåæ ‡è½´æ˜¯å¦äº¤å‰äºé›¶ç‚¹
+- scale: é»˜è®¤TRUEï¼Œæ˜¯å¦åŸºäºæœ€å¤§ã€æœ€å°å€¼è°ƒæ•´åæ ‡å°ºåº¦
+- palette: é»˜è®¤aetnagreenï¼Œä½¿ç”¨è°ƒè‰²æ¿
+    - Aetna palettes: å¯ç”¨ 'aetnagreen', 'aetnablue', 'aetnaviolet', 'aetnaorange', 'aetnateal', 'aetnacranberry'
+    - RColorBrewer palettes(åŒºåˆ†å¤§å°å†™): å¯ç”¨'BrBG', 'PiYG', 'PRGn', 'PuOr', 'RdBu', 'RdGy', 'RdYlBu', 'RdYlGn', 'Spectral', 'Accent', 'Dark2', 'Paired', 'Pastel1', 'Pastel2', 'Set1', 'Set2', 'Set3', 'Blues', 'BuGn', 'BuPu', 'GnBu', 'Greens', 'Greys', 'Oranges', 'OrRd', 'PuBu', 'PuBuGn', 'PuRd', 'Purples', 'RdPu', 'Reds', 'YlGn', 'YlGnBu', 'YlOrBr', 'YlOrRd'
     - ggthemes palettes: 'calc', 'economist', 'economist_white', 'excel', 'few', 'fivethirtyeight', 'gdocs', 'pander', 'tableau', 'stata', 'tableau20', 'tableau10medium', 'tableaugray', 'tableauprgy', 'tableaublrd', 'tableaugnor', 'tableaucyclic', 'tableau10light', 'tableaublrd12','tableauprgy12', 'tableaugnor12','hc','darkunica', 'solarized','solarized_red', 'solarized_yellow', 'solarized_orange','solarized_magenta','solarized_violet', 'solarized_blue', 'solarized_cyan', 'solarized_green', 'wsj','colorblind', 'trafficlight'
-- tooltip: Ä¬ÈÏTRUE£¬Êó±êÖ¸ÕëÌØĞ§
-- legend: Ä¬ÈÏTRUE£¬ÊÇ·ñÏÔÊ¾Í¼Àı
-- legend_pos: Í¼ÀıÎ»ÖÃ£¬c("center","top")±íÊ¾ÖĞ¼ä¶¥¶ËÎ»ÖÃ
-- toolbox: Ä¬ÈÏTRUE£¬ÊÇ·ñÏÔÊ¾¹¤¾ßÏä
-- calculable: Ä¬ÈÏTRUE£¬ÊÇ·ñÖ§³ÖÍÏÒ·ÖØËã(Echarts×¨Àû)
+    - å…¶ä»– palette: 'rainbow', 'terrain'
+- tooltip: é»˜è®¤TRUEï¼Œé¼ æ ‡æŒ‡é’ˆç‰¹æ•ˆ
+- legend: é»˜è®¤TRUEï¼Œæ˜¯å¦æ˜¾ç¤ºå›¾ä¾‹
+- legend_pos: å›¾ä¾‹ä½ç½®ï¼Œc("center","top")è¡¨ç¤ºä¸­é—´é¡¶ç«¯ä½ç½®
+- toolbox: é»˜è®¤TRUEï¼Œæ˜¯å¦æ˜¾ç¤ºå·¥å…·ç®±
+- calculable: é»˜è®¤TRUEï¼Œæ˜¯å¦æ”¯æŒæ‹–æ›³é‡ç®—(Echartsä¸“åˆ©)
 
 # Examples
-```{r import R,message=FALSE,echo=FALSE}
+```{r import R,message=FALSE,echo=FALSE,prompt=FALSE}
 Sys.setlocale("LC_ALL","Chinese")
-source("~/Github/recharts/R/echartR.R")
+source("C:/HMSProjects/Data Analytics/R_scripts/CommonFunctions.R")
 knitr::opts_chunk$set(message=FALSE,warning=FALSE)
 ```
 
-## Scatter É¢µãÍ¼
-### Singular-series Scatter µ¥ÏµÁĞÉ¢µãÍ¼
+## Scatter æ•£ç‚¹å›¾
+### Singular-series Scatter å•ç³»åˆ—æ•£ç‚¹å›¾
 ```{r mono-series scatter}
 echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length, 
         type = 'scatter', palette='solarized_magenta',
@@ -76,23 +80,23 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length,
         xlab = 'Sepal Width', ylab = 'Sepal Length')
 ```
 
-ÏÔÊ¾·¶Î§´ÓÁãµã¿ªÊ¼(`scale`=FALSE)£º
-```{r mono-series scatter}
+æ˜¾ç¤ºèŒƒå›´ä»é›¶ç‚¹å¼€å§‹(`scale`=FALSE)ï¼š
+```{r mono-series scatter at zero}
 echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length, scale = F,
         type = 'scatter', palette='solarized_blue',
         title = 'Scatter - Sepal Width vs Length (iris)', 
         xlab = 'Sepal Width', ylab = 'Sepal Length')
 ```
 
-### Multi-series Scatter ¶àÏµÁĞÉ¢µãÍ¼
+### Multi-series Scatter å¤šç³»åˆ—æ•£ç‚¹å›¾
 ```{r multi-series scatter}
 echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length, series = ~Species,
-        type = 'scatter', palette='aetnaviolet', symbolList='circle',
+        type = 'scatter', palette='aetnaviolet', symbolList=rep('circle',3),
         title = 'Scatter - Sepal Width vs Length by Species (iris)',
         xlab = 'Sepal Width', ylab = 'Sepal Length')
 ```
 
-Ê¹ÓÃÈıÌ×±êÖ¾Í¼ĞÎ(ÊµĞÄµã¡¢¿ÕĞÄµã¡¢·½¿é)Çø·ÖÊı¾İÏµÁĞ
+ä½¿ç”¨ä¸‰å¥—æ ‡å¿—å›¾å½¢(å®å¿ƒç‚¹ã€ç©ºå¿ƒç‚¹ã€æ–¹å—)åŒºåˆ†æ•°æ®ç³»åˆ—
 ```{r multi-series scatter with multi-symbols}
 echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length, series = ~Species,
         type = 'scatter', palette='aetnateal',
@@ -101,21 +105,21 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length, series = ~Species,
         xlab = 'Sepal Width', ylab = 'Sepal Length')
 ```
 
-## Bubble ÆøÅİÍ¼
+## Bubble æ°”æ³¡å›¾
 
-ÆøÅİÍ¼Í¬ÑùÀ´Ô´ÓÚÉ¢µãÍ¼¡£type¸ÄÎª`bubble`¼´¿É£¬Èç²»Ö¸¶¨`weight`±äÁ¿£¬º¯ÊıÄ¬ÈÏÖ¸¶¨yÎªÆøÅİÈ¨ÖØ¡£
+æ°”æ³¡å›¾åŒæ ·æ¥æºäºæ•£ç‚¹å›¾ã€‚typeæ”¹ä¸º`bubble`å³å¯ï¼Œå¦‚ä¸æŒ‡å®š`weight`å˜é‡ï¼Œå‡½æ•°é»˜è®¤æŒ‡å®šyä¸ºæ°”æ³¡æƒé‡ã€‚
 
-### Singular-series Bubble µ¥ÏµÁĞÆøÅİÍ¼
+### Singular-series Bubble å•ç³»åˆ—æ°”æ³¡å›¾
 ```{r mono-series bubble}
 echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length, 
         weight = ~Petal.Length,
         type = 'bubble', palette='solarized_cyan',
-        title = 'Bubble - Sepal Width vs Length weighed by Petal Length (iris)', 
+        title = 'Bubble - Sepal Width vs Length weighed by Petal Length (iris)',
         xlab = 'Sepal Width', ylab = 'Sepal Length')
 ```
 
-### Multi-series Bubble ¶àÏµÁĞÆøÅİÍ¼
-ÓÃ`rep('circle',nlevels(iris$Species))`ÉèÖÃ3¸öÊı¾İÏµÁĞ¾ùÊ¹ÓÃÊµĞÄÔ²×÷Îª±êÖ¾Í¼ĞÎ
+### Multi-series Bubble å¤šç³»åˆ—æ°”æ³¡å›¾
+ç”¨`rep('circle',nlevels(iris$Species))`è®¾ç½®3ä¸ªæ•°æ®ç³»åˆ—å‡ä½¿ç”¨å®å¿ƒåœ†ä½œä¸ºæ ‡å¿—å›¾å½¢
 ```{r multi-series bubble}
 echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length, 
         weight = ~Petal.Length, series = ~Species, 
@@ -126,9 +130,9 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length,
         xlab = 'Sepal Width', ylab = 'Sepal Length')
 ```
 
-## vBar ÖùÍ¼
+## vBar æŸ±å›¾
 
-ÏÈÉú³ÉÒ»¸ö»ã×ÜÊı¾İ¼¯`dtiris`¡£
+å…ˆç”Ÿæˆä¸€ä¸ªæ±‡æ€»æ•°æ®é›†`dtiris`ã€‚
 
 ```{r summary data}
 library(reshape2)
@@ -141,31 +145,31 @@ names(dtiris) <- c("Species","Param","Mean")
 knitr::kable(dtiris,format='html',caption="Table: Mean of parameters (iris)")
 ```
 
-### Unstacked vBar Æ½ÆÌÖùÍ¼
+### Unstacked vBar å¹³é“ºæŸ±å›¾
 ```{r unstack vbar}
 echartR(data = dtiris, x = ~Param, y = ~Mean, 
         series = ~Species,
         type = 'bar', palette='fivethirtyeight',
-        title = paste("VBar - Parameter Mean by Species,", "(iris)"), 
+        title = paste("VBar - Parameter Mean by Species", "(iris)"), 
         xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
 ```
 
-### Stacked vBar ¶Ñ»ıÖùÍ¼
+### Stacked vBar å †ç§¯æŸ±å›¾
 ```{r stack vbar}
 echartR(data = dtiris, x = ~Param, y = ~Mean, 
         series = ~Species, stack=T,
         type = 'bar', palette='pander',
-        title = paste("VBar - Parameter Mean by Species,", "(iris)"), 
+        title = paste("VBar - Parameter Mean by Species", "(iris)"), 
         xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
 ```
 
-¶Ñ»ıÓë·ñ£¬Ò²¿ÉÒÔ¼òµ¥µØÍ¨¹ı¹¤¾ßÀ¸µÄ`Æ½ÆÌ`¡¢`¶Ñ»ı`°´Å¥ÇĞ»»¡£·Ç³£Ç¿´ó(µ«Ò²µÃÔÚº¯ÊıÅäÖÃÏîÀïÕıÈ·µØÂë³ö´úÂë)¡£
+å †ç§¯ä¸å¦ï¼Œä¹Ÿå¯ä»¥ç®€å•åœ°é€šè¿‡å·¥å…·æ çš„`å¹³é“º`ã€`å †ç§¯`æŒ‰é’®åˆ‡æ¢ã€‚éå¸¸å¼ºå¤§(ä½†ä¹Ÿå¾—åœ¨å‡½æ•°é…ç½®é¡¹é‡Œæ­£ç¡®åœ°ç å‡ºä»£ç )ã€‚
 
-## hBar ÌõÍ¼
+## hBar æ¡å›¾
 
-ÌõÍ¼ºÍÖùÍ¼µÄÇø±ğÖ»ÔÚÓÚ`xyflip`¿ª¹ØÑ¡Ïî¡£
+æ¡å›¾å’ŒæŸ±å›¾çš„åŒºåˆ«åªåœ¨äº`xyflip`å¼€å…³é€‰é¡¹ã€‚
 
-### Unstacked hBar Æ½ÆÌÌõÍ¼
+### Unstacked hBar å¹³é“ºæ¡å›¾
 ```{r unstack hbar}
 echartR(data = dtiris, x = ~Param, y = ~Mean, 
         series = ~Species, xyflip=T,
@@ -174,7 +178,7 @@ echartR(data = dtiris, x = ~Param, y = ~Mean,
         xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
 ```
 
-### Stacked hBar ¶Ñ»ıÌõÍ¼
+### Stacked hBar å †ç§¯æ¡å›¾
 ```{r stack hbar}
 echartR(data = dtiris, x = ~Param, y = ~Mean, 
         series = ~Species, stack=T, xyflip=T,
@@ -183,9 +187,9 @@ echartR(data = dtiris, x = ~Param, y = ~Mean,
         xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
 ```
 
-## Pie ±ıÍ¼
+## Pie é¥¼å›¾
 
-ÓÃ`mtcars`×÷Îª×÷Í¼Êı¾İ¼¯¡£
+ç”¨`mtcars`ä½œä¸ºä½œå›¾æ•°æ®é›†ã€‚
 
 ```{r pie data}
 dtcars <- mtcars
@@ -202,26 +206,26 @@ echartR(dtcars, x = ~transmission,  y = ~car, type='pie',
         title='Number of Automatic/manual trasmitted cars (mtcars)')
 ```
 
-## Ring »·Í¼
+## Ring ç¯å›¾
 
-»·ĞÎÍ¼ÊÇ±ıÍ¼µÄ±äĞÎ£¬Ö»Ğè½«`type`¸ÄÎªring¡£EchartsÖĞÖ»ĞèÒª°Ñ±ıÍ¼µÄ°ë¾¶²ÎÊıÀ©Õ¹Îª°üº¬ÄÚÍâ¾¶µÄÊı×é¼´¿É¡£
+ç¯å½¢å›¾æ˜¯é¥¼å›¾çš„å˜å½¢ï¼Œåªéœ€å°†`type`æ”¹ä¸ºringã€‚Echartsä¸­åªéœ€è¦æŠŠé¥¼å›¾çš„åŠå¾„å‚æ•°æ‰©å±•ä¸ºåŒ…å«å†…å¤–å¾„çš„æ•°ç»„å³å¯ã€‚
 
 ```{r ring}
 echartR(dtcars, x = ~cylinder,  y = ~car, type='ring',
         palette='hc', title='Numver of Cylinders (mtcars)')
 ```
 
-## Line ÏßÍ¼
+## Line çº¿å›¾
 
-### Unstacked Line Æ½ÆÌÏßÍ¼
-´ò¿ªÊı¾İËõ·Å`dataZoom=T`
+### Unstacked Line å¹³é“ºçº¿å›¾
+æ‰“å¼€æ•°æ®ç¼©æ”¾`dataZoom=T`
 ```{r line}
 echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='line', dataZoom=T,
         palette='tableauBlRd', xlab = 'Sample ID', ylab = 'Measure',
         title='Parameter measures (iris)')
 ```
 
-Ïß¶ÎÆ½»¬£¬²»ÏÔÊ¾±êÖ¾Í¼ĞÎ(`symbolList='none'`)
+çº¿æ®µå¹³æ»‘ï¼Œä¸æ˜¾ç¤ºæ ‡å¿—å›¾å½¢(`symbolList='none'`)
 ```{r linesmooth}
 echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='linesmooth',
         symbolList=rep('none',10),
@@ -229,14 +233,14 @@ echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='linesmooth',
         title='Parameter measures (iris)')
 ```
 
-### Stacked Line ¶Ñ»ıÏßÍ¼
+### Stacked Line å †ç§¯çº¿å›¾
 ```{r line stacked}
 echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='line',stack=T,
         palette='tableauBlRd12', xlab = 'Sample ID', ylab = 'Measure',
         title='Parameter measures (iris)')
 ```
 
-Ïß¶ÎÆ½»¬£¬²»ÏÔÊ¾±êÖ¾Í¼ĞÎ
+çº¿æ®µå¹³æ»‘ï¼Œä¸æ˜¾ç¤ºæ ‡å¿—å›¾å½¢
 ```{r line stacked smooth}
 echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='linesmooth',stack=T,
         palette='tableauGnOr12', xlab = 'Sample ID', ylab = 'Measure',
@@ -244,17 +248,17 @@ echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='linesmooth',stack=T,
         title='Parameter measures (iris)')
 ```
 
-## Area Ãæ»ıÍ¼
-EchartsÖĞ£¬Ãæ»ıÍ¼±¾ÖÊÉÏ±»¶¨ÒåÎªÏßÍ¼£¬½öÍ¨¹ı`itemStyle`²ÎÊıäÖÈ¾ÑÕÉ«¡£
+## Area é¢ç§¯å›¾
+Echartsä¸­ï¼Œé¢ç§¯å›¾æœ¬è´¨ä¸Šè¢«å®šä¹‰ä¸ºçº¿å›¾ï¼Œä»…é€šè¿‡`itemStyle`å‚æ•°æ¸²æŸ“é¢œè‰²ã€‚
 
-### Unstacked Area Æ½ÆÌÃæ»ıÍ¼
+### Unstacked Area å¹³é“ºé¢ç§¯å›¾
 ```{r area}
 echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='area',
         palette='BrBG', xlab = 'Sample ID', ylab = 'Measure',
         title='Parameter measures (iris)')
 ```
 
-Ïß¶ÎÆ½»¬
+çº¿æ®µå¹³æ»‘
 ```{r areasmooth}
 echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='areasmooth',
         palette='PiYG', xlab = 'Sample ID', ylab = 'Measure', 
@@ -262,7 +266,7 @@ echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='areasmooth',
         title='Parameter measures (iris)')
 ```
 
-### Stacked Area ¶Ñ»ıÃæ»ıÍ¼
+### Stacked Area å †ç§¯é¢ç§¯å›¾
 ```{r area stacked}
 echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='area',stack=T,
         palette='PRGn', xlab = 'Sample ID', ylab = 'Measure',
@@ -270,7 +274,7 @@ echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='area',stack=T,
         title='Parameter measures (iris)')
 ```
 
-Ïß¶ÎÆ½»¬
+çº¿æ®µå¹³æ»‘
 ```{r area stacked smooth}
 echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='areasmooth',stack=T,
         palette='PuOr', xlab = 'Sample ID', ylab = 'Measure', 
@@ -278,157 +282,93 @@ echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='areasmooth',stack=T,
         title='Parameter measures (iris)')
 ```
 
-## Histogram Ö±·½Í¼
+## Histogram ç›´æ–¹å›¾
 
 
 
-## Funnel Â©¶·Í¼
+## Funnel æ¼æ–—å›¾
 
-### Funnel ÆÕÍ¨Â©¶·Í¼
+### Funnel æ™®é€šæ¼æ–—å›¾
 ```{r funnel}
 echartR(dtcars, x = ~carburetor,  y = ~car, type='funnel',
-        palette='RdBu', 
-        title='Number of carburetors of cars (mtcars)')
+        palette='RdBu', title='Number of carburetors of cars (mtcars)')
 ```
 
-### Pyramid ½ğ×ÖËşÍ¼
-½ğ×ÖËşÍ¼¼´ÄæĞòÂ©¶·Í¼
+### Pyramid é‡‘å­—å¡”å›¾
+é‡‘å­—å¡”å›¾å³é€†åºæ¼æ–—å›¾
 
 ```{r pyramid}
 echartR(dtcars, x = ~carburetor,  y = ~car, type='pyramid',
-        palette='RdGy', 
-        title='Number of carburetors of cars (mtcars)')
+        palette='RdGy', title='Number of carburetors of cars (mtcars)')
 ```
 
-## Radar À×´ïÍ¼
+## Radar é›·è¾¾å›¾
+```{r radar}
+player <- rbind(data.frame(name=rep("Philipp Lahm",8),
+                     para=c("Passing%","Key passing","Comp crosses","Crossing%",
+                            "Successful dribbles","Dispossessed","Dribbled past",
+                            "Fouls"),
+                     value=c(89.67,1.51,0.97,24.32, 0.83,0.86,1.15, 0.47)),
+                data.frame(name=rep("Dani Alves",8),
+                     para=c("Passing%","Key passing","Comp crosses","Crossing%",
+                            "Successful dribbles","Dispossessed","Dribbled past",
+                            "Fouls"),
+                     value=c(86.62,2.11,0.99,20.78,1.58,1.64,0.9,1.71)))
+soccer <- rbind(data.frame(name=rep("Ronaldo",6),
+                           para=c('è¿›æ”»','é˜²å®ˆ','ä½“èƒ½','é€Ÿåº¦','åŠ›é‡','æŠ€å·§'),
+                           value=c(97, 32, 74, 95, 88, 92)),
+                data.frame(name=rep("Shevchenko",6),
+                           para=c('è¿›æ”»','é˜²å®ˆ','ä½“èƒ½','é€Ÿåº¦','åŠ›é‡','æŠ€å·§'),
+                           value=c(97, 42, 88, 94, 90, 86)))
 
+echartR(soccer, x=~para, y=~value, series=~name, type='radar',
+        title='Lahm vs Alves (by @mixedknuts)', palette='RdGy')
+```
 
+## Map åœ°å›¾
 
-## Map µØÍ¼
+Rå’ŒRstudioçš„ä¸­æ–‡è½¬ç ä¸€ç›´æ˜¯è€å¤§éš¾ã€‚åœ¨è¿™é‡Œï¼ŒRstudioçš„é»˜è®¤ç¼–ç å’ŒRmdæ–‡æ¡£éƒ½é‡‡ç”¨CP936ç¼–ç ã€‚ç”¨iconvè½¬ç åï¼Œå•ä¸ªæ±‰å­—ä»ç„¶ä¼šæ˜¾ç¤ºä¸ºä¹±ç ã€‚å› æ­¤æˆ‘ç›´æ¥åˆ°åŒ…ç›®å½•(`R/library/recharts/htmlwidgets/lib/echarts/echart-all.js`)é‡Œå°†å•æ•°ä¸ªæ±‰å­—æ”¹æˆäº†åŒæ•°(é»‘é¾™æ±Ÿ-->é»‘é¾™æ±Ÿçœï¼Œå†…è’™å¤-->å†…è’™)ã€‚
 
 ```{r map gdp data}
-gdp <- iconv("2014,¹ã¶«,1103605 
-2014,½­ËÕ,1059587 
-2014,É½¶«,967419 
-2014,Õã½­,653668 
-2014,ºÓÄÏ,568786 
-2014,ºÓ±±,478953 
-2014,ÁÉÄş,466018 
-2014,ËÄ´¨,464555 
-2014,ºş±±,445514 
-2014,ºşÄÏ,440328 
-2014,¸£½¨,391609 
-2014,ÉÏº£,383554 
-2014,±±¾©,347249 
-2014,°²»Õ,339401 
-2014,ÄÚÃÉ¹Å,289274 
-2014,ÉÂÎ÷,287978 
-2014,Ìì½ò,255950 
-2014,½­Î÷,255724 
-2014,¹ãÎ÷,255144 
-2014,ºÚÁú½­,244829 
-2014,ÖØÇì,232230 
-2014,¼ªÁÖ,224715 
-2014,ÔÆÄÏ,208612 
-2014,É½Î÷,207714 
-2014,ĞÂ½®,150812 
-2014,¹óÖİ,150599 
-2014,¸ÊËà,111273 
-2014,º£ÄÏ,56989 
-2014,ÄşÏÄ,44802 
-2014,Çàº£,37460 
-2014,Î÷²Ø,14990 
-2013,¹ã¶«,1003746 
-2013,½­ËÕ,955269 
-2013,É½¶«,882974 
-2013,Õã½­,606609 
-2013,ºÓÄÏ,519212 
-2013,ºÓ±±,456976 
-2013,ÁÉÄş,437216 
-2013,ËÄ´¨,424026 
-2013,ºş±±,398316 
-2013,ºşÄÏ,395622 
-2013,¸£½¨,351347 
-2013,ÉÏº£,348804 
-2013,±±¾©,314871 
-2013,°²»Õ,307416 
-2013,ÄÚÃÉ¹Å,271788 
-2013,ÉÂÎ÷,259078 
-2013,ºÚÁú½­,232237 
-2013,¹ãÎ÷,232158 
-2013,Ìì½ò,232031 
-2013,½­Î÷,231520 
-2013,¼ªÁÖ,209608 
-2013,ÖØÇì,204364 
-2013,É½Î÷,203485 
-2013,ÔÆÄÏ,189255 
-2013,ĞÂ½®,134991 
-2013,¹óÖİ,129284 
-2013,¸ÊËà,101208 
-2013,º£ÄÏ,50805 
-2013,ÄşÏÄ,41417 
-2013,Çàº£,33925 
-2013,Î÷²Ø,13041 
-2012,¹ã¶«,904046 
-2012,½­ËÕ,856368 
-2012,É½¶«,792289 
-2012,Õã½­,549154 
-2012,ºÓÄÏ,468900 
-2012,ºÓ±±,420990 
-2012,ÁÉÄş,393607 
-2012,ËÄ´¨,378183 
-2012,ºş±±,352482 
-2012,ºşÄÏ,350958 
-2012,ÉÏº£,319710 
-2012,¸£½¨,312107 
-2012,±±¾©,283238 
-2012,°²»Õ,272666 
-2012,ÄÚÃÉ¹Å,251574 
-2012,ÉÂÎ÷,228969 
-2012,ºÚÁú½­,216896 
-2012,¹ãÎ÷,206497 
-2012,½­Î÷,205131 
-2012,Ìì½ò,204259 
-2012,É½Î÷,191886 
-2012,¼ªÁÖ,189136 
-2012,ÖØÇì,180746 
-2012,ÔÆÄÏ,163318 
-2012,ĞÂ½®,118896 
-2012,¹óÖİ,108550 
-2012,¸ÊËà,89508 
-2012,º£ÄÏ,45236 
-2012,ÄşÏÄ,37090
-2012,Çàº£,29997 
-2012,Î÷²Ø,11105",from='CP936')
-
-dtgdp <- unlist(strsplit(gdp,split=",|\n",perl=T))
-dtgdp <- as.data.frame(t(matrix(dtgdp,nrow=3)),stringsAsFactors=F)
-names(dtgdp) <- c('Year','Prov',"GDP")
-dtgdp$GDP <-as.numeric(dtgdp$GDP)
-dtgdp$Prov <- as.factor(dtgdp$Prov)
-dtgdp$Year<- as.factor(dtgdp$Year)
-
-knitr::kable(dcast(dtgdp,Prov~Year,sum), format='html',
+    gdp <- enc2native("2014,å¹¿ä¸œ,1103605,2014,æ±Ÿè‹,1059587,2014,å±±ä¸œ,967419,2014,æµ™æ±Ÿ,653668,2014,æ²³å—,568786,2014,æ²³åŒ—,478953,2014,è¾½å®,466018,2014,å››å·,464555,2014,æ¹–åŒ—,445514,2014,æ¹–å—,440328,2014,ç¦å»º,391609,2014,ä¸Šæµ·,383554,2014,åŒ—äº¬,347249,2014,å®‰å¾½,339401,2014,å†…è’™,289274,2014,é™•è¥¿,287978,2014,å¤©æ´¥,255950,2014,æ±Ÿè¥¿,255724,2014,å¹¿è¥¿,255144,2014,é»‘é¾™æ±Ÿçœ,244829,2014,é‡åº†,232230,2014,å‰æ—,224715,2014,äº‘å—,208612,2014,å±±è¥¿,207714,2014,æ–°ç–†,150812,2014,è´µå·,150599,2014,ç”˜è‚ƒ,111273,2014,æµ·å—,56989,2014,å®å¤,44802,2014,é’æµ·,37460,2014,è¥¿è—,14990,2013,å¹¿ä¸œ,1003746,2013,æ±Ÿè‹,955269,2013,å±±ä¸œ,882974,2013,æµ™æ±Ÿ,606609,2013,æ²³å—,519212,2013,æ²³åŒ—,456976,2013,è¾½å®,437216,2013,å››å·,424026,2013,æ¹–åŒ—,398316,2013,æ¹–å—,395622,2013,ç¦å»º,351347,2013,ä¸Šæµ·,348804,2013,åŒ—äº¬,314871,2013,å®‰å¾½,307416,2013,å†…è’™,271788,2013,é™•è¥¿,259078,2013,é»‘é¾™æ±Ÿçœ,232237,2013,å¹¿è¥¿,232158,2013,å¤©æ´¥,232031,2013,æ±Ÿè¥¿,231520,2013,å‰æ—,209608,2013,é‡åº†,204364,2013,å±±è¥¿,203485,2013,äº‘å—,189255,2013,æ–°ç–†,134991,2013,è´µå·,129284,2013,ç”˜è‚ƒ,101208,2013,æµ·å—,50805,2013,å®å¤,41417,2013,é’æµ·,33925,2013,è¥¿è—,13041,2012,å¹¿ä¸œ,904046,2012,æ±Ÿè‹,856368,2012,å±±ä¸œ,792289,2012,æµ™æ±Ÿ,549154,2012,æ²³å—,468900,2012,æ²³åŒ—,420990,2012,è¾½å®,393607,2012,å››å·,378183,2012,æ¹–åŒ—,352482,2012,æ¹–å—,350958,2012,ä¸Šæµ·,319710,2012,ç¦å»º,312107,2012,åŒ—äº¬,283238,2012,å®‰å¾½,272666,2012,å†…è’™,251574,2012,é™•è¥¿,228969,2012,é»‘é¾™æ±Ÿçœ,216896,2012,å¹¿è¥¿,206497,2012,æ±Ÿè¥¿,205131,2012,å¤©æ´¥,204259,2012,å±±è¥¿,191886,2012,å‰æ—,189136,2012,é‡åº†,180746,2012,äº‘å—,163318,2012,æ–°ç–†,118896,2012,è´µå·,108550,2012,ç”˜è‚ƒ,89508,2012,æµ·å—,45236,2012,å®å¤,37090,2012,é’æµ·,29997,2012,è¥¿è—,11105")
+    dtgdp <- unlist(strsplit(gdp,split=","))
+    dtgdp <- as.data.frame(t(matrix(dtgdp,nrow=3)),stringsAsFactors=F)
+    names(dtgdp) <- c('Year','Prov',"GDP")
+    dtgdp$GDP <- as.numeric(dtgdp$GDP)    
+    knitr::kable(dcast(dtgdp,Prov~Year,sum,value.var="GDP"), format='html',
              caption="Table: 2012-2014 GDP of Provinces in China (Million USD)")
+
+    dtgdp$Prov <- as.factor(dtgdp$Prov)
+    dtgdp$Year<- as.factor(dtgdp$Year)
 ```
 
-### Area Çø¿é±ê×¢
+### Area åŒºå—æ ‡æ³¨
 
-ÓÉÓÚºº×ÖµÄ±àÂëÎÊÌâ£¬ÎŞ·¨Ë³Àû³öÍ¼¡£ÓÃÊÀ½çGDP´Ö²ÚÑİÊ¾¡£
-```{r map}
-worldgdp <- data.frame(country=c('United States of America','China','Japan',
-                                 'Germany','United Kingdom','France','Brazil',
-                                 'Italy','India','Russia','Canada','Australia'),
-                       GDP=c(17418925,10380380,4616335,3859547,2945146,2846889,
-                             2353025,2147952,2049501,1857461,1788717,1444189))
+```{r china map area}
+echartR(dtgdp, x = ~Prov, y = ~GDP, series= ~Year, 
+        type=c('map','china','area'),
+        title="GDPs of China Provinces, 2012-2014 (Million USD)",
+        palette='RdYlGn', dataRange=c('High',"Low"))
+```
+
+ç”¨ä¸–ç•ŒGDPå‰20ç²—ç³™æ¼”ç¤ºä¸–ç•Œåœ°å›¾ã€‚
+```{r world map area}
+worldgdp <- data.frame(
+    country=c('United States of America','China','Japan','Germany',
+              'United Kingdom','France','Brazil', 'Italy','India','Russia',
+              'Canada','Australia','South Korea','Spain','Mexico','Indonesia',
+             'Netherlands','Turkey','Saudi Arabia','Switzerland'),
+    GDP=c(17418925,10380380,4616335,3859547,2945146,2846889,2353025,2147952,
+          2049501,1857461,1788717,1444189,1416949,1406855,1282725,888648,866354,
+          806108,752459,712050))
 echartR(worldgdp, x = ~country, y = ~GDP, type=c('map','world','area'),
-        title="Nations with top GDPs (Million USD)",palette='',
-        dataRange=c("High","Low"))
+        title="Nations with top 20 GDPs, 2014 (Million USD) - Wikipedia",
+        palette='rainbow', dataRange=c("High","Low"))
 ```
 
-### Point µã±ê×¢
+### Point ç‚¹æ ‡æ³¨
 
 
-## Chord ºÍÏÒÍ¼
+## Chord å’Œå¼¦å›¾
 
-## Force Á¦µ¼Ïò²¼¾ÖÍ¼
+## Force åŠ›å¯¼å‘å¸ƒå±€å›¾
