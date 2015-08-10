@@ -40,7 +40,7 @@ echartR(data, x, y, series=NULL, weight=NULL,
 - **y**: y变量
 - series: Series(系列)变量
 - weight: 权重变量，在气泡图等时用
-- type: 默认scatter，可选'scatter', 'bubble', 'bar', 'line', 'linesmooth', 'map', 'k', 'pie', 'ring', 'area', 'areasmooth', 'chord', 'force', 'tree', 'treemap', 'wordcloud', 'heatmap', 'histogram', 'funnel', 'pyramid'
+- type: 默认scatter，可选'scatter', 'bubble', 'bar', 'line', 'linesmooth', 'map', 'k', 'pie', 'ring', 'area', 'areasmooth', 'chord', 'force', 'tree', 'treemap', 'wordcloud', 'heatmap', 'histogram', 'funnel', 'pyramid', 'radar', 'radarfill'
     - 如选择map，则控制项必须写作一个长度为3的向量：c('map',`mapType`,`area/point`)。mapType可选'world'、'china'，或简体中文表示的具体中国地名。area/point为area时，用区块颜色表示效应大小；为point时，用点在地图上做标注。默认为c('map','china','area')。
 - stack: 默认FALSE，是否堆积。用于制作堆积条图、柱图、线图和面积图等
 - title: 标题 
@@ -54,10 +54,17 @@ echartR(data, x, y, series=NULL, weight=NULL,
 - AxisAtZero: 默认TRUE，坐标轴是否交叉于零点
 - scale: 默认TRUE，是否基于最大、最小值调整坐标尺度
 - palette: 默认aetnagreen，使用调色板
-    - Aetna palettes: 可用 'aetnagreen', 'aetnablue', 'aetnaviolet', 'aetnaorange', 'aetnateal', 'aetnacranberry'
-    - RColorBrewer palettes(区分大小写): 可用'BrBG', 'PiYG', 'PRGn', 'PuOr', 'RdBu', 'RdGy', 'RdYlBu', 'RdYlGn', 'Spectral', 'Accent', 'Dark2', 'Paired', 'Pastel1', 'Pastel2', 'Set1', 'Set2', 'Set3', 'Blues', 'BuGn', 'BuPu', 'GnBu', 'Greens', 'Greys', 'Oranges', 'OrRd', 'PuBu', 'PuBuGn', 'PuRd', 'Purples', 'RdPu', 'Reds', 'YlGn', 'YlGnBu', 'YlOrBr', 'YlOrRd'
-    - ggthemes palettes: 'calc', 'economist', 'economist_white', 'excel', 'few', 'fivethirtyeight', 'gdocs', 'pander', 'tableau', 'stata', 'tableau20', 'tableau10medium', 'tableaugray', 'tableauprgy', 'tableaublrd', 'tableaugnor', 'tableaucyclic', 'tableau10light', 'tableaublrd12','tableauprgy12', 'tableaugnor12','hc','darkunica', 'solarized','solarized_red', 'solarized_yellow', 'solarized_orange','solarized_magenta','solarized_violet', 'solarized_blue', 'solarized_cyan', 'solarized_green', 'wsj','colorblind', 'trafficlight'
-    - 其他 palette: 'rainbow', 'terrain'
+    - 种类:
+        - Aetna palettes: 可用 'aetnagreen', 'aetnablue', 'aetnaviolet', 'aetnaorange', 'aetnateal', 'aetnacranberry'
+        - RColorBrewer palettes(区分大小写): 可用'BrBG', 'PiYG', 'PRGn', 'PuOr', 'RdBu', 'RdGy', 'RdYlBu', 'RdYlGn', 'Spectral', 'Accent', 'Dark2', 'Paired', 'Pastel1', 'Pastel2', 'Set1', 'Set2', 'Set3', 'Blues', 'BuGn', 'BuPu', 'GnBu', 'Greens', 'Greys', 'Oranges', 'OrRd', 'PuBu', 'PuBuGn', 'PuRd', 'Purples', 'RdPu', 'Reds', 'YlGn', 'YlGnBu', 'YlOrBr', 'YlOrRd'
+        - ggthemes palettes: 'calc', 'economist', 'economist_white', 'excel', 'few', 'fivethirtyeight', 'gdocs', 'pander', 'tableau', 'stata', 'tableau20', 'tableau10medium', 'tableaugray', 'tableauprgy', 'tableaublrd', 'tableaugnor', 'tableaucyclic', 'tableau10light', 'tableaublrd12','tableauprgy12', 'tableaugnor12','hc','darkunica', 'solarized','solarized_red', 'solarized_yellow', 'solarized_orange','solarized_magenta','solarized_violet', 'solarized_blue', 'solarized_cyan', 'solarized_green', 'wsj','colorblind', 'trafficlight'
+        - 其他 palette: 'rainbow', 'terrain'
+    - 用法:
+        - 可以不指定，使用函数默认
+        - 可以`palette=NULL`，使用Echarts默认
+        - 可以`palette=palette name`指定上述任何一种色板
+        - 规定色板的同时跟一个数字，可以限定色板颜色的个数，如`palette='calc(3)'`
+        - 可以`palette=c(color1,color2,color3,...)`自定义色板向量，向量可以是颜色名，也可以是Hex表达式
 - tooltip: 默认TRUE，鼠标指针特效
 - legend: 默认TRUE，是否显示图例
 - legend_pos: 图例位置，c("center","top")表示中间顶端位置
@@ -67,8 +74,8 @@ echartR(data, x, y, series=NULL, weight=NULL,
 # Examples
 ```{r import R,message=FALSE,echo=FALSE,prompt=FALSE}
 Sys.setlocale("LC_ALL","Chinese")
-source("C:/HMSProjects/Data Analytics/R_scripts/CommonFunctions.R")
-knitr::opts_chunk$set(message=FALSE,warning=FALSE)
+source("~/Github/recharts/R/echartR.R")
+knitr::opts_chunk$set(message=FALSE,warning=FALSE,cache=FALSE)
 ```
 
 ## Scatter 散点图
@@ -119,12 +126,12 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length,
 ```
 
 ### Multi-series Bubble 多系列气泡图
-用`rep('circle',nlevels(iris$Species))`设置3个数据系列均使用实心圆作为标志图形
+用`rep('circle',nlevels(iris$Species))`设置3个数据系列均使用实心圆作为标志图形。palette设置为tableauGnOr(3)，只取该色板前3种颜色。
 ```{r multi-series bubble}
 echartR(data = iris, x = ~Sepal.Width, y = ~Sepal.Length, 
         weight = ~Petal.Length, series = ~Species, 
         symbolList=rep('circle',nlevels(iris$Species)),
-        type = 'bubble', palette='tableauGnOr',
+        type = 'bubble', palette='tableauGnOr(3)',
         title = paste("Bubble - Sepal Width vs Length by Species,",
                       "weighed by Petal Length(iris)"), 
         xlab = 'Sepal Width', ylab = 'Sepal Length')
@@ -179,10 +186,11 @@ echartR(data = dtiris, x = ~Param, y = ~Mean,
 ```
 
 ### Stacked hBar 堆积条图
+palette设为calc的前4种颜色。
 ```{r stack hbar}
 echartR(data = dtiris, x = ~Param, y = ~Mean, 
         series = ~Species, stack=T, xyflip=T,
-        type = 'bar', palette='calc',
+        type = 'bar', palette='calc(4)',
         title = paste("hBar - Parameter Mean by Species", "(iris)"), 
         xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
 ```
@@ -274,10 +282,11 @@ echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='area',stack=T,
         title='Parameter measures (iris)')
 ```
 
-线段平滑
+线段平滑。自定义色板向量。
 ```{r area stacked smooth}
 echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='areasmooth',stack=T,
-        palette='PuOr', xlab = 'Sample ID', ylab = 'Measure', 
+        palette=c('red','yellow','green','purple'), 
+        xlab = 'Sample ID', ylab = 'Measure', 
         symbolList=rep('none',nlevels(dfiris$Param)),
         title='Parameter measures (iris)')
 ```
@@ -303,7 +312,9 @@ echartR(dtcars, x = ~carburetor,  y = ~car, type='pyramid',
 ```
 
 ## Radar 雷达图
-```{r radar}
+
+### Empty Radar 空心雷达
+```{r radar empty}
 player <- rbind(data.frame(name=rep("Philipp Lahm",8),
                      para=c("Passing%","Key passing","Comp crosses","Crossing%",
                             "Successful dribbles","Dispossessed","Dribbled past",
@@ -314,15 +325,17 @@ player <- rbind(data.frame(name=rep("Philipp Lahm",8),
                             "Successful dribbles","Dispossessed","Dribbled past",
                             "Fouls"),
                      value=c(86.62,2.11,0.99,20.78,1.58,1.64,0.9,1.71)))
-soccer <- rbind(data.frame(name=rep("Ronaldo",6),
-                           para=c('进攻','防守','体能','速度','力量','技巧'),
-                           value=c(97, 32, 74, 95, 88, 92)),
-                data.frame(name=rep("Shevchenko",6),
-                           para=c('进攻','防守','体能','速度','力量','技巧'),
-                           value=c(97, 42, 88, 94, 90, 86)))
+echartR(player, x=~para, y=~value, series=~name, type='radar',
+        symbolList=rep('none',2),
+        title='Lahm vs Alves (by @mixedknuts)', palette=c('red','blue'))
+```
 
-echartR(soccer, x=~para, y=~value, series=~name, type='radar',
-        title='Lahm vs Alves (by @mixedknuts)', palette='RdGy')
+### Solid Radar 实心雷达
+
+```{r radar solid}
+echartR(player, x=~para, y=~value, series=~name, type='radarfill',
+        symbolList=rep('none',2),
+        title='Lahm vs Alves (by @mixedknuts)', palette=c('red','navy'))
 ```
 
 ## Map 地图
@@ -338,7 +351,7 @@ R和Rstudio的中文转码一直是老大难。在这里，Rstudio的默认编�
     knitr::kable(dcast(dtgdp,Prov~Year,sum,value.var="GDP"), format='html',
              caption="Table: 2012-2014 GDP of Provinces in China (Million USD)")
 
-    dtgdp$Prov <- as.factor(dtgdp$Prov)
+    dtgdp$Prov <- as.factor(iconv(dtgdp$Prov,to='utf-8'))
     dtgdp$Year<- as.factor(dtgdp$Year)
 ```
 
@@ -348,10 +361,12 @@ R和Rstudio的中文转码一直是老大难。在这里，Rstudio的默认编�
 echartR(dtgdp, x = ~Prov, y = ~GDP, series= ~Year, 
         type=c('map','china','area'),
         title="GDPs of China Provinces, 2012-2014 (Million USD)",
-        palette='RdYlGn', dataRange=c('High',"Low"))
+        palette=c('red','orange','yellow','green'),
+        dataRange=c('High',"Low"))
 ```
 
 用世界GDP前20粗糙演示世界地图。
+
 ```{r world map area}
 worldgdp <- data.frame(
     country=c('United States of America','China','Japan','Germany',
@@ -363,12 +378,13 @@ worldgdp <- data.frame(
           806108,752459,712050))
 echartR(worldgdp, x = ~country, y = ~GDP, type=c('map','world','area'),
         title="Nations with top 20 GDPs, 2014 (Million USD) - Wikipedia",
-        palette='rainbow', dataRange=c("High","Low"))
+        palette='rainbow(6)', dataRange=c("High","Low"))
 ```
 
 ### Point 点标注
 
 
 ## Chord 和弦图
+
 
 ## Force 力导向布局图
