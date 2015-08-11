@@ -16,12 +16,14 @@ output:
 
 本工具来源于百度开发的国内顶尖水平的开源d3-js可视项目[Echarts](http://echarts.baidu.com/)([Github Repo](https://github.com/ecomfe/echarts))。Yang Zhou和Taiyun Wei基于该工具开发了[recharts](https://github.com/taiyun/recharts)包，经Yihui Xie[修改](https://github.com/yihui/recharts)后，可通过`htmlwidgets`传递js参数，大大简化了开发难度。但此包开发仍未完成。为了赶紧上手用，基于该包做了一个函数`echartR`，用于制作基础Echart交互图。
 
+This tool originates from a top-tier d3-js visualization project of China: [Baidu Echarts](http://echarts.baidu.com/)([Github Repo](https://github.com/ecomfe/echarts)). Yang Zhou and Taiyun Wei developed an experimental R package [recharts](https://github.com/taiyun/recharts) based on it, which then evoluted into [yihui/recharts](https://github.com/yihui/recharts) by Yihui Xie to pass js parameters through `htmlwidgets`. The package is sill uder development. I developed a function `echartR` based on this package to make basic Echarts interation charts.
+
 # Usage 用法
 ## Installation 安装
-- 安装`devtools`
-- 安装recharts (`install_github('yihui/recharts')`)
-- 下载`echartR`文件到本地(位置:  [https://github.com/madlogos/recharts/blob/master/R/echartR.R](https://github.com/madlogos/recharts/blob/master/R/echartR.R))
-- 调用`echartR`脚本(假设我将脚本放在本地GitHub Repo： `source("~/Github/recharts/R/echartR.R")`)
+- 安装 Install `devtools` (`install.packages('devtools')`)
+- 安装 Insall recharts (`install_github('yihui/recharts')`)
+- 下载 Download `echartR`文件到本地位置 to local disk:  [https://github.com/madlogos/recharts/blob/master/R/echartR.R](https://github.com/madlogos/recharts/blob/master/R/echartR.R))
+- 调用 Source `echartR` 脚本 script (假设我将脚本放在本地 suppose I stored the script to local GitHub Repo: `source("~/Github/recharts/R/echartR.R")`)
 
 ## Grammar 语法
 
@@ -33,53 +35,54 @@ echartR(data, x, y, z=NULL, series=NULL, weight=NULL,
         xlab=NULL, ylab=NULL, xyflip=FALSE, AxisAtZero=TRUE, scale=TRUE,
         palette='aetnagreen', tooltip=TRUE, legend=TRUE,
         legend_pos=c('center','top'), 
-        toolbox=TRUE,calculable=TRUE))
+        toolbox=TRUE, calculable=TRUE, asImage=FALSE))
 ```
 
-- **data**: 数据集
-- **x**: x变量
-- **y**: y变量
-- z: z变量，只接受时间/日期变量，并打开时间轴
-- series: Series(系列)变量
-- weight: 权重变量，可用于直方图、气泡图等
-- type: 默认scatter，可选'scatter', 'bubble', 'bar', 'line', 'linesmooth', 'map', 'k', 'pie', 'ring', 'area', 'areasmooth', 'chord', 'force', 'tree', 'treemap', 'wordcloud', 'heatmap', 'histogram', 'funnel', 'pyramid', 'radar', 'radarfill'
-    - 如选择map，则控制项必须写作一个长度为3的向量：c('map',`mapType`,`area/point`)。mapType可选'world'、'china'，或简体中文表示的具体中国地名。area/point为area时，用区块颜色表示效应大小；为point时，用点在地图上做标注。默认为c('map','china','area')。
-- stack: 默认FALSE，是否堆积。用于制作堆积条图、柱图、线图和面积图等
+- **data**: 数据集 dataset
+- **x**: x变量 x variable
+- **y**: y变量 y variable
+- z: z变量，只接受时间/日期变量，并打开时间轴。z variable, only accept data/time variable to open time axis
+- series: Series(系列)变量 series variable
+- weight: 权重变量，可用于直方图、气泡图等 weight variable, used in histogram, bubble, etc
+- type: 默认 default `scatter`，可选 options 'scatter', 'bubble', 'bar', 'line', 'linesmooth', 'map', 'k', 'pie', 'ring', 'area', 'areasmooth', 'chord', 'force', 'tree', 'treemap', 'wordcloud', 'heatmap', 'histogram', 'funnel', 'pyramid', 'radar', 'radarfill'
+    - 如选择map，则控制项必须写作一个长度为3的向量：c('map',`mapType`,`area/point`)。mapType可选'world'、'china'，或简体中文表示的具体中国地名。area/point为area时，用区块颜色表示效应大小；为point时，用点在地图上做标注。默认为c('map','china','area')。If `map` was chosen, the control option should be a vector of length 3: c('map',`mapType`,`area/point`). `mapType` could be either 'world' or 'china', of which simplified Chinese names are required for 'china'. When `area/point` equals to 'area', the function colors polygons to show the effects; while equals to 'point', it ticks droplets on the map.
+- stack: 默认FALSE，是否堆积。用于制作堆积条图、柱图、线图和面积图等。Default to FALSE (do not stack). Used in stacked hbar/vbar, line and area chart, etc.
 - title: 标题 
 - subtitle: 副标题
-- symbolList: 图形标志。可使用数组循环使用，但数组长度必须大于等于数据系列的水平数。如设置为NULL或不设置，则循环显示Echarts默认的标志图形列表：c('circle','rectangle','triangle','diamond','emptyCircle','emptyRectangle','emptyTriangle','emptyDiamond')。也可任意指定'heart','droplet','pin','arrow','star5','star6'等非标图形。设为'none'则不显示
-- dataZoom: 数据缩放轴，默认FALSE
-- dataRange: 数据范围漫游范围，默认不打开。如要打开，设置dataRange=c(`高值标签`,`低值标签`)
-- splitNumber: 如打开数据漫游，可指定数据范围切分段数，默认为连续漫游轴
-- dataRangePalette: 如打开数据漫游，可单独指定漫游色板，否则采用Echarts默认值
-- xlab: x轴标题
-- ylab: y轴标题
-- xyflip: 默认FALSE，是否翻转坐标轴
-- AxisAtZero: 默认TRUE，坐标轴是否交叉于零点
-- scale: 默认TRUE，是否基于最大、最小值调整坐标尺度
-- palette: 默认aetnagreen，使用调色板
-    - 种类:
-        - Aetna palettes: 可用 'aetnagreen', 'aetnablue', 'aetnaviolet', 'aetnaorange', 'aetnateal', 'aetnacranberry'
-        - RColorBrewer palettes: 可用'BrBG', 'PiYG', 'PRGn', 'PuOr', 'RdBu', 'RdGy', 'RdYlBu', 'RdYlGn', 'Spectral', 'Accent', 'Dark2', 'Paired', 'Pastel1', 'Pastel2', 'Set1', 'Set2', 'Set3', 'Blues', 'BuGn', 'BuPu', 'GnBu', 'Greens', 'Greys', 'Oranges', 'OrRd', 'PuBu', 'PuBuGn', 'PuRd', 'Purples', 'RdPu', 'Reds', 'YlGn', 'YlGnBu', 'YlOrBr', 'YlOrRd'
+- symbolList: 图形标志。可使用数组循环使用。如设置为NULL或不设置，则循环显示Echarts默认的标志图形列表：c('circle','rectangle','triangle','diamond','emptyCircle','emptyRectangle','emptyTriangle','emptyDiamond')。也可任意指定'heart','droplet','pin','arrow','star5','star6'等非标图形。设为'none'则不显示。A vector assigning symbols. You can use an array of symbols. Do not set the value or set it NULL, the function circulates the default symbol list of Echarts c('circle','rectangle','triangle','diamond','emptyCircle','emptyRectangle','emptyTriangle','emptyDiamond'). You can also assign non-standard symbols like 'heart','droplet','pin','arrow','star5','star6', etc. When assigned to 'none', no symbols are shown.
+- dataZoom: 数据缩放轴，默认FALSE. The axis to zoom data. Default to FALSE.
+- dataRange: 数据范围漫游范围，默认不打开。如要打开，设置dataRange=c(`高值标签`,`低值标签`) The range to zoom the data. Default to FALSE. Set dataRange=c(`High value label`,`Low value label`) to enable dataRange.
+- splitNumber: 如打开数据漫游，可指定数据范围切分段数，默认为连续漫游轴(0)。When dataRange is on, assign splitNumber to cut the range into discrete sections. Default to 0 (continuous range).
+- dataRangePalette: 如打开数据漫游，可单独指定漫游色板(同palette功能)，否则采用Echarts默认值。You can independently assign palettes to dataRange (similar to overall palette). Default to NULL (applies echarts defaults).
+- xlab: x轴标题 title of x-axis
+- ylab: y轴标题 title of y-axis
+- xyflip: 默认FALSE，是否翻转坐标轴。Flip x,y-axies. Default to FALSE.
+- AxisAtZero: 默认TRUE，坐标轴是否交叉于零点。Axes cross at zero. Default to TRUE.
+- scale: 默认TRUE，是否基于最大、最小值调整坐标尺度。Rescale the axes based on min and max values. Default to TRUE.
+- palette: 默认aetnagreen，使用调色板。Overall palette. Default to 'aetnagreen'.
+    - 种类 Palette names:
+        - Aetna palettes: 可用 Including 'aetnagreen', 'aetnablue', 'aetnaviolet', 'aetnaorange', 'aetnateal', 'aetnacranberry'
+        - RColorBrewer palettes: 可用 Including 'BrBG', 'PiYG', 'PRGn', 'PuOr', 'RdBu', 'RdGy', 'RdYlBu', 'RdYlGn', 'Spectral', 'Accent', 'Dark2', 'Paired', 'Pastel1', 'Pastel2', 'Set1', 'Set2', 'Set3', 'Blues', 'BuGn', 'BuPu', 'GnBu', 'Greens', 'Greys', 'Oranges', 'OrRd', 'PuBu', 'PuBuGn', 'PuRd', 'Purples', 'RdPu', 'Reds', 'YlGn', 'YlGnBu', 'YlOrBr', 'YlOrRd'
         - ggthemes palettes: 'calc', 'economist', 'economist_white', 'excel', 'few', 'fivethirtyeight', 'gdocs', 'pander', 'tableau', 'stata', 'tableau20', 'tableau10medium', 'tableaugray', 'tableauprgy', 'tableaublrd', 'tableaugnor', 'tableaucyclic', 'tableau10light', 'tableaublrd12','tableauprgy12', 'tableaugnor12','hc','darkunica', 'solarized','solarized_red', 'solarized_yellow', 'solarized_orange','solarized_magenta','solarized_violet', 'solarized_blue', 'solarized_cyan', 'solarized_green', 'wsj','colorblind', 'trafficlight'
-        - 其他 palette: 'rainbow', 'terrain'
-    - 用法:
-        - 可以不指定，使用函数默认
-        - 可以`palette=NULL`，使用Echarts默认
-        - 可以`palette=palette name`指定上述任何一种色板
-        - 规定色板的同时跟个数限定，限定色板颜色的个数，如`palette='calc(3)'`，会从calc色板中随机取3种颜色
-        - 可以`palette=c(color1,color2,color3,...)`自定义色板向量，向量可以是颜色名，也可以是Hex表达式。可以用`colors()`函数查看所有支持的颜色名称，`demo(colors)`查看颜色效果
-- tooltip: 默认TRUE，鼠标指针特效
-- legend: 默认TRUE，是否显示图例
-- legend_pos: 图例位置，c("center","top")表示中间顶端位置
-- toolbox: 默认TRUE，是否显示工具箱
-- calculable: 默认TRUE，是否支持拖曳重算(Echarts专利)
+        - 其他Other palette: 'rainbow', 'terrain'
+    - 用法 Usage:
+        - 可以不指定，使用函数默认。Do not set the value and function defaults will be loaded
+        - 可以`palette=NULL`，使用Echarts默认。Set `palette=NULL` to use Echarts defaults
+        - 可以`palette=palette name`指定上述任何一种色板。Set `palette=palette name` to assign any palette listed above
+        - 规定色板的同时跟个数限定，限定色板颜色的个数，如`palette='calc(3)'`，会从calc色板中随机取3种颜色。Set `palette=palette name(number)` to restrict number of colors within the palette (e.g., `palette='calc(3)'` picks 3 colors out of 'calc' randomly)
+        - 可以`palette=c(color1,color2,color3,...)`自定义色板向量，向量可以是颜色名，也可以是Hex表达式。可以用`colors()`函数查看所有支持的颜色名称，`demo(colors)`查看颜色效果。Set `palette=c(color1,color2,color3,...)` to define a palette vector, made of which either color names or Hex expressions. Use `colors()` to check available color names and check the effects using `demo(colors)`.
+- tooltip: 默认TRUE，鼠标指针特效。Mouse tip effects swtich. Default to TRUE.
+- legend: 默认TRUE，是否显示图例。Whether show the legend. Default to TRUE.
+- legend_pos: 图例位置，可用c('left|center|right','top|center|bottom')，c("center","top")表示中间顶端位置。Legend position which is a vector of length 2 (c('left|center|right','top|center|bottom')). c('center','top') means top meiddle. 
+- toolbox: 默认TRUE，是否显示工具箱。Echarts Tool box switch. Default to TRUE.
+- calculable: 默认TRUE，是否支持拖曳重算(Echarts专利) Calculable switch (Echarts patent).
+- asImage: 默认FALSE，是否出静态图。renderAsImage switch.Deafult to FALSE.
 
 # Examples
 ```{r import R scripts,results='hide'}
 Sys.setlocale("LC_ALL","Chinese")
-#source("~/Github/recharts/R/echartR.R")
-source("C:/HMSProjects/Data Analytics/R_scripts/CommonFunctions.R")
+source("~/Github/recharts/R/echartR.R")
+#source("C:/HMSProjects/Data Analytics/R_scripts/CommonFunctions.R")
 knitr::opts_chunk$set(message=FALSE,warning=FALSE,results='asis')
 ```
 
@@ -234,6 +237,8 @@ echartR(dtcars, x = ~cylinder,  y = ~car, type='ring',
 打开数据缩放`dataZoom=T`
 ```{r line}
 airquality$Date <- as.Date(with(airquality,paste(2015,Month,Day,sep="-")))
+airquality$strDate <- with(airquality,paste(2015,Month,Day,sep="-"))
+airquality$TempG <- cut(airquality$Temp,breaks=c(0,60,70,80,100))
 a=echartR(airquality, x = ~Date, y= ~Wind, weight=~Solar.R,
           type='line', dataZoom=T,
         palette='tableauBlRd', xlab = 'Date', ylab = 'Wind',
@@ -249,12 +254,14 @@ echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='line', dataZoom=T,
         title='Parameter measures (iris)')
 ```
 
-线段平滑，不显示标志图形(`symbolList='none'`)
+线段平滑，不显示标志图形(`symbolList='none'`)。Echarts对缺失值默认不填补，因此有很多断线。
 ```{r linesmooth}
-a=echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='linesmooth',
+airq <- melt(airquality[,c("Ozone","Solar.R","Wind","Temp","strDate")],
+             id=c("strDate"))
+echartR(airq, x = ~strDate, y= ~value, series= ~variable, type='linesmooth',
         symbolList='none',
-        palette='tableauPrGy', xlab = 'Sample ID', ylab = 'Measure',
-        title='Parameter measures (iris)')
+        palette='tableauPrGy(4)', xlab = 'Date', ylab = 'Measure',
+        title='Climate measures by day (airquality)')
 ```
 
 ### Stacked Line 堆积线图
@@ -359,7 +366,8 @@ echartR(player, x=~para, y=~value, series=~name, type='radarfill',
 R和Rstudio的中文转码在Windows里一直是老大难。在这里，Rstudio的默认编码采用CP936编码，文档用UTF-8。如直接在程序内读数据集，用iconv转码后，落单的汉字仍然会显示为乱码。可先下载[ChinaGDP.txt](https://raw.githubusercontent.com/madlogos/Shared_Doc/master/Shared_Documents/ChinaGDP.txt)到本地，`readLines`读入。
 
 ```{r map gdp data}
-gdp <- readLines("C:/HMSProjects/Data Analytics/RWork/ChinaGDP.txt")
+#gdp <- readLines("https://raw.githubusercontent.com/madlogos/Shared_Doc/master/Shared_Documents/ChinaGDP.txt")
+gdp <- readLines("ChinaGDP.txt")
 dtgdp <- unlist(strsplit(gdp,split=","))
 dtgdp <- as.data.frame(t(matrix(dtgdp,nrow=3)),stringsAsFactors=F)
 names(dtgdp) <- c('Year','Prov',"GDP")
