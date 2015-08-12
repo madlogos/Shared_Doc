@@ -31,7 +31,7 @@ This tool originates from a top-tier `d3-js` visualization project of China: [Ba
 echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL, 
         type="scatter", stack=FALSE,
         title=NULL, subtitle=NULL, title_pos=c('center','bottom'),
-        symbolList=NULL, dataZoom=NULL, 
+        symbolList=NULL, dataZoom=NULL, dataZoomRange=NULL,
         dataRange=NULL, splitNumber=NULL, dataRangePalette=NULL,
         xlab=NULL, ylab=NULL, xyflip=FALSE, AxisAtZero=TRUE, scale=TRUE,
         palette='aetnagreen', tooltip=TRUE, legend=TRUE,
@@ -54,6 +54,7 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
 - title_pos: 标题位置，可用c('left|center|right','top|center|bottom')，默认c("center","bottom")表示底部居中位置。Legend position which is a vector of length 2 (c('left|center|right','top|center|bottom')). Default to c('center','bottom') which means bottom meiddle.
 - symbolList: 图形标志。可使用数组循环使用，如数组长度小于series水平数，则以最后一个标志填充。如设置为NULL或不设置，则循环显示Echarts默认的标志图形列表：c('circle','rectangle','triangle','diamond','emptyCircle','emptyRectangle','emptyTriangle','emptyDiamond')。也可任意指定'heart','droplet','pin','arrow','star5','star6'等非标图形。设为'none'则不显示。A vector assigning symbols. You can use an array of symbols. If the length of the symbols array is smaller than number of levels of the series, the last symbol will be used to extend the array. If you set symbolList NULL or leave it unset, the function circulates the default symbol list of Echarts: c('circle','rectangle','triangle','diamond','emptyCircle','emptyRectangle','emptyTriangle','emptyDiamond'). You can also assign non-standard symbols, such as 'heart','droplet','pin','arrow','star5','star6', 'star7', etc. When assigned to 'none', no symbols are shown.
 - dataZoom: 数据缩放轴，默认FALSE. The axis to zoom data. Default to FALSE.
+- dataZoomRange: 如`dataZoom=TRUE`，默认范围为0-100%。可用一个长度为2的向量控制初始范围，如`c(30,70)`显示初始30-70%。If `dataZoom=TRUE`, the default range is 0-100%. You can assign a vector with length of 2 to `dataZoomRange` to control the initial range. E.g.,`c(30,70)` means from 30% to 70% at the initial view.
 - dataRange: 数据范围漫游范围，默认不打开。如要打开，设置dataRange=c(`高值标签`,`低值标签`) The range to zoom the data. Default to FALSE. Set dataRange=c(`High value label`,`Low value label`) to enable dataRange.
 - splitNumber: 如打开数据漫游，可指定数据范围切分段数，默认为连续漫游轴(0)。在直方图里，如设定splitNumber，则将数据切分成splitNumber个块。When dataRange is on, assign splitNumber to cut the range into discrete sections. Default to 0 (continuous range). In histogram, if splitNumber is set, the y variable will be cut into splitNumber groups.
 - dataRangePalette: 如打开数据漫游，可单独指定漫游色板(同palette功能)，否则采用Echarts默认值。You can independently assign palettes to dataRange (similar to overall palette). Default to NULL (applies echarts defaults).
@@ -83,15 +84,19 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
 - asImage: 默认FALSE，是否出静态图。renderAsImage switch.Deafult to FALSE.
 
 # Examples
+
 ```{r import R scripts,results='hide'}
+rm(list=ls())
 Sys.setlocale("LC_ALL","Chinese")
-#source("~/Github/recharts/R/echartR.R")
-source("C:/HMSProjects/Data Analytics/R_scripts/CommonFunctions.R")
-knitr::opts_chunk$set(results='asis')
+source("~/Github/recharts/R/echartR.R")
+#source("C:/HMSProjects/Data Analytics/R_scripts/CommonFunctions.R")
+knitr::opts_chunk$set(message=FALSE,warning=FALSE,results='asis',cache=FALSE)
 ```
 
 ## Scatter 散点图
+
 ### Singular-series Scatter 单系列散点图
+
 ```{r mono-series scatter}
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, 
         type = 'scatter', palette='solarized_magenta',
@@ -99,23 +104,19 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width,
         xlab = 'Sepal Width', ylab = 'Petal Width')
 ```
 
-显示范围从零点开始(`scale=FALSE`)：
-```{r mono-series scatter at zero}
-echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, scale = F,
-        type = 'scatter', palette='solarized_blue(3)',
-        title = 'Scatter - Sepal Width vs Petal Width (iris)', 
-        xlab = 'Sepal Width', ylab = 'Petal Width')
-```
-
 ### Multi-series Scatter 多系列散点图
+
+指定series，且显示范围从零点开始(`scale=FALSE`)
+
 ```{r multi-series scatter}
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, series = ~Species,
-        type = 'scatter', palette='aetnaviolet', symbolList='circle',
+        type = 'scatter', palette='aetnaviolet', symbolList='circle', scale=F,
         title = 'Scatter - Sepal Width vs Petal Width, by Species (iris)',
         xlab = 'Sepal Width', ylab = 'Petal Width')
 ```
 
 使用三套非标准图形(箭头、心形、八角星)区分数据系列
+
 ```{r multi-series scatter with multi-symbols}
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, series = ~Species,
         type = 'scatter', palette='aetnateal',
@@ -129,6 +130,7 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, series = ~Species,
 气泡图同样来源于散点图。type改为`bubble`即可，如不指定`weight`变量，函数默认指定y为气泡权重。
 
 ### Singular-series Bubble 单系列气泡图
+
 ```{r mono-series bubble}
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, 
         weight = ~Petal.Length,
@@ -139,16 +141,18 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width,
 ```
 
 ### Multi-series Bubble 多系列气泡图
+
 用`symbolList=c('circle','emptyCircle')`设置第1个数据系列为实心圆、剩下的数据系列以空心圆作为标志图形。palette设置为tableauGnOr(3)，只随机取该色板的3种颜色。
 
 ```{r multi-series bubble}
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, 
         weight = ~Petal.Length, series = ~Species, 
-        symbolList=c('circle','emptyCircle'),
+        symbolList=c('emptyCircle','circle'),
         type = 'bubble', palette='tableaugnor(3)',
         title = paste("Bubble - Sepal Width vs Petal Width, by Species,",
                       "weighed by Petal Length (iris)"), 
         xlab = 'Sepal Width', ylab = 'Petal Width')
+
 ```
 
 ## vBar 柱图
@@ -167,6 +171,7 @@ knitr::kable(dtiris,format='html',caption="Table: Mean of parameters (iris)")
 ```
 
 ### Unstacked vBar 平铺柱图
+
 ```{r unstack vbar}
 echartR(data = dtiris, x = ~Param, y = ~Mean,  series = ~Species,
         type = 'bar', palette='fivethirtyeight',
@@ -175,6 +180,7 @@ echartR(data = dtiris, x = ~Param, y = ~Mean,  series = ~Species,
 ```
 
 ### Stacked vBar 堆积柱图
+
 ```{r stack vbar}
 echartR(data = dtiris, x = ~Param, y = ~Mean, 
         series = ~Species, stack=T,
@@ -190,16 +196,18 @@ echartR(data = dtiris, x = ~Param, y = ~Mean,
 条图和柱图的区别只在于`xyflip`开关选项。
 
 ### Unstacked hBar 平铺条图
-```{r unstack hbar}
-echartR(data = dtiris, x = ~Param, y = ~Mean, 
-        series = ~Species, xyflip=T,
+
+```{r unstack hbar,results='markup'}
+echartR(data = dtiris, x = ~Param, y = ~Mean, series = ~Species, xyflip=T,
         type = 'bar', palette='stata(3)',
         title = paste("hBar - Parameter Mean by Species", "(iris)"), 
         xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
 ```
 
 ### Stacked hBar 堆积条图
+
 palette设为calc的随机4种颜色。
+
 ```{r stack hbar}
 echartR(data = dtiris, x = ~Param, y = ~Mean, 
         series = ~Species, stack=T, xyflip=T,
@@ -252,6 +260,7 @@ echartR(dtcars, x = ~cylinder,  y = ~car, type='ring',
 ### Unstacked Line 平铺线图
 打开数据缩放`dataZoom=T`
 ```{r line}
+data(airquality)
 airquality$Date <- strptime(paste(2015,airquality$Month,airquality$Day,sep="-")
                             ,format="%Y-%m-%d")
 airquality$strDate <- with(airquality,paste(2015,Month,Day,sep="-"))
@@ -421,4 +430,7 @@ echartR(worldgdp, x = ~country, y = ~GDP, type=c('map','world','area'),
 
 
 ## Force 力导向布局图
+
+
+
 
