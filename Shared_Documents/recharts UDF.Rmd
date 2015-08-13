@@ -14,15 +14,29 @@ output:
 
 # Intro 前言
 
-本工具来源于百度开发的国内顶尖水平的开源`d3-js`可视项目[Echarts](http://echarts.baidu.com/)([Github Repo](https://github.com/ecomfe/echarts))。Yang Zhou和Taiyun Wei基于该工具开发了[recharts](https://github.com/taiyun/recharts)包，经Yihui Xie[修改](https://github.com/yihui/recharts)后，可通过`htmlwidgets`传递js参数，大大简化了开发难度。但此包开发仍未完成。为了赶紧上手用，基于该包做了一个函数`echartR`，用于制作基础Echart交互图。
+本工具来源于百度开发的国内顶尖水平的开源`d3-js`可视项目[Echarts](http://echarts.baidu.com/)([Github Repo](https://github.com/ecomfe/echarts))。Yang Zhou和Taiyun Wei基于该工具开发了[recharts](https://github.com/taiyun/recharts)包，经Yihui Xie[修改](https://github.com/yihui/recharts)后，可通过`htmlwidgets`传递js参数，大大简化了开发难度。但此包开发仍未完成。为了赶紧上手用，基于该包做了一个函数`echartR`，用于制作基础Echart交互图。需要R版本>=3.2.0.
 
-This tool originates from a top-tier `d3-js` visualization project of China: [Baidu Echarts](http://echarts.baidu.com/)([Github Repo](https://github.com/ecomfe/echarts)). Yang Zhou and Taiyun Wei developed an experimental R package [recharts](https://github.com/taiyun/recharts) based on it, which then evoluted into [yihui/recharts](https://github.com/yihui/recharts) by Yihui Xie to pass js parameters through `htmlwidgets`. The package is sill uder development. I developed a function `echartR` based on this package to make basic Echarts interation charts.
+This tool originates from a top-tier `d3-js` visualization project of China: [Baidu Echarts](http://echarts.baidu.com/)([Github Repo](https://github.com/ecomfe/echarts)). Yang Zhou and Taiyun Wei developed an experimental R package [recharts](https://github.com/taiyun/recharts) based on it, which then evoluted into [yihui/recharts](https://github.com/yihui/recharts) by Yihui Xie to pass js parameters through `htmlwidgets`. The package is sill uder development. I developed a function `echartR` based on this package to make basic Echarts interation charts. This function requires R>=3.2.0.
+
+`echartR`的主要工作是将Echarts参数封装成list，Yihui Xie的原型函数`echart`被用来处理这个list。`echart`函数的[基本用法](http://yihui.name/recharts)如下，除了数据本身，并没有提供其他参数的位置。
+
+`echartR` majorly packs Echarts parameters into a list while `echart`, the prototype function developed by Yihui Xie, is used to parse the list. The [basic examples](http://yihui.name/recharts) of `echart` is as follows, which does not provide parameters entry other than dataset itself.
+```{r rechart}
+if (! 'recharts' %in% installed.packages()[,1]){
+    install.packages('recharts',
+                     repos = c('http://yihui.name/xran', 'http://cran.rstudio.com')
+                     )
+}
+library(recharts)
+echart(iris, ~Sepal.Length, ~Sepal.Width)
+echart(iris, ~Sepal.Length, ~Sepal.Width, series = ~Species)
+```
 
 # Usage 用法
 ## Installation 安装
 - 安装 Install `devtools` (`install.packages('devtools')`)
 - 安装 Insall recharts (`install_github('yihui/recharts')`)
-- 下载 Download `echartR`文件到本地位置 to local disk:  [https://github.com/madlogos/recharts/blob/master/R/echartR.R](https://github.com/madlogos/recharts/blob/master/R/echartR.R))
+- 下载 Download `echartR.R`脚本文件到本地位置 script file to local disk:  [https://github.com/madlogos/recharts/blob/master/R/echartR.R](https://github.com/madlogos/recharts/blob/master/R/echartR.R))
 - 调用 Source `echartR` 脚本 script (假设我将脚本放在本地 suppose I stored the script to local GitHub Repo: `source("~/Github/recharts/R/echartR.R")`)
 
 ## Grammar 语法
@@ -86,9 +100,9 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
 # Examples 示例
 
 ```{r import R scripts,results='hide'}
-Sys.setlocale("LC_ALL","Chinese")
-#source("~/Github/recharts/R/echartR.R")
-source("C:/HMSProjects/Data Analytics/R_scripts/CommonFunctions.R")
+Sys.setlocale("LC_CTYPE","Chs")
+source("~/Github/recharts/R/echartR.R")
+#source("C:/HMSProjects/Data Analytics/R_scripts/CommonFunctions.R")
 knitr::opts_chunk$set(message=FALSE,warning=FALSE,results='asis')
 ```
 
@@ -443,7 +457,7 @@ echartR(worldgdp, x = ~country, y = ~GDP, type=c('map','world','area'),
 1. `echartR`比较接近于`lattice`，而不是`ggplot2`图层叠加的思路。每次使用都要一次性编辑很多参数；
 1. 函数本身写得比较笨重，技术还不行；
 1. 未实现的功能：
-    1. Force，Chord，Wordcloud和点标注地图还没有开发；
+    1. Force，Chord，Wordcloud，candlestick(k)和点标注地图还没有开发；
     1. 仍然不支持时间格式的坐标轴（series中数据格式有问题）；
     1. 仍然不支持动态时间轴；
     1. tooltip不够智能；
