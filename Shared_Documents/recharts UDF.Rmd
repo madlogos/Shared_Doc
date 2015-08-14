@@ -33,6 +33,10 @@ echart(iris, ~Sepal.Length, ~Sepal.Width, series = ~Species)
 ```
 
 # Usage 用法
+- 首先，安装好最新版的[R](http://www.r-project.org)和[Rstudio](http://www.rstudio.com)
+- 了解最基本的R语言技巧，能够用R整理、读写数据集
+- 最好会用`knitr`，会写[`rmarkdown`](http://rmarkdown.rstudio.com/)
+
 ## Installation 安装
 - 安装 Install `devtools` (`install.packages('devtools')`)
 - 安装 Insall recharts (`install_github('yihui/recharts')`)
@@ -81,7 +85,7 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
     - 种类 Palette names:
         - Aetna palettes: 可用 Including 'aetnagreen', 'aetnablue', 'aetnaviolet', 'aetnaorange', 'aetnateal', 'aetnacranberry'
         - RColorBrewer palettes: 可用 Including 'BrBG', 'PiYG', 'PRGn', 'PuOr', 'RdBu', 'RdGy', 'RdYlBu', 'RdYlGn', 'Spectral', 'Accent', 'Dark2', 'Paired', 'Pastel1', 'Pastel2', 'Set1', 'Set2', 'Set3', 'Blues', 'BuGn', 'BuPu', 'GnBu', 'Greens', 'Greys', 'Oranges', 'OrRd', 'PuBu', 'PuBuGn', 'PuRd', 'Purples', 'RdPu', 'Reds', 'YlGn', 'YlGnBu', 'YlOrBr', 'YlOrRd'
-        - ggthemes palettes: 'calc', 'economist', 'economist_white', 'excel', 'few', 'fivethirtyeight', 'gdocs', 'pander', 'tableau', 'stata', 'tableau20', 'tableau10medium', 'tableaugray', 'tableauprgy', 'tableaublrd', 'tableaugnor', 'tableaucyclic', 'tableau10light', 'tableaublrd12','tableauprgy12', 'tableaugnor12','hc','darkunica', 'solarized','solarized_red', 'solarized_yellow', 'solarized_orange','solarized_magenta','solarized_violet', 'solarized_blue', 'solarized_cyan', 'solarized_green', 'wsj','colorblind', 'trafficlight'
+        - ggthemes palettes: 'calc', 'economist', 'economist_white', 'economist_stata','excel', 'exel_fill', 'excel_old', 'excel_new', 'few', 'fivethirtyeight', 'gdocs', 'pander', 'tableau', 'stata', 'stata1','stata1r','statamono', 'tableau20', 'tableau10medium', 'tableaugray', 'tableauprgy', 'tableaublrd', 'tableaugnor', 'tableaucyclic', 'tableau10light', 'tableaublrd12', 'tableauprgy12', 'tableaugnor12','hc','darkunica', 'solarized','solarized_red', 'solarized_yellow', 'solarized_orange','solarized_magenta','solarized_violet', 'solarized_blue', 'solarized_cyan', 'solarized_green', 'wsj', 'wsj_rgby', 'wsj_red_green', 'wsj_black_green', 'wsj_dem_rep', 'colorblind', 'trafficlight'
         - 其他Other palettes: 'rainbow', 'terrain', 'topo', 'heat', 'cm'
     - 用法 Usage:
         - 可以不指定，使用函数默认。Do not set the value and function defaults will be loaded
@@ -101,14 +105,14 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
 
 ```{r import R scripts,results='hide'}
 Sys.setlocale("LC_CTYPE","Chs")
-source("~/Github/recharts/R/echartR.R")
-#source("C:/HMSProjects/Data Analytics/R_scripts/CommonFunctions.R")
+#source("~/Github/recharts/R/echartR.R")
+source("C:/HMSProjects/Data Analytics/R_scripts/CommonFunctions.R")
 knitr::opts_chunk$set(message=FALSE,warning=FALSE,results='asis')
 ```
 
 ## Scatter 散点图
 
-### Singular-series Scatter 单系列散点图
+### Mono-series Scatter 单系列散点图
 
 ```{r mono-series scatter}
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, 
@@ -123,26 +127,38 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width,
 
 ```{r multi-series scatter}
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, series = ~Species,
-        type = 'scatter', palette='aetnaviolet', symbolList='circle', scale=F,
+        type = 'scatter', palette='wsj_dem_rep', symbolList='circle',
+        scale=F, xlab = 'Sepal Width', ylab = 'Petal Width',
+        title = 'Scatter - Sepal Width vs Petal Width, by Species (iris)')
+```
+
+使用三套非标准图形(箭头、心形、八角星)区分数据系列(`c('arrow','heart','star8')`)。命令指定随机选择excel_old色版中的1种颜色，但由于数据集有3个水平(series)，颜色个数限制被忽略。
+
+```{r multi-series scatter with multi-symbols}
+echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, series = ~Species,
+        type = 'scatter', palette='excel_old(1)',
+        symbolList=c('arrow','heart','star8'),
         title = 'Scatter - Sepal Width vs Petal Width, by Species (iris)',
         xlab = 'Sepal Width', ylab = 'Petal Width')
 ```
 
-使用三套非标准图形(箭头、心形、八角星)区分数据系列
-
-```{r multi-series scatter with multi-symbols}
-echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, series = ~Species,
-        type = 'scatter', palette='aetnateal',
-        symbolList=c('arrow','heart','star8'),
-        title = 'Scatter - Sepal Width vs Petal Width, by Species (iris)',
-        xlab = 'Sepal Width', ylab = 'Petal Width')
+大规模散点图(5000个点以上)同样可以秒级出图(但html文件会变得很大)。
+```{r bigscale scatter}
+x <- rnorm(5001)*2
+e <- vector()
+for (i in 1:5001)  e <- c(e,rnorm(1,0,x[i]+abs(min(x))))
+df <- data.frame(x, sin=sin(x)+e/20, cos=cos(x)+e/20)
+df <- melt(df,id="x")
+echartR(df,x=~x,y=~value,series=~variable,type='scatter',
+        palette='wsj_red_green',symbolList='circle',
+        title='Scatter of 5,001 points')
 ```
 
 ## Bubble 气泡图
 
 气泡图同样来源于散点图。type改为`bubble`即可，如不指定`weight`变量，函数默认指定y为气泡权重。
 
-### Singular-series Bubble 单系列气泡图
+### Mono-series Bubble 单系列气泡图
 
 ```{r mono-series bubble}
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, 
@@ -165,7 +181,6 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width,
         title = paste('Bubble - Sepal Width vs Petal Width, by Species,',
                       'weighed by Petal Length (iris)'), 
         xlab = 'Sepal Width', ylab = 'Petal Width')
-
 ```
 
 ## Column 柱图
@@ -213,7 +228,7 @@ echartR(data = dtiris, x = ~Param, y = ~Mean,
 
 ```{r tiled hbar}
 echartR(data = dtiris, x = ~Species, y = ~Mean, series = ~Param, 
-        type = 'bar', palette='stata', xyflip=T,
+        type = 'bar', palette='stata1', xyflip=T,
         title = 'Species-specific Mean by Parameters (iris)', 
         xlab = 'Species', ylab = 'Mean', legend_pos=c('right','center'))
 ```
@@ -225,7 +240,7 @@ palette设为calc的随机4种颜色。打开stack (`stack=TRUE`)。
 ```{r stack hbar}
 echartR(data = dtiris, x = ~Param, y = ~Mean, 
         series = ~Species, stack=T, xyflip=T,
-        type = 'bar', palette='calc',
+        type = 'bar', palette='calc(5)',
         title = 'Parameter Mean by Species (iris)', 
         xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
 ```
@@ -276,19 +291,18 @@ echartR(dtcars, x = ~cylinder,  y = ~car, type='ring',
 打开数据缩放`dataZoom=T`
 
 ```{r line}
-data(airquality)
-airquality$Date <- strptime(paste(2015,airquality$Month,airquality$Day,sep="-")
-                            ,format="%Y-%m-%d")
+airquality$Date <- strptime(paste(2015,airquality$Month,airquality$Day,sep="-"),
+                            format="%F", tz="Asia/Taipei")
 airquality$strDate <- with(airquality,paste(2015,Month,Day,sep="-"))
 airquality$TempG <- cut(airquality$Temp,breaks=c(0,60,70,80,100))
-#echartR(airquality, x = ~Date, y= ~Wind,
-#          type='line', dataZoom=T,
-#        palette='tableauBlRd', xlab = 'Date', ylab = 'Wind',
-#        title='Wind by day (airquality)')
-echartR(airquality, x = ~Day, y= ~Wind, series=~Month,
-          type='line', dataZoom=T, dataZoomRange=c(30,70),
-        palette='tableauBlRd', xlab = 'Days', ylab = 'Wind',
-        title='Day-specific Wind by month (airquality)', symbolList='none')
+a=echartR(airquality, x = ~Date, y= ~Wind,
+          type='linesmooth', dataZoom=T, 
+        xlab = 'Date', ylab = 'Wind',
+        title='Wind by day (airquality)')
+#echartR(airquality, x = ~Day, y= ~Wind, series=~Month,
+#          type='line', dataZoom=T, dataZoomRange=c(30,70),
+#        palette='tableauBlRd', xlab = 'Days', ylab = 'Wind',
+#        title='Day-specific Wind by month (airquality)', symbolList='none')
 ```
 
 线段平滑(`type='linesmooth'`)，不显示标志图形(`symbolList='none'`)。Echarts对缺失值默认不填补，因此有很多断线。需要在数据前处理时自行作插值运算。
