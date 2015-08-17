@@ -49,13 +49,15 @@ echart(iris, ~Sepal.Length, ~Sepal.Width, series = ~Species)
 echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL, 
         type="scatter", stack=FALSE,
         title=NULL, subtitle=NULL, title_pos=c('center','bottom'),
+        title_url=NULL, subtitle_url=NULL,
         symbolList=NULL, dataZoom=NULL, dataZoomRange=NULL,
         dataRange=NULL, splitNumber=NULL, dataRangePalette=NULL,
         xlab=NULL, ylab=NULL, xyflip=FALSE, AxisAtZero=TRUE, scale=TRUE,
-        palette='aetnagreen', tooltip=TRUE, legend=TRUE,
-        legend_pos=c('center','top'), 
+        palette='aetnagreen', tooltip=TRUE, 
+        legend=TRUE, legend_pos=c('center','top'), 
         toolbox=TRUE, toolbox_pos=c('right','top'), 
-        calculable=TRUE, asImage=FALSE))
+        calculable=TRUE, asImage=FALSE,
+        markLine=NULL, markPoint=NULL, ...))
 ```
 
 - **data**: 数据集 dataset
@@ -64,12 +66,14 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
 - z: z变量，只接受时间/日期变量，并打开时间轴。z variable, only accept data/time variable to open time axis
 - series: Series(系列)变量 series variable
 - weight: 权重变量，可用于直方图、气泡图等 weight variable, used in histogram, bubble, etc
-- type: 默认 default `scatter`，可选 options 'scatter', 'bubble', 'bar', 'line', 'linesmooth', 'map', 'k', 'pie', 'ring', 'area', 'areasmooth', 'chord', 'force', 'tree', 'treemap', 'wordcloud', 'heatmap', 'histogram', 'funnel', 'pyramid', 'radar', 'radarfill'
+- type: 默认 default `scatter`，可选 options 'scatter', 'bubble', 'bar', 'line', 'linesmooth', 'map', 'k', 'pie', 'ring', 'rose','area', 'areasmooth', 'chord', 'force', 'tree', 'treemap', 'wordcloud', 'heatmap', 'histogram', 'funnel', 'pyramid', 'radar', 'radarfill'
     - 如选择map，则控制项必须写作一个长度为3的向量：c('map',`mapType`,`area/point`)。mapType可选'world'、'china'，或简体中文表示的具体中国地名。area/point为area时，用区块颜色表示效应大小；为point时，用点在地图上做标注。默认为c('map','china','area')。If `map` was chosen, the control option should be a vector of length 3: c('map',`mapType`,`area/point`). `mapType` could be either 'world' or 'china', of which simplified Chinese names are required for 'china'. When `area/point` equals to 'area', the function colors polygons to show the effects; while equals to 'point', it ticks droplets on the map.
-- stack: 默认FALSE，是否堆积。用于制作堆积条图、柱图、线图和面积图等。Default to FALSE (do not stack). Used in stacked hbar/vbar, line and area chart, etc.
+- stack: 默认FALSE，是否堆积。用于制作堆积条图、柱图、线图和面积图等直角坐标系图形。Default to FALSE (do not stack). Used in stacked column, bar, line and area chart, etc.
 - title: 标题 
 - subtitle: 副标题
 - title_pos: 标题位置，可用c('left|center|right','top|center|bottom')，默认c("center","bottom")表示底部居中位置。Legend position which is a vector of length 2 (c('left|center|right','top|center|bottom')). Default to c('center','bottom') which means bottom meiddle.
+- title_url: 标题链接，url of the title
+- subtitle_url: 副标题链接, url of the subtitle
 - symbolList: 图形标志。可使用数组循环使用，如数组长度小于series水平数，则以最后一个标志填充。如设置为NULL或不设置，则循环显示Echarts默认的标志图形列表：c('circle','rectangle','triangle','diamond','emptyCircle','emptyRectangle','emptyTriangle','emptyDiamond')。也可任意指定'heart','droplet','pin','arrow','star5','star6'等非标图形。设为'none'则不显示。A vector assigning symbols. You can use an array of symbols. If the length of the symbols array is smaller than number of levels of the series, the last symbol will be used to extend the array. If you set symbolList NULL or leave it unset, the function circulates the default symbol list of Echarts: c('circle','rectangle','triangle','diamond','emptyCircle','emptyRectangle','emptyTriangle','emptyDiamond'). You can also assign non-standard symbols, such as 'heart','droplet','pin','arrow','star5','star6', 'star7', etc. When assigned to 'none', no symbols are shown.
 - dataZoom: 数据缩放轴，默认FALSE. The axis to zoom data. Default to FALSE.
 - dataZoomRange: 如`dataZoom=TRUE`，默认范围为0-100%。可用一个长度为2的向量控制初始范围，如`c(30,70)`显示初始30-70%。If `dataZoom=TRUE`, the default range is 0-100%. You can assign a vector with length of 2 to `dataZoomRange` to control the initial range. E.g.,`c(30,70)` means from 30% to 70% at the initial view.
@@ -81,7 +85,7 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
 - xyflip: 默认FALSE，是否翻转坐标轴。Flip x,y-axies. Default to FALSE.
 - AxisAtZero: 默认FALSE，坐标轴是否交叉于零点。Axes cross at zero. Default to FALSE.
 - scale: 默认TRUE，是否基于最大、最小值调整坐标尺度。Rescale the axes based on min and max values. Default to TRUE.
-- palette: 默认aetnagreen，使用调色板。Overall palette. Default to 'aetnagreen'.
+- palette: 调色板。默认aetnagreen。Overall palette. Default to 'aetnagreen'.
     - 种类 Palette names:
         - Aetna palettes: 可用 Including 'aetnagreen', 'aetnablue', 'aetnaviolet', 'aetnaorange', 'aetnateal', 'aetnacranberry'
         - RColorBrewer palettes: 可用 Including 'BrBG', 'PiYG', 'PRGn', 'PuOr', 'RdBu', 'RdGy', 'RdYlBu', 'RdYlGn', 'Spectral', 'Accent', 'Dark2', 'Paired', 'Pastel1', 'Pastel2', 'Set1', 'Set2', 'Set3', 'Blues', 'BuGn', 'BuPu', 'GnBu', 'Greens', 'Greys', 'Oranges', 'OrRd', 'PuBu', 'PuBuGn', 'PuRd', 'Purples', 'RdPu', 'Reds', 'YlGn', 'YlGnBu', 'YlOrBr', 'YlOrRd'
@@ -99,7 +103,10 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
 - toolbox: 默认TRUE，是否显示工具箱。Echarts Tool box switch. Default to TRUE.
 - toolbox_pos: 工具箱位置，默认右上方。参考`title_pos`的设置方法。Toolbox position, default to c('right','top'). Refer to `title_pos` for configuration.
 - calculable: 默认TRUE，是否支持拖曳重算(Echarts专利) Calculable switch (Echarts patent).
-- asImage: 默认FALSE，是否出静态图。renderAsImage switch.Deafult to FALSE.
+- asImage: 默认FALSE，是否显示为静态图。renderAsImage switch.Deafult to FALSE.
+- markLine: 显示标线，默认不显示。格式写作一个列表 Show markline, default to NULL. The grammar is a list:
+    - 缩略格式 Short form：list(c('data series 1 name|index','min|max|average'),c('data series 2 name|index','min|max|average'),...)。如list('male','average')或list(1,'average')都可表示male数据系列平均值标线，只用于line, bar, scatter。E.g., both list('male','average') and list(1,'average') could refer to an average markline of the series 'male', only available for line, bar, scatter charts.
+    - 完整格式 Full form: list(c('data series 1 name|index','value 1','x1 begin','y1 begin','x1 end','y1 end'),c('data series 2 name|index','value 2','x2 begin','y2 begin','x2 end','y2 end'),...)。如list(c('male',100,0,5,100,5))表示在'male'数据系列中画一条穿越P(0,5)和P(100,5)的直线。E.g., list(c('male',100,0,5,100,5)) refers to a markline through P(0,5) and P(100,5) as of sereis 'male'. 在line, bar, k, scatter图中，'x1 begin','y1 begin','x1 end','y1 end'均被理解为直角坐标系的定位。 In line, bar, k and scatter charts, 'x1 begin','y1 begin','x1 end','y1 end' are comprehended as coordinates.
 
 # Examples 示例
 
@@ -117,8 +124,10 @@ knitr::opts_chunk$set(message=FALSE,warning=FALSE,results='asis')
 ```{r mono-series scatter}
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, 
         type = 'scatter', palette='solarized_magenta',
-        title = 'Scatter - Sepal Width vs Petal Width (iris)', 
-        xlab = 'Sepal Width', ylab = 'Petal Width')
+        title = 'Scatter - Sepal Width vs Petal Width', 
+        subtitle = "source: iris",
+        xlab = 'Sepal Width', ylab = 'Petal Width'
+        )
 ```
 
 ### Multi-series Scatter 多系列散点图
@@ -129,16 +138,18 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width,
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, series = ~Species,
         type = 'scatter', palette='wsj_dem_rep', symbolList='circle',
         scale=F, xlab = 'Sepal Width', ylab = 'Petal Width',
-        title = 'Scatter - Sepal Width vs Petal Width, by Species (iris)')
+        title = 'Scatter - Sepal Width vs Petal Width, by Species',
+        subtitle ='source: iris')
 ```
 
-使用三套非标准图形(箭头、心形、八角星)区分数据系列(`c('arrow','heart','star8')`)。命令指定随机选择excel_old色版中的1种颜色，但由于数据集有3个水平(series)，颜色个数限制被忽略。
+使用三套非标准图形(箭头、心形、八角星)区分数据系列(`c('arrow','heart','star8')`)。命令指定随机选择excel_old色版中的1种颜色，但由于数据集有3个水平(series)，颜色个数限制在执行中被忽略。
 
 ```{r multi-series scatter with multi-symbols}
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, series = ~Species,
         type = 'scatter', palette='excel_old(1)',
         symbolList=c('arrow','heart','star8'),
-        title = 'Scatter - Sepal Width vs Petal Width, by Species (iris)',
+        title = 'Scatter - Sepal Width vs Petal Width, by Species',
+        subtitle = 'source: iris',
         xlab = 'Sepal Width', ylab = 'Petal Width')
 ```
 
@@ -165,7 +176,8 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width,
         weight = ~Petal.Length,
         type = 'bubble', palette='solarized_cyan',
         title = paste("Bubble - Sepal Width vs Petal Width,",
-                      "weighed by Petal Length (iris)"),
+                      "weighed by Petal Length"),
+        subtitle = 'source: iris',
         xlab = 'Sepal Width', ylab = 'Petal Width')
 ```
 
@@ -179,7 +191,8 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width,
         symbolList=c('emptyCircle','circle'),
         type = 'bubble', palette='tableaugnor(3)',
         title = paste('Bubble - Sepal Width vs Petal Width, by Species,',
-                      'weighed by Petal Length (iris)'), 
+                      'weighed by Petal Length'), 
+        subtitle = 'source: iris',
         xlab = 'Sepal Width', ylab = 'Petal Width')
 ```
 
@@ -204,7 +217,8 @@ knitr::kable(dcast(dtiris,Param~Species,sum,value.var="Mean"),
 ```{r tiled vbar}
 echartR(data = dtiris, x = ~Param, y = ~Mean,  series = ~Species,
         type = 'bar', palette='fivethirtyeight',
-        title = paste("VBar - Parameter Mean by Species", "(iris)"), 
+        title = "Column - Parameter Mean by Species", 
+        subtitle = 'source: iris',
         xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
 ```
 
@@ -214,7 +228,8 @@ echartR(data = dtiris, x = ~Param, y = ~Mean,  series = ~Species,
 echartR(data = dtiris, x = ~Param, y = ~Mean, 
         series = ~Species, stack=T,
         type = 'bar', palette='pander',
-        title = paste("VBar - Parameter Mean by Species", "(iris)"), 
+        title = "Column - Parameter Mean by Species",
+        subtitle = 'source: iris',
         xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
 ```
 
@@ -229,7 +244,8 @@ echartR(data = dtiris, x = ~Param, y = ~Mean,
 ```{r tiled hbar}
 echartR(data = dtiris, x = ~Species, y = ~Mean, series = ~Param, 
         type = 'bar', palette='stata1', xyflip=T,
-        title = 'Species-specific Mean by Parameters (iris)', 
+        title = 'Species-specific Mean by Parameters',
+        subtitle = 'source: iris',
         xlab = 'Species', ylab = 'Mean', legend_pos=c('right','center'))
 ```
 
@@ -241,7 +257,8 @@ palette设为calc的随机4种颜色。打开stack (`stack=TRUE`)。
 echartR(data = dtiris, x = ~Param, y = ~Mean, 
         series = ~Species, stack=T, xyflip=T,
         type = 'bar', palette='calc(5)',
-        title = 'Parameter Mean by Species (iris)', 
+        title = 'Parameter Mean by Species',
+        subtitle = 'source: iris',
         xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
 ```
 
@@ -253,7 +270,8 @@ echartR(data = dtiris, x = ~Param, y = ~Mean,
 
 ```{r hist}
 echartR(airquality, y=~Temp, type='histogram', splitNumber=13,
-        palette='pastel2', title='Histogram of temperature (airquality)')
+        palette='pastel2', title='Histogram of temperature',
+        subtitle = 'source: airquality')
 ```
 
 ## Pie 饼图
@@ -272,7 +290,8 @@ dtcars$carburetor <-as.factor(dtcars$carb)
 ```{r pie}
 echartR(dtcars, x = ~transmission,  y = ~car, type='pie',
         palette='darkunica', 
-        title='Number of cars by transmission (mtcars)')
+        title='Number of cars by transmission',
+        subtitle = 'source: mtcars')
 ```
 
 ## Ring 环图
@@ -281,7 +300,16 @@ echartR(dtcars, x = ~transmission,  y = ~car, type='pie',
 
 ```{r ring}
 echartR(dtcars, x = ~cylinder,  y = ~car, type='ring',
-        palette='hc', title='Number of Cylinders (mtcars)')
+        palette='hc', title='Number of Cylinders',
+        subtitle = 'source: mtcars')
+```
+
+### Rose Nightingale玫瑰图
+
+```{r rose}
+echartR(dtcars, x = ~cylinder,  y = ~car, type='rose',
+        palette='colorblind', title='Number of Cylinders',
+        subtitle = 'source: mtcars')
 ```
 
 ## Line 线图
@@ -295,14 +323,15 @@ airquality$Date <- strptime(paste(2015,airquality$Month,airquality$Day,sep="-"),
                             format="%F", tz="Asia/Taipei")
 airquality$strDate <- with(airquality,paste(2015,Month,Day,sep="-"))
 airquality$TempG <- cut(airquality$Temp,breaks=c(0,60,70,80,100))
-a=echartR(airquality, x = ~Date, y= ~Wind,
-          type='linesmooth', dataZoom=T, 
-        xlab = 'Date', ylab = 'Wind',
-        title='Wind by day (airquality)')
-#echartR(airquality, x = ~Day, y= ~Wind, series=~Month,
-#          type='line', dataZoom=T, dataZoomRange=c(30,70),
-#        palette='tableauBlRd', xlab = 'Days', ylab = 'Wind',
-#        title='Day-specific Wind by month (airquality)', symbolList='none')
+#a=echartR(airquality, x = ~Date, y= ~Wind,
+#          type='linesmooth', dataZoom=T, 
+#        xlab = 'Date', ylab = 'Wind',
+#        title='Wind by day',
+#        subtitle = 'source: airquality')
+echartR(airquality, x = ~Day, y= ~Wind, series=~Month,
+          type='line', dataZoom=T, dataZoomRange=c(30,70),
+        palette='tableauBlRd', xlab = 'Days', ylab = 'Wind',
+        title='Day-specific Wind by month (airquality)', symbolList='none')
 ```
 
 线段平滑(`type='linesmooth'`)，不显示标志图形(`symbolList='none'`)。Echarts对缺失值默认不填补，因此有很多断线。需要在数据前处理时自行作插值运算。
@@ -313,14 +342,15 @@ airq <- melt(airquality[,c("Ozone","Solar.R","Wind","Temp","strDate")],
 echartR(airq, x = ~strDate, y= ~value, series= ~variable, type='linesmooth',
         symbolList='none', dataZoom=T, dataZoomRange=c(20,50),
         palette='tableauPrGy', xlab = 'Date', ylab = 'Measure',
-        title='Climate measures by day (airquality)')
+        title='Climate measures by day',
+        subtitle = 'source: airquality')
 ```
 
 ### Stacked Line 堆积线图
 ```{r line stacked}
 echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='line',stack=T,
         palette='tableauBlRd12', xlab = 'Sample ID', ylab = 'Measure',
-        title='Parameter measures (iris)')
+        title='Parameter measures', subtitle = 'source: iris')
 ```
 
 线段平滑，不显示标志图形
@@ -328,7 +358,7 @@ echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='line',stack=T,
 echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='linesmooth',stack=T,
         palette='tableauGnOr12', xlab = 'Sample ID', ylab = 'Measure',
         symbolList='none',
-        title='Parameter measures (iris)')
+        title='Parameter measures', subtitle = 'source: iris')
 ```
 
 ## Area 面积图
@@ -338,7 +368,8 @@ Echarts中，面积图本质上被定义为线图，只需通过`itemStyle`参�
 ```{r tiled area}
 echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='area',
         palette='brbg', xlab = 'Sample ID', ylab = 'Measure',
-        symbolList='emptyDiamond',title='Parameter measures (iris)')
+        symbolList='emptyDiamond',title='Parameter measures',
+        subtitle = 'source: iris')
 ```
 
 线段平滑`type='areasmooth'`，并打开数据缩放`dataZoom=TRUE`，初始显示40%-80%。
@@ -346,7 +377,7 @@ echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='area',
 echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='areasmooth',
         palette='PiYG', xlab = 'Sample ID', ylab = 'Measure', 
         symbolList='none', dataZoom=T, dataZoomRange=c(40,80),
-        title='Parameter measures (iris)')
+        title='Parameter measures', subtitle = 'source: iris')
 ```
 
 ### Stacked Area 堆积面积图
@@ -354,7 +385,7 @@ echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='areasmooth',
 echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='area',stack=T,
         palette='PRGn', xlab = 'Sample ID', ylab = 'Measure',
         symbolList='emptyCircle',
-        title='Parameter measures (iris)')
+        title='Parameter measures', subtitle = 'source: iris')
 ```
 
 线段平滑(`type='areasmooth'`)。自定义色板向量。
@@ -363,7 +394,7 @@ echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='areasmooth',stack=T,
         palette=c('red','yellow','limegreen','skyblue'), 
         xlab = 'Sample ID', ylab = 'Measure', 
         symbolList='none',
-        title='Parameter measures (iris)')
+        title='Parameter measures', subtitle = 'source: iris')
 ```
 
 ## Funnel 漏斗图
@@ -372,7 +403,8 @@ echartR(dfiris, x = ~id, y= ~Value, series= ~Param, type='areasmooth',stack=T,
 
 ```{r funnel}
 echartR(dtcars, x = ~carburetor,  y = ~car, type='funnel',
-        palette='RdBu', title='Number of carburetors of cars (mtcars)')
+        palette='RdBu', title='Number of carburetors of cars',
+        subtitle = 'source: mtcars')
 ```
 
 ### Pyramid 金字塔图
@@ -380,7 +412,8 @@ echartR(dtcars, x = ~carburetor,  y = ~car, type='funnel',
 
 ```{r pyramid}
 echartR(dtcars, x = ~carburetor,  y = ~car, type='pyramid',
-        palette='RdGy', title='Number of carburetors of cars (mtcars)')
+        palette='RdGy', title='Number of carburetors of cars',
+        subtitle = 'source: mtcars')
 ```
 
 ## Radar 雷达图
@@ -400,7 +433,7 @@ player <- data.frame(name=c(rep("Philipp Lahm",8),rep("Dani Alves",8)),
 ```{r radar hollow}
 echartR(player, x= ~para, y= ~value, series= ~name, type='radar',
         symbolList='none', palette=c('red','blue'),
-        title='Lahm vs Alves (by @mixedknuts)')
+        title='Lahm vs Alves', subtitle= '(by @mixedknuts)')
 ```
 
 ### Solid Radar 实心雷达
@@ -408,12 +441,14 @@ echartR(player, x= ~para, y= ~value, series= ~name, type='radar',
 ```{r radar solid}
 echartR(player, x= ~para, y= ~value, series= ~name, type='radarfill',
         symbolList='none', palette=c('firebrick1','dodgerblue'),
-        title='Lahm vs Alves (by @mixedknuts)')
+        title='Lahm vs Alves', subtitle= '(by @mixedknuts)')
 ```
 
 ## Map 地图
 
 R和Rstudio的中文转码在Windows里一直是老大难。在本文档，Rstudio的默认编码采用CP936编码，文档用UTF-8。如直接在程序内读数据集，用iconv转码后，落单的汉字仍然会显示为乱码。可先下载[ChinaGDP.txt](https://raw.githubusercontent.com/madlogos/Shared_Doc/master/Shared_Documents/ChinaGDP.txt)到本地，`readLines`读入。
+
+最令人orz的地方是Chrome不能正确显示地图，变成了一堆锯齿。
 
 ```{r map gdp data}
 #gdp <- readLines("https://raw.githubusercontent.com/madlogos/Shared_Doc/master/Shared_Documents/ChinaGDP.txt")
@@ -431,12 +466,14 @@ dtgdp$Year<- as.factor(dtgdp$Year)
 
 ### Area 区块标注
 
-开启数据漫游，并定义色板。
+开启数据漫游，并定义色板。`subtitle_url`链接为本例数据源。
 
 ```{r china map area}
 echartR(dtgdp, x = ~Prov, y = ~GDP, series= ~Year, 
         type=c('map','china','area'), palette='gdocs',
         title="GDPs of China Provinces, 2012-2014 (Million USD)",
+        subtitle='source: Wikipedia',
+        subtitle_url="https://raw.githubusercontent.com/madlogos/Shared_Doc/master/Shared_Documents/ChinaGDP.txt",
         dataRangePalette=c('red','orange','yellow','green','limegreen'),
         dataRange=c('High',"Low"),toolbox_pos=c('right','center'))
 ```
@@ -453,12 +490,18 @@ worldgdp <- data.frame(
           2049501,1857461,1788717,1444189,1416949,1406855,1282725,888648,866354,
           806108,752459,712050))
 echartR(worldgdp, x = ~country, y = ~GDP, type=c('map','world','area'),
-        title="Nations with top 20 GDPs, 2014 (Million USD) - Wikipedia",
+        title="Nations with top 20 GDPs, 2014 (Million USD)",
+        subtitle = 'source: Wikipedia', 
+        subtitle_url="https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)",
         dataRangePalette='rainbow(5)', dataRange=c("High","Low"), 
         splitNumber=10, toolbox_pos=c('right','center'))
 ```
 
 ### Point 点标注
+
+
+## Wordcloud 词云
+
 
 
 ## Chord 和弦图
@@ -472,8 +515,9 @@ echartR(worldgdp, x = ~country, y = ~GDP, type=c('map','world','area'),
 1. 函数本身写得比较笨重，技术还不行；
 1. 未实现的功能：
     1. Force，Chord，Wordcloud，candlestick(k)和点标注地图还没有开发；
-    1. 仍然不支持时间格式的坐标轴（series中数据格式有问题）；
+    1. 仍然不支持时间格式的坐标轴（series中数据结构有问题）；
     1. 仍然不支持动态时间轴；
     1. tooltip不够智能；
     1. 进阶功能（包括多图联动、双坐标轴等）仍未开发；
-1. **注意**：如要改进，千万不要在函数代码中`set.seed()`，这会全局锁定种子数，导致knitr时每做一图都按该种子随机化`htmlwidget id`。最终的文档中，某些图会无法按指定代码出图，而是重复其他的图（串id）。
+1. **注意**：如要改进，千万不要在函数代码中`set.seed()`，这会全局锁定种子数，导致knitr时每做一图都按该种子随机化`htmlwidget id`。最终的文档中，某些图可能会无法按指定代码出图，而是重复其他的图（串id）。
+2. 
