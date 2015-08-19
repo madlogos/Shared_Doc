@@ -108,9 +108,22 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
 - calculable: 默认TRUE，是否支持拖曳重算(Echarts专利) Calculable switch (Echarts patent).
 - asImage: 默认FALSE，是否显示为静态图。renderAsImage switch.Deafult to FALSE.
 - markLine: 显示标线，默认不显示。格式写作一个列表 Show markline, default to NULL. The grammar is a list:
-    - 缩略格式 Short form：list(c('data series 1 name|index','min|max|average|lm'),c('data series 2 name|index','min|max|average|lm'),...)。如list('male','average')或list(1,'average')都可表示male数据系列平均值标线，只用于line, linesmooth, bar, scatter, bubble。`lm`可出线性回归标线，只用于散点或气泡图。E.g., both list('male','average') and list(1,'average') could refer to an average markline of the series 'male', only available for line, linesmooth, bar, scatter, bubble charts. 'lm' refers to linear regresson markline which is only available for scatters and bubbles.
-    - 完整格式 Full form: list(c('data series 1 name|index','value 1','x1 begin','y1 begin','x1 end','y1 end'),c('data series 2 name|index','value 2','x2 begin','y2 begin','x2 end','y2 end'),...)。如list(c('male',100,0,5,100,5))表示在'male'数据系列中画一条穿越P(0,5)和P(100,5)的直线。E.g., list(c('male',100,0,5,100,5)) refers to a markline through P(0,5) and P(100,5) as of sereis 'male'. 在line, bar, k, scatter图中，'x1 begin','y1 begin','x1 end','y1 end'均被理解为直角坐标系的定位。 In line, bar, k and scatter charts, 'x1 begin','y1 begin','x1 end','y1 end' are comprehended as coordinates.
-
+    - 缩略格式 Short form (长度3或4 length 3 or 4)：
+    `list(c('data series 1 name|index','line name','min|max|average|lm',TRUE|NULL),c('data series 2 name|index','line name','min|max|average|lm',TRUE|NULL),...)`
+    如list('male',NA,'average')或list(1,NA,'average')都可表示male数据系列平均值标线，只用于line, linesmooth, bar, scatter, bubble。`lm`可出线性回归标线，只用于散点或气泡图。如list('male',NA,'average',T)则表示male系列开启炫光特效。
+    E.g., both list('male',NA,'average') and list(1,NA,'average') could refer to an average markline of the series 'male', only available for line, linesmooth, bar, scatter, bubble charts. 'lm' refers to linear regresson markline which is only available for scatters and bubbles. list('male',NA,'average',T) opens aurora effects of series 'male'.
+    - 完整格式 Full form (长度7或8 length 7 or 8): 
+    list(c('data series 1 name|index','line name','value 1','x1 begin','y1 begin','x1 end','y1 end',TRUE|NULL),c('data series 2 name|index','line name','value 2','x2 begin','y2 begin','x2 end','y2 end',TRUE|NULL),...)
+    如list(c('male',NA,100,0,5,100,5))表示在'male'数据系列中画一条穿越P(0,5)和P(100,5)的直线。E.g., list(c('male',NA,100,0,5,100,5)) refers to a markline through P(0,5) and P(100,5) as of sereis 'male'. 在line, bar, k, scatter图中，'x1 begin','y1 begin','x1 end','y1 end'均被理解为直角坐标系的定位。在map中，这些坐标值必须写作经纬度。 list(c('male',NA,100,0,5,100,5,T))可打开male系列的炫光特效。 In line, bar, k and scatter charts, 'x1 begin','y1 begin','x1 end','y1 end' are comprehended as coordinates. In map charts, these coordinates should be lattitudes and longitudes. list(c('male',NA,100,0,5,100,5,T)) opens aurora effects of series 'male'.
+- markPoint: 显示标注点，默认不显示。格式写作一个列表 Show markline, default to NULL. The grammar is a list:
+    - 缩略格式 Short form (长度3或4 length 3 or 4)：
+    `list(c('data series 1 name|index','point name','min|max',TRUE|NULL),c('data series 2 name|index','point name','min|max',TRUE|NULL),...)`
+    如list('male',,'min')或list(1,,'min')都可表示male数据系列最小值标注，只用于line, linesmooth, bar, scatter, bubble。list('male',,'min',T)则表示male系列开启炫光特效。
+    E.g., both list('male',NA,'min') and list(1,NA,'min') refer to a min markpoint of the series 'male', only available for line, linesmooth, bar, scatter, bubble charts. list('male',NA,'min',T) opens aurora effects of series 'male'.
+    - 完整格式 Full form (长度5或6 length 5 or 6): 
+    list(c('data series 1 name|index','point name','value 1','x1','y1',TRUE|NULL),c('data series 2 name|index',;point name','value 2','x2','y2',TRUE|NULL),...)
+    如list(c('male',NA,100,0,5))表示在'male'数据系列中标注点P(0,5)。E.g., list(c('male',NA,100,0,5)) refers to a markpoint at P(0,5) as of sereis 'male'. 在line, bar, k, scatter图中，'x1','y1',...均被理解为直角坐标系的定位。在map中，这些坐标值必须写作经纬度。 list(c('male',NA,100,0,5,T))可打开male系列的炫光特效。 In line, bar, k and scatter charts, 'x1','y1',... are comprehended as coordinates. In map charts, these coordinates should be lattitudes and longitudes. list(c('male',NA,100,0,5,T)) opens aurora effects of sereis 'male'.
+    
 # Examples 示例
 
 ```{r import R scripts,results='hide'}
@@ -123,19 +136,19 @@ knitr::opts_chunk$set(message=FALSE,warning=FALSE,results='asis')
 ## Scatter 散点图
 
 ### Mono-series Scatter 单系列散点图
-没有数据系列，因此指定显示第1个系列的均数线(`markLine=list(c(1,'average'`)。
+没有数据系列，因此指定显示第1个系列的均数线(`markLine=list(c(1,NA,'average'`)。
 
 ```{r mono-series scatter}
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, 
         type = 'scatter', palette='solarized_magenta',
         title = 'Scatter - Sepal Width vs Petal Width', 
         subtitle = "(source: iris)", xlab = 'Sepal Width', ylab = 'Petal Width',
-        markLine=list(c(1,"average")))
+        markLine=list(c(1,NA,"average")))
 ```
 
 ### Multi-series Scatter 多系列散点图
 
-指定series，且显示范围从零点开始(`scale=FALSE`)。在第2个数据系列(versicolor)中打开最大(max)、最小(min)、均线(average)三根标线。
+指定series，且显示范围从零点开始(`scale=FALSE`)。在第2个数据系列(versicolor)中打开最大(max)、最小(min)、均线(average)三根标线；在第1、2、3数据系列中分别标注max、min、max点，且打开第3个系列的眩光特效(`markPoint=list(c(1,'Max','max'),c(2,'Min','min'),c(3,'Max','max',T))`)。
 
 ```{r multi-series scatter}
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, series = ~Species,
@@ -143,12 +156,13 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, series = ~Species,
         scale=F, xlab = 'Sepal Width', ylab = 'Petal Width',
         title = 'Scatter - Sepal Width vs Petal Width, by Species',
         subtitle ='(source: iris)', 
-        markLine=list(c(2,'average'),c('versicolor','max'),c(2,'min')))
+        markLine=list(c(2,'average'),c('versicolor','max'),c(2,'min')),
+        markPoint=list(c(1,'Max','max'),c(2,'Min','min'),c(3,'Max','max',T)))
 ```
 
 使用三套非标准图形(箭头、心形、八角星)区分数据系列(`c('arrow','heart','star8')`)。命令指定随机选择excel_old色版中的1种颜色，但由于数据集有3个水平(series)，颜色个数限制在执行中被忽略。
 
-同时拟合3条回归线(markLine写作short form，类型指定为'lm')。
+同时拟合3条回归线(markLine列表写作short form，类型指定为'lm'，并开启炫光特效)。
 
 ```{r multi-series scatter with multi-symbols}
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, series = ~Species,
@@ -156,10 +170,11 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, series = ~Species,
         symbolList=c('arrow','heart','star8'),
         title = 'Scatter - Sepal Width vs Petal Width, by Species',
         subtitle = '(source: iris)', xlab = 'Sepal Width', ylab = 'Petal Width',
-        markLine = list(c(1,'lm'),c(2,'lm'),c(3,'lm')))
+        markLine = list(c(1,NA,'lm',T),c(2,NA,'lm',T),c(3,NA,'lm',T)))
 ```
 
 大规模散点图(2000个点以上)同样可以秒级出图(但html文件会变得很大)。
+
 ```{r bigscale scatter}
 x <- rnorm(2001)*2
 e <- vector()
@@ -204,7 +219,7 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width,
                       'weighed by Petal Length'), 
         subtitle = '(source: iris)',
         xlab = 'Sepal Width', ylab = 'Petal Width',
-        markLine=list(c('Linear Coef.',round(fit$coefficients[[2]],2),
+        markLine=list(c('Linear Coef.',NA,round(fit$coefficients[[2]],2),
                         pred[1,1],yhat[[1]],pred[2,1],yhat[[2]])))
 ```
 
@@ -430,26 +445,39 @@ echartR(dtcars, x = ~carburetor,  y = ~car, type='pyramid',
 ## Radar 雷达图
 
 雷达图就是极坐标系下的线图/面积图，通过Echarts的`polar`参数模块控制。
-```{r radar data}
+
+### Hollow Radar 空心雷达
+
+```{r radar hollow 2}
+browser <- as.data.frame(
+    matrix(c(2001,390,208,15,9,0.5,2002,380,204,20,18,2,2003,370,200,25,27,4.5,
+    2004,360,196,30,36,8,2005,350,192,35,45,12.5,2006,340,188,40,54,18,
+    2007,330,184,45,63,24.5,2008,320,180,50,72,32,2009,310,176,55,81,40.5,
+    2010,300,172,60,90,50,2011,290,168,65,99,60.5,2012,280,164,70,108,72,
+    2013,270,160,75,117,84.5,2014,260,156,80,126,98,2015,250,152,85,135,112.5,
+    2016,240,148,90,144,128,2017,230,144,95,153,144.5,2018,220,140,100,162,162,
+    2019,210,136,105,171,180.5,2020,200,132,110,180,200,2021,190,128,115,189,220.5,
+    2022,180,124,120,198,242,2023,170,120,125,207,264.5,2024,160,116,130,216,288,
+    2025,150,112,135,225,312.5,2026,140,108,140,234,338,2027,130,104,145,243,364.5,
+    2028,120,100,150,252,392),byrow=T,ncol=6)
+    )
+names(browser) <- c("Year","IE8-","IE9+","Safari","Firefox","Chrome")
+browser <- melt(browser,id="Year")
+echartR(browser, x= ~variable, y= ~value, series= ~Year, type='radar',
+        palette=paste0('heat(',nlevels(as.factor(browser$Year)),")"),
+        legend_pos=c('left','center'), symbolList='none',
+        title='Browser Mkt Occup Ratio', subtitle= 'Totally virtual data')
+```
+
+### Solid Radar 实心雷达
+
+```{r radar solid}
 player <- data.frame(name=c(rep("Philipp Lahm",8),rep("Dani Alves",8)),
                      para=rep(c("Passing%","Key passing","Comp crosses",
                                 "Crossing%","Successful dribbles",
                                 "Dispossessed","Dribbled past","Fouls"),2),
                      value=c(89.67, 1.51, 0.97, 24.32, 0.83, 0.86, 1.15, 0.47,
                             86.62, 2.11, 0.99, 20.78, 1.58, 1.64, 0.9, 1.71))
-```
-
-### Hollow Radar 空心雷达
-
-```{r radar hollow}
-echartR(player, x= ~para, y= ~value, series= ~name, type='radar',
-        symbolList='none', palette=c('red','blue'),
-        title='Lahm vs Alves', subtitle= '(by @mixedknuts)')
-```
-
-### Solid Radar 实心雷达
-
-```{r radar solid}
 echartR(player, x= ~para, y= ~value, series= ~name, type='radarfill',
         symbolList='none', palette=c('firebrick1','dodgerblue'),
         title='Lahm vs Alves', subtitle= '(by @mixedknuts)')
@@ -513,16 +541,29 @@ echartR(worldgdp, x = ~country, y = ~GDP, type=c('map','world','area'),
 
 ```{r pointmark map data}
 #chinapm2 <- readLines('https://raw.githubusercontent.com/madlogos/Shared_Doc/master/Shared_Documents/China%20PM2.5.txt')
-chinapm25 <- unlist(strsplit(paste0(readLines("China PM2.5.txt"),
-                                    collapse=""),","))
+chinapm25 <- enc2native(unlist(strsplit(paste0(readLines("China PM2.5.txt"), collapse=","),",")))
 chinapm25 <- as.data.frame(matrix(chinapm25,byrow=T,ncol=4),stringsAsFactors=F)
-names(chinapm25) <- c("City","PM25","xcoord","ycoord")
+names(chinapm25) <- c("City","PM25","ycoord","xcoord")
+for (i in 2:4) chinapm25[,i] <- as.numeric(chinapm25[,i])
+top5 <- head(chinapm25[order(chinapm25$PM25,decreasing=T),],5)
+top5$Name <- "Top 5"
+top5$effect <- T
+top5 <- top5[,c(5,1,2,4,3,6)]
+m <- list()
+for (i in 1:5){
+    m[[i]] <- unlist(top5[i,])
+}
+
 echartR(chinapm25, x=~City, y=~PM25, xcoord=~xcoord, ycoord=~ycoord,
-        type=c('map','china','point'))
+        type=c('map','china','point'),title='PM2.5 in Chinese cities',
+        subtitle="(source: PM25.in)",subtitle_url="http://pm25.in/",
+        dataRange=c("High","Low"),
+        dataRangePalette=c('maroon','red','orange','yellow','lightgreen','green'),
+        markPoint=m)
 ```
 
 ## Wordcloud 词云
-直接knitr时readLines读取网页会报错，只能将网页 'http://top.baidu.com/buzz?b=1' 的源代码保存到本地再读取。
+直接knitr时readLines读取网页会报错，此例将网页 'http://top.baidu.com/buzz?b=1' 的源代码保存为本地txt后再读取。
 
 ```{r word cloud data}
 #baiduhot <- paste0(readLines("http://top.baidu.com/buzz?b=1"),collapse="")
@@ -539,11 +580,10 @@ knitr::kable(hotword, format='html', row.names=F,
 ```
 
 ```{r word cloud}
-a=echartR(hotword[1:30,], x=~Keyword, y=~Freq, type="wordcloud", 
+echartR(hotword[1:30,], x=~Keyword, y=~Freq, type="wordcloud", 
         title="Baidu Word Search Top 30", palette=NULL,
         title_url="http://top.baidu.com/buzz?b=1", 
         subtitle="Tuesday, Auguest 18, 2015")
-
 ```
 
 ## Chord 和弦图
@@ -556,10 +596,12 @@ a=echartR(hotword[1:30,], x=~Keyword, y=~Freq, type="wordcloud",
 
 1. `echartR`比较接近于`lattice`，而不是`ggplot2`图层叠加的思路。每次使用都要一次性编辑所有需要的参数；
 1. 函数本身写得比较笨重，技术还不行；
+1. 当没有数据系列的时候，如显示图例，会被拆成一串单字节字符；
 1. 未实现的功能：
     1. Force，Chord，candlestick(k)和点标注地图还没有开发；
     1. 仍然不支持时间格式的坐标轴（series中数据结构有问题）；
     1. 仍然不支持动态时间轴；
     1. tooltip不够智能；
     1. 进阶功能（包括多图联动、双坐标轴等）仍未开发；
-1. **注意**：如要改进，千万不要在函数代码中`set.seed()`，这会全局锁定种子数，导致knitr时每做一图都按该种子随机化`htmlwidget id`。最终的文档中，某些图可能会无法按指定代码出图，而是重复其他的图（串id）。 
+1. **注意**：如要改进，千万不要在函数代码中`set.seed()`，这会全局锁定种子数，导致knitr时每做一图都按该种子随机化`htmlwidget id`。最终的文档中，某些图可能会无法按指定代码出图，而是重复其他的图（串id）。
+2. 
