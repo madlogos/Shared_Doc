@@ -49,14 +49,14 @@ echart(iris, ~Sepal.Length, ~Sepal.Width, series = ~Species)
 echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL, 
         xcoord=NULL, ycoord=NULL,
         type="scatter", stack=FALSE,
-        title=NULL, subtitle=NULL, title_pos=c('center','bottom'),
+        title=NULL, subtitle=NULL, title_pos=6,
         title_url=NULL, subtitle_url=NULL,
         symbolList=NULL, dataZoom=NULL, dataZoomRange=NULL,
         dataRange=NULL, splitNumber=NULL, dataRangePalette=NULL,
         xlab=NULL, ylab=NULL, xyflip=FALSE, AxisAtZero=TRUE, scale=TRUE,
         palette='aetnagreen', tooltip=TRUE, 
-        legend=TRUE, legend_pos=c('center','top'), 
-        toolbox=TRUE, toolbox_pos=c('right','top'), 
+        legend=TRUE, legend_pos=11, 
+        toolbox=TRUE, toolbox_pos=1, 
         calculable=TRUE, asImage=FALSE,
         markLine=NULL, markPoint=NULL, ...))
 ```
@@ -74,7 +74,7 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
 - stack: 默认FALSE，是否堆积。用于制作堆积条图、柱图、线图和面积图等直角坐标系图形。Default to FALSE (do not stack). Used in stacked column, bar, line and area chart, etc.
 - title: 标题 
 - subtitle: 副标题
-- title_pos: 标题位置，可用c('left|center|right','top|center|bottom')，默认c("center","bottom")表示底部居中位置。Legend position which is a vector of length 2 (c('left|center|right','top|center|bottom')). Default to c('center','bottom') which means bottom meiddle.
+- title_pos: 标题位置，可用1-12点钟方向指示，默认6点位，即底部居中位置。Legend position which is an integer 1-12. Default to 6 (o'clock), which means bottom middle.
 - title_url: 标题链接，url of the title
 - subtitle_url: 副标题链接, url of the subtitle
 - symbolList: 图形标志。可使用数组循环使用，如数组长度小于series水平数，则以最后一个标志填充。如设置为NULL或不设置，则循环显示Echarts默认的标志图形列表：c('circle','rectangle','triangle','diamond','emptyCircle','emptyRectangle','emptyTriangle','emptyDiamond')。也可任意指定'heart','droplet','pin','arrow','star5','star6'等非标图形。设为'none'则不显示。A vector assigning symbols. You can use an array of symbols. If the length of the symbols array is smaller than number of levels of the series, the last symbol will be used to extend the array. If you set symbolList NULL or leave it unset, the function circulates the default symbol list of Echarts: c('circle','rectangle','triangle','diamond','emptyCircle','emptyRectangle','emptyTriangle','emptyDiamond'). You can also assign non-standard symbols, such as 'heart','droplet','pin','arrow','star5','star6', 'star7', etc. When assigned to 'none', no symbols are shown.
@@ -102,27 +102,44 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
         - 可以`palette=c(color1,color2,color3,...)`自定义色板向量，向量可以是颜色名，也可以是Hex表达式。可以用`colors()`函数查看所有支持的颜色名称，`demo(colors)`查看颜色效果。Set `palette=c(color1,color2,color3,...)` to define a palette vector, made of which either color names or Hex expressions. Use `colors()` to check available color names and check the effects using `demo(colors)`.
 - tooltip: 默认TRUE，鼠标指针特效。Mouse tip effects swtich. Default to TRUE.
 - legend: 默认TRUE，是否显示图例。Whether show the legend. Default to TRUE.
-- legend_pos: 图例位置，长度为2的向量，设置方法参考`title_pos`。Legend position, a vector of length 2. Refer to `title_pos` for configuration.
+- legend_pos: 图例位置，默认11，设置方法参考`title_pos`。Legend position, an integer 1-12. Default to 11. Refer to `title_pos` for configuration.
 - toolbox: 默认TRUE，是否显示工具箱。Echarts Tool box switch. Default to TRUE.
-- toolbox_pos: 工具箱位置，默认右上方。参考`title_pos`的设置方法。Toolbox position, default to c('right','top'). Refer to `title_pos` for configuration.
+- toolbox_pos: 工具箱位置，默认1，参考`title_pos`的设置方法。Toolbox position, default to 1. Refer to `title_pos` for configuration.
 - calculable: 默认TRUE，是否支持拖曳重算(Echarts专利) Calculable switch (Echarts patent).
 - asImage: 默认FALSE，是否显示为静态图。renderAsImage switch.Deafult to FALSE.
-- markLine: 显示标线，默认不显示。格式写作一个列表 Show markline, default to NULL. The grammar is a list:
-    - 缩略格式 Short form (长度3或4 length 3 or 4)：
-    `list(c('data series 1 name|index','line name','min|max|average|lm',TRUE|NULL),c('data series 2 name|index','line name','min|max|average|lm',TRUE|NULL),...)`
-    如list('male',NA,'average')或list(1,NA,'average')都可表示male数据系列平均值标线，只用于line, linesmooth, bar, scatter, bubble。`lm`可出线性回归标线，只用于散点或气泡图。如list('male',NA,'average',T)则表示male系列开启炫光特效。
-    E.g., both list('male',NA,'average') and list(1,NA,'average') could refer to an average markline of the series 'male', only available for line, linesmooth, bar, scatter, bubble charts. 'lm' refers to linear regresson markline which is only available for scatters and bubbles. list('male',NA,'average',T) opens aurora effects of series 'male'.
-    - 完整格式 Full form (长度7或8 length 7 or 8): 
-    list(c('data series 1 name|index','line name','value 1','x1 begin','y1 begin','x1 end','y1 end',TRUE|NULL),c('data series 2 name|index','line name','value 2','x2 begin','y2 begin','x2 end','y2 end',TRUE|NULL),...)
-    如list(c('male',NA,100,0,5,100,5))表示在'male'数据系列中画一条穿越P(0,5)和P(100,5)的直线。E.g., list(c('male',NA,100,0,5,100,5)) refers to a markline through P(0,5) and P(100,5) as of sereis 'male'. 在line, bar, k, scatter图中，'x1 begin','y1 begin','x1 end','y1 end'均被理解为直角坐标系的定位。在map中，这些坐标值必须写作经纬度。 list(c('male',NA,100,0,5,100,5,T))可打开male系列的炫光特效。 In line, bar, k and scatter charts, 'x1 begin','y1 begin','x1 end','y1 end' are comprehended as coordinates. In map charts, these coordinates should be lattitudes and longitudes. list(c('male',NA,100,0,5,100,5,T)) opens aurora effects of series 'male'.
-- markPoint: 显示标注点，默认不显示。格式写作一个列表 Show markline, default to NULL. The grammar is a list:
-    - 缩略格式 Short form (长度3或4 length 3 or 4)：
-    `list(c('data series 1 name|index','point name','min|max',TRUE|NULL),c('data series 2 name|index','point name','min|max',TRUE|NULL),...)`
-    如list('male',,'min')或list(1,,'min')都可表示male数据系列最小值标注，只用于line, linesmooth, bar, scatter, bubble。list('male',,'min',T)则表示male系列开启炫光特效。
-    E.g., both list('male',NA,'min') and list(1,NA,'min') refer to a min markpoint of the series 'male', only available for line, linesmooth, bar, scatter, bubble charts. list('male',NA,'min',T) opens aurora effects of series 'male'.
-    - 完整格式 Full form (长度5或6 length 5 or 6): 
-    list(c('data series 1 name|index','point name','value 1','x1','y1',TRUE|NULL),c('data series 2 name|index',;point name','value 2','x2','y2',TRUE|NULL),...)
-    如list(c('male',NA,100,0,5))表示在'male'数据系列中标注点P(0,5)。E.g., list(c('male',NA,100,0,5)) refers to a markpoint at P(0,5) as of sereis 'male'. 在line, bar, k, scatter图中，'x1','y1',...均被理解为直角坐标系的定位。在map中，这些坐标值必须写作经纬度。 list(c('male',NA,100,0,5,T))可打开male系列的炫光特效。 In line, bar, k and scatter charts, 'x1','y1',... are comprehended as coordinates. In map charts, these coordinates should be lattitudes and longitudes. list(c('male',NA,100,0,5,T)) opens aurora effects of sereis 'male'.
+- markLine: 显示标线，默认不显示。格式写作一个4或8列的数据框或矩阵 Show markline, default to NULL. The grammar is a data.frame or matrix with 4 or 8 columns:
+    - 缩略格式 Short form ：
+    
+    series name/index * | line name | Line type | Aurora effect
+    :-------------------|-----------|------------|-------------
+    String or number   | String / NA | min/max/average/lm | TRUE/FALSE
+
+    - 完整格式 Full form :
+    
+    series name/index * | line name | Value | P0 x | P0 y | P1 x| P1 y | Aurora effect
+    :------------------|-----------|-------|-------|------|-----|------|-----------
+    String or number  | String/NA | num  | x val | y val | x val| y val | TRUE/FALSE 
+
+    - 例子 Examples
+    1. 如`t(c('male',NA,'average',F))`或`t(c(1,NA,'average',F))`都可表示male数据系列平均值标线，只用于line, linesmooth, bar, scatter, bubble。`lm`可出线性回归标线，只用于散点或气泡图。如`t(c(1,NA,'average',T))`则表示male系列开启炫光特效。E.g., both `t(c('male',NA,'average',F))` and `t(c(1,NA,'average',F))` refer to an average markline of the series 'male', only available for line, linesmooth, bar, scatter, bubble charts. 'lm' refers to linear regresson markline which is only available for scatters and bubbles. `t(c(1,NA,'average',T))` opens aurora effects of series 'male'.
+    1. 如`t(c('male',NA,100,0,5,100,5,F))`表示在'male'数据系列中画一条穿越P0(0,5)和P1(100,5)的直线。E.g., `t(c('male',NA,100,0,5,100,5,F))` refers to a markline through P0(0,5) and P1(100,5) as of sereis 'male'. 在line, bar, k, scatter图中，'P0 x','P0 y','P1 x','P1 y'均被理解为直角坐标系的定位。在map中，这些坐标值必须写作经纬度。 `t(c('male',NA,100,0,5,100,5,T))`可打开male系列的炫光特效。 In line, bar, k and scatter charts, 'P0 x','P0 y','P1 x','P1 y' are comprehended as coordinates. In map charts, these coordinates should be lattitudes and longitudes. `t(c('male',NA,100,0,5,100,5,T))` opens aurora effects of series 'male'.
+    
+- markPoint: 显示标注点，默认不显示。格式写作一个4或6列的数据框或矩阵 Show markpoints, default to NULL. The grammar is a data.frame or matrix with 4 or 6 columns:
+    - 缩略格式 Short form ：
+    
+    series name/index * | Point name | Point type | Aurora effect
+    -------------------|-----------|------------|-------------
+    String or number   | String / NA | min/max/ | TRUE/FALSE
+    
+    - 完整格式 Full form :
+    
+    series name/index * | Point name | Value | P x | P y | Aurora effect
+    ------------------|------------|--------|-----|-----|------------
+    String or number  | String / NA | num   | x val | y val | TRUE/FALSE
+
+    - 例子 Examples
+    1. 如`t(c('male',NA,'min',F))`或`t(c(1,NA,'min',F))`都可表示male数据系列最小值标注，只用于line, linesmooth, bar, scatter, bubble。`t('male',NA,'min',T)`则表示male系列开启炫光特效。E.g., both `t(c('male',NA,'min',F))` and `t(c(1,NA,'min',F))` refer to a min markpoint of the series 'male', only available for line, linesmooth, bar, scatter, bubble charts. `t(c('male',NA,'min',T))` opens aurora effects of series 'male'.
+    1. 如`t(c('male',NA,100,0,5,F))`表示在'male'数据系列中标注点P(0,5)。E.g., `t(c('male',NA,100,0,5,F))` refers to a markpoint at P(0,5) as of sereis 'male'. 在line, bar, k, scatter图中，'P x','P y', ...均被理解为直角坐标系的定位。在map中，这些坐标值必须写作经纬度。 `t(c('male',NA,100,0,5,T))`可打开male系列的炫光特效。 In line, bar, k and scatter charts, 'P x','P y',... are comprehended as coordinates. In map charts, these coordinates should be lattitudes and longitudes. `t(c('male',NA,100,0,5,T))` opens aurora effects of sereis 'male'.
     
 # Examples 示例
 
@@ -136,19 +153,19 @@ knitr::opts_chunk$set(message=FALSE,warning=FALSE,results='asis')
 ## Scatter 散点图
 
 ### Mono-series Scatter 单系列散点图
-没有数据系列，因此指定显示第1个系列的均数线(`markLine=list(c(1,NA,'average'`)。
+没有数据系列，因此指定显示第1个系列的均数线(`markLine=c(1,NA,'average',F)`)。
 
 ```{r mono-series scatter}
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, 
         type = 'scatter', palette='solarized_magenta',
         title = 'Scatter - Sepal Width vs Petal Width', 
         subtitle = "(source: iris)", xlab = 'Sepal Width', ylab = 'Petal Width',
-        markLine=list(c(1,NA,"average")))
+        markLine=t(c(1,NA,"average",F)))
 ```
 
 ### Multi-series Scatter 多系列散点图
 
-指定series，且显示范围从零点开始(`scale=FALSE`)。在第2个数据系列(versicolor)中打开最大(max)、最小(min)、均线(average)三根标线；在第1、2、3数据系列中分别标注max、min、max点，且打开第3个系列的眩光特效(`markPoint=list(c(1,'Max','max'),c(2,'Min','min'),c(3,'Max','max',T))`)。
+指定series，且显示范围从零点开始(`scale=FALSE`)。在第2个数据系列(versicolor)中打开最大(max)、最小(min)、均线(average)三根标线；在第1、2、3数据系列中分别标注max、min、max点，且打开第3个系列的眩光特效(`markPoint=rbind(c(1,'Max','max',F),c(2,'Min','min',F), c(3,'Max','max',T))`)。
 
 ```{r multi-series scatter}
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, series = ~Species,
@@ -156,8 +173,9 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, series = ~Species,
         scale=F, xlab = 'Sepal Width', ylab = 'Petal Width',
         title = 'Scatter - Sepal Width vs Petal Width, by Species',
         subtitle ='(source: iris)', 
-        markLine=list(c(2,'average'),c('versicolor','max'),c(2,'min')),
-        markPoint=list(c(1,'Max','max'),c(2,'Min','min'),c(3,'Max','max',T)))
+        markLine=rbind(c(2,'Mean','average',F),c('versicolor','Maximum','max',F),
+                       c(2,'Minimum','min',F)),
+        markPoint=rbind(c(1,'Max','max',F),c(2,'Min','min',F), c(3,'Max','max',T)))
 ```
 
 使用三套非标准图形(箭头、心形、八角星)区分数据系列(`c('arrow','heart','star8')`)。命令指定随机选择excel_old色版中的1种颜色，但由于数据集有3个水平(series)，颜色个数限制在执行中被忽略。
@@ -170,7 +188,7 @@ echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, series = ~Species,
         symbolList=c('arrow','heart','star8'),
         title = 'Scatter - Sepal Width vs Petal Width, by Species',
         subtitle = '(source: iris)', xlab = 'Sepal Width', ylab = 'Petal Width',
-        markLine = list(c(1,NA,'lm',T),c(2,NA,'lm',T),c(3,NA,'lm',T)))
+        markLine = rbind(c(1,NA,'lm',T),c(2,NA,'lm',T),c(3,NA,'lm',T)))
 ```
 
 大规模散点图(2000个点以上)同样可以秒级出图(但html文件会变得很大)。
@@ -213,14 +231,14 @@ pred <- data.frame(Sepal.Width=c(min(iris$Sepal.Width),max(iris$Sepal.Width)))
 yhat <- round(predict(fit,pred),2)
 echartR(data = iris, x = ~Sepal.Width, y = ~Petal.Width, 
         weight = ~Petal.Length, series = ~Species, 
-        symbolList=c('emptyCircle','circle'),
+        symbolList=c('emptyCircle','circle'), 
         type = 'bubble', palette='tableaugnor(4)',
         title = paste('Bubble - Sepal Width vs Petal Width, by Species,',
                       'weighed by Petal Length'), 
-        subtitle = '(source: iris)',
-        xlab = 'Sepal Width', ylab = 'Petal Width',
-        markLine=list(c('Linear Coef.',NA,round(fit$coefficients[[2]],2),
-                        pred[1,1],yhat[[1]],pred[2,1],yhat[[2]])))
+        subtitle = '(source: iris)', xlab = 'Sepal Width', ylab = 'Petal Width',
+        markLine=t(c('Reg Coef.','slope',round(fit$coefficients[[2]],2), 
+                     pred[1,1],yhat[[1]],pred[2,1],
+                     yhat[[2]],F)))
 ```
 
 ## Column 柱图
@@ -245,7 +263,7 @@ knitr::kable(dcast(dtiris,Param~Species,sum,value.var="Mean"),
 echartR(data = dtiris, x = ~Param, y = ~Mean,  series = ~Species,
         type = 'bar', palette='fivethirtyeight',
         title = "Column - Parameter Mean by Species", 
-        subtitle = '(source: iris)',legend_pos=c('right','center'),
+        subtitle = '(source: iris)',legend_pos=3,
         xlab = 'Parameter', ylab = 'Mean')
 ```
 
@@ -257,10 +275,10 @@ echartR(data = dtiris, x = ~Param, y = ~Mean,
         type = 'bar', palette='pander',
         title = "Column - Parameter Mean by Species",
         subtitle = '(source: iris)',
-        xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
+        xlab = 'Parameter', ylab = 'Mean', legend_pos=3)
 ```
 
-堆积与否，也可以简单地通过工具栏的`平铺`和`堆积`按钮切换。非常强大(但也得在函数配置项里正确地码出代码)。
+堆积与否，也可以简单地通过工具栏的`平铺`和`堆积`按钮切换，非常强大。
 
 ## Bar 条图
 
@@ -272,7 +290,7 @@ echartR(data = dtiris, x = ~Param, y = ~Mean,
 echartR(data = dtiris, x = ~Species, y = ~Mean, series = ~Param, 
         type = 'bar', palette='stata1', xyflip=T,
         title = 'Species-specific Mean by Parameters',
-        subtitle = '(source: iris)', legend_pos=c('right','center'),
+        subtitle = '(source: iris)', legend_pos=3,
         xlab = 'Species', ylab = 'Mean')
 ```
 
@@ -286,7 +304,7 @@ echartR(data = dtiris, x = ~Param, y = ~Mean,
         type = 'bar', palette='calc(5)',
         title = 'Parameter Mean by Species',
         subtitle = '(source: iris)',
-        xlab = 'Parameter', ylab = 'Mean', legend_pos=c('right','center'))
+        xlab = 'Parameter', ylab = 'Mean', legend_pos=3)
 ```
 
 ## Histogram 直方图
@@ -465,7 +483,7 @@ names(browser) <- c("Year","IE8-","IE9+","Safari","Firefox","Chrome")
 browser <- melt(browser,id="Year")
 echartR(browser, x= ~variable, y= ~value, series= ~Year, type='radar',
         palette=paste0('heat(',nlevels(as.factor(browser$Year)),")"),
-        legend_pos=c('left','center'), symbolList='none',
+        legend_pos=9, symbolList='none',
         title='Browser Mkt Occup Ratio', subtitle= 'Totally virtual data')
 ```
 
@@ -478,7 +496,7 @@ player <- data.frame(name=c(rep("Philipp Lahm",8),rep("Dani Alves",8)),
                                 "Dispossessed","Dribbled past","Fouls"),2),
                      value=c(89.67, 1.51, 0.97, 24.32, 0.83, 0.86, 1.15, 0.47,
                             86.62, 2.11, 0.99, 20.78, 1.58, 1.64, 0.9, 1.71))
-echartR(player, x= ~para, y= ~value, series= ~name, type='radarfill',
+a=echartR(player, x= ~para, y= ~value, series= ~name, type='radarfill',
         symbolList='none', palette=c('firebrick1','dodgerblue'),
         title='Lahm vs Alves', subtitle= '(by @mixedknuts)')
 ```
@@ -514,7 +532,7 @@ echartR(dtgdp, x = ~Prov, y = ~GDP, series= ~Year,
         subtitle='(source: Wikipedia)',
         subtitle_url="https://raw.githubusercontent.com/madlogos/Shared_Doc/master/Shared_Documents/ChinaGDP.txt",
         dataRangePalette=c('red','orange','yellow','green','limegreen'),
-        dataRange=c('High',"Low"),toolbox_pos=c('right','center'))
+        dataRange=c('High',"Low"),toolbox_pos=3)
 ```
 
 用世界GDP前20粗糙演示世界地图。漫游轴切分为10档(`splitNumber=10`)。
@@ -533,7 +551,7 @@ echartR(worldgdp, x = ~country, y = ~GDP, type=c('map','world','area'),
         subtitle = '(source: Wikipedia)', 
         subtitle_url="https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)",
         dataRangePalette='rainbow(5)', dataRange=c("High","Low"), 
-        splitNumber=10, toolbox_pos=c('right','center'))
+        splitNumber=10, toolbox_pos=3)
 ```
 
 ### Point 点标注
@@ -549,17 +567,13 @@ top5 <- head(chinapm25[order(chinapm25$PM25,decreasing=T),],5)
 top5$Name <- "Top 5"
 top5$effect <- T
 top5 <- top5[,c(5,1,2,4,3,6)]
-m <- list()
-for (i in 1:5){
-    m[[i]] <- unlist(top5[i,])
-}
 
 echartR(chinapm25, x=~City, y=~PM25, xcoord=~xcoord, ycoord=~ycoord,
         type=c('map','china','point'),title='PM2.5 in Chinese cities',
         subtitle="(source: PM25.in)",subtitle_url="http://pm25.in/",
-        dataRange=c("High","Low"),
+        dataRange=c("High","Low"), toolbox_pos=3, 
         dataRangePalette=c('maroon','red','orange','yellow','lightgreen','green'),
-        markPoint=m)
+        markPoint=top5)
 ```
 
 ## Wordcloud 词云
@@ -604,4 +618,4 @@ echartR(hotword[1:30,], x=~Keyword, y=~Freq, type="wordcloud",
     1. tooltip不够智能；
     1. 进阶功能（包括多图联动、双坐标轴等）仍未开发；
 1. **注意**：如要改进，千万不要在函数代码中`set.seed()`，这会全局锁定种子数，导致knitr时每做一图都按该种子随机化`htmlwidget id`。最终的文档中，某些图可能会无法按指定代码出图，而是重复其他的图（串id）。
-2. 
+
