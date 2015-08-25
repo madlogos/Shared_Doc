@@ -1,7 +1,7 @@
 ---
 title: "Function echartR with package recharts"
 author: "Author: `r Sys.info()[['user']]`"
-date: "Edited: `r format(Sys.time(),'%x %X')`"
+date: "Edited: `r format(Sys.time(),'%x %X %Z')`"
 output: 
   html_document: 
     css: ~/css/hms_blue.css
@@ -12,15 +12,23 @@ output:
     toc: yes
 ---
 
+```{r import R scripts,results='hide'}
+#Global settings
+Sys.setlocale("LC_CTYPE","Chs")
+source("~/Github/recharts/R/echartR.R")
+#source("C:/HMSProjects/Data Analytics/R_scripts/CommonFunctions.R")
+knitr::opts_chunk$set(message=FALSE,warning=FALSE,results='asis')
+```
+
 # Intro 前言
 
 本工具来源于百度开发的国内顶尖水平的开源`d3-js`可视项目[Echarts](http://echarts.baidu.com/)([Github Repo](https://github.com/ecomfe/echarts))。Yang Zhou和Taiyun Wei基于该工具开发了[recharts](https://github.com/taiyun/recharts)包，经Yihui Xie[修改](https://github.com/yihui/recharts)后，可通过`htmlwidgets`传递js参数，大大简化了开发难度。但此包开发仍未完成。为了赶紧上手用，基于该包做了一个函数`echartR`，用于制作基础Echart交互图。需要R版本>=3.2.0.
 
 This tool originates from a top-tier `d3-js` visualization project of China: [Baidu Echarts](http://echarts.baidu.com/)([Github Repo](https://github.com/ecomfe/echarts)). Yang Zhou and Taiyun Wei developed an experimental R package [recharts](https://github.com/taiyun/recharts) based on it, which then evoluted into [yihui/recharts](https://github.com/yihui/recharts) by Yihui Xie to pass js parameters through `htmlwidgets`. The package is sill uder development. I developed a function `echartR` based on this package to make basic Echarts interation charts. This function requires R>=3.2.0.
 
-`echartR`的主要工作是将Echarts参数封装成list，Yihui Xie的原型函数`echart`被用来处理这个list。`echart`函数的[基本用法](http://yihui.name/recharts)如下，除了数据本身，并没有提供其他参数的位置。
+`echartR`的主要工作是将Echarts参数封装成list，Yihui Xie的原型函数`echart`被用来处理这个list。`echart`函数的[基本用法](http://yihui.name/recharts)如下，除了数据本身，并没有提供其他参数的设置方法。
 
-`echartR` majorly packs Echarts parameters into a list while `echart`, the prototype function developed by Yihui Xie, is used to parse the list. The [basic examples](http://yihui.name/recharts) of `echart` is as follows, which does not provide parameters entry other than dataset itself.
+`echartR` majorly packs Echarts parameters into a list while `echart`, the prototype function developed by Yihui Xie, is used to parse the list. The [basic examples](http://yihui.name/recharts) of `echart` is as follows, which does not provide parameters entries other than dataset itself.
 ```{r rechart}
 if (! 'recharts' %in% installed.packages()[,1]){
     install.packages('recharts',
@@ -30,6 +38,46 @@ if (! 'recharts' %in% installed.packages()[,1]){
 library(recharts)
 echart(iris, ~Sepal.Length, ~Sepal.Width)
 echart(iris, ~Sepal.Length, ~Sepal.Width, series = ~Species)
+```
+
+echartR则主要细化了部分参数的设置方法，可以做出如下效果的动图：
+```{r map line example,echo=FALSE,warning=FALSE}
+migrate <- as.data.frame(matrix(unlist(strsplit(readLines("CZflight.txt")[3],",")),
+                               byrow=T,ncol=2),stringsAsFactors=F)
+names(migrate) <- c("From","To")
+migrateCoord <- as.data.frame(matrix(unlist(strsplit(readLines("CZflight.txt")[4],",")),
+                                byrow=T,ncol=3),stringsAsFactors=F)
+for (i in 2:3) migrateCoord[,i] <- as.numeric(migrateCoord[,i])
+names(migrateCoord) <- c("City","Ycoord","Xcoord")
+migrate <- merge(migrate,migrateCoord,by.x="From",by.y="City",all.x=T)
+migrate <- merge(migrate,migrateCoord,by.x="To",by.y="City",all.x=T)
+migrate$series <- "全国"
+# markLine source data
+migrateEm <- as.data.frame(matrix(unlist(strsplit(readLines("CZflight.txt")[5],",")),
+                                byrow=T,ncol=3),stringsAsFactors=F)
+migrateEm[,3] <- as.numeric(migrateEm[,3])
+names(migrateEm) <- c("From","To","Val")
+#migrate <- merge(migrate,migrateEm,by=c("From","To"),all.x=T)
+#migrate$Val[is.na(migrate$Val)] <- "-"
+migrate$Val <- NA
+migrateEm <- merge(migrateEm, migrateCoord, by.x="From",by.y="City",all.x=T)
+migrateEm <- merge(migrateEm, migrateCoord, by.x="To",by.y="City",all.x=T)
+# markLine dataset (8 col)
+markline <- migrateEm[,c(2,1,3,5,4,7,6)]
+markline$To <- paste(markline$From,markline$To,sep="/")
+markline$effect <- F
+# markPoint dataset (6 col)
+markpoint <- migrateEm[,c(2,1,3,7,6)]
+markpoint$effect <- T
+# plot
+echartR(migrate, x=~From, x1=~To, y=~Val, series=~series, xcoord=~Xcoord.x,
+          ycoord=~Ycoord.x, xcoord1=~Xcoord.y, ycoord1=~Ycoord.y,
+        type=c('map','china','line'), palette=c("Gray","Orange","Green","Purple"),
+        pos=list(toolbox=3), title="百度迁徙（模拟数据）", dataRange=c("High","Low"),
+        dataRangePalette=c("red","orange",'gold','green1','aquamarine2','royalblue4'),
+        legend=list(mode='single',select=c('北京')), 
+        markLinesmooth=markline, markPoint=markpoint, 
+        theme=list(backgroundColor="#1b1b1b", borderColor="royalblue4"))
 ```
 
 # Usage 用法
@@ -71,7 +119,7 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
 - weight: 权重变量，可用于直方图、气泡图等 weight variable, used in histogram, bubble, etc
 - xcoord: 纬度坐标变量，仅用于点/线标注的map。Lattitude variable, only for point/line-marking map.
 - ycoord: 经度坐标变量，仅用于点/线标注的map。Longitude variable, only for point/line-marking map.
-- x1: 备用自变量，仅用于线标注的地图。Backup x variable, only for line-marking map.
+- x1: 备用自变量，仅用于线标注的地图、力导向图和和弦图。Backup x variable, only for line-marking map, force andchord chart.
 - xcoord1: 备用纬度坐标变量，仅用于线标注的map。Backup lattitude variable, only for line-marking map.
 - ycoord1: 备用经度坐标变量，仅用于线标注的map。Backup Longitude variable, only for line-marking map.
 - type: 默认 default `scatter`，可选 options 'scatter', 'bubble', 'bar', 'line', 'linesmooth', 'map', 'k', 'pie', 'ring', 'rose','area', 'areasmooth', 'chord', 'force', 'tree', 'treemap', 'wordcloud', 'heatmap', 'histogram', 'funnel', 'pyramid', 'radar', 'radarfill'
@@ -149,14 +197,6 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
 - theme: 主题元素设置，语法为`theme=list(backgroundColor=color name/value, borderColor=color name/value)`，默认均为NULL。
 
 # Examples 示例
-
-```{r import R scripts,results='hide'}
-#Global settings
-Sys.setlocale("LC_CTYPE","Chs")
-#source("~/Github/recharts/R/echartR.R")
-source("C:/HMSProjects/Data Analytics/R_scripts/CommonFunctions.R")
-knitr::opts_chunk$set(message=FALSE,warning=FALSE,results='asis')
-```
 
 ## Scatter 散点图
 
@@ -698,19 +738,23 @@ echartR(hotword[1:30,], x=~Keyword, y=~Freq, type="wordcloud",
 deutsch <- data.frame(player=c('Kruse','Kramer','Neuer','Boateng','Lahm','Kroos',
                                'Muller','Gotze','Badstuber','Hummels','Weidenfeller',
                                'Reus','Gundogan'),
-                      club=c(rep('Monchengladbach',2),rep('Bayern',7),rep('Dortmund',4)),
+                      club=c(rep('Monchengladbach',2),rep('Bayern',7),
+                             rep('Dortmund',4)),
                       weight=rep(1,13), stringsAsFactors=F)
 echartR(deutsch,x=~player, y=~weight, x1=~club, type='chord', 
-          title='Deutsch Soccer Team - Clubs')
+          title='Deutsch Soccer Team - Clubs',pos=list(legend=10))
 ```
 
+也可以对矩阵作图。
 ```{r simple chord 2}
-grpmtx <- matrix(c(11975, 5871, 8916, 2868, 1951, 10048, 2060, 6171, 8010, 16145, 8090,
-                 8045, 1013, 990, 940, 6907),byrow=T,nrow=4)
+grpmtx <- matrix(c(11975, 5871, 8916, 2868, 1951, 10048, 2060, 6171, 8010, 16145,
+                   8090, 8045, 1013, 990, 940, 6907),byrow=T,nrow=4)
 dimnames(grpmtx) <- list(LETTERS[1:4],LETTERS[1:4])
+knitr::kable(as.data.frame(grpmtx),format='html',
+             caption="Table: Group A-D Mutual Transition")
 grpmtx <- melt(grpmtx)
 echartR(grpmtx,x=~Var1, y=~value, x1=~Var2, type='chord', 
-          title='Group A-D mutual transition')
+          title='Group A-D mutual transition',pos=list(legend=10))
 ```
 
 ### Multi-series chord 多系列和弦图
@@ -738,9 +782,10 @@ echartR(grpmtx,x=~Var1, y=~value, x1=~Var2, type='chord',
 1. 函数本身写得比较笨重，技术还不行；
 1. 当没有数据系列的时候，如显示图例，会被拆成一串单字节字符；
 1. 未实现的功能：
-    1. Force，Chord，candlestick(k)和点标注地图还没有开发；
+    1. Force，candlestick(k)还没有开发；
     1. 仍然不支持时间格式的坐标轴（series中数据结构有问题）；
     1. 仍然不支持动态时间轴；
     1. tooltip不够智能；
     1. 进阶功能（包括多图联动、双坐标轴等）仍未开发；
 1. **注意**：如要改进，千万不要在函数代码中`set.seed()`，这会全局锁定种子数，导致knitr时每做一图都按该种子随机化`htmlwidget id`。最终的文档中，某些图可能会无法按指定代码出图，而是重复其他的图（串id）。
+
