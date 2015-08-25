@@ -47,7 +47,8 @@ echart(iris, ~Sepal.Length, ~Sepal.Width, series = ~Species)
 
 ```
 echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL, 
-        xcoord=NULL, ycoord=NULL, type="scatter", stack=FALSE,
+        xcoord=NULL, ycoord=NULL, x1=NULL, xcoord1=NULL, ycoord1=NULL, 
+        type="scatter", stack=FALSE,
         title=NULL, subtitle=NULL, title_url=NULL, subtitle_url=NULL,
         symbolList=NULL, dataZoom=NULL, 
         dataRange=NULL, splitNumber=NULL, dataRangePalette=NULL,
@@ -57,19 +58,24 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
         palette='aetnagreen', tooltip=TRUE, legend=TRUE, toolbox=TRUE, 
         pos=list(title=6, legend=11, toolbox=1, dataZoom=6, dataRange=8, roam=2),
         calculable=TRUE, asImage=FALSE,
-        markLine=NULL, markPoint=NULL, ...))
+        markLine=NULL, markLinesmooth=NULL, markPoint=NULL, 
+        theme=list(backgroundColor=NULL, borderColor=NULL),
+        ...))
 ```
 
 - **data**: 数据集 dataset
-- x: x变量，直方图可省略。x variable, only omitable for histograms。
+- x: x变量，直方图、饼图、环形图、玫瑰图可省略。x variable, only omitable for histograms, pie, ring and rose charts。
 - **y**: y变量 y variable
 - z: z变量，只接受时间/日期变量，并打开时间轴。z variable, only accept data/time variable to open time axis
 - series: Series(系列)变量 series variable
 - weight: 权重变量，可用于直方图、气泡图等 weight variable, used in histogram, bubble, etc
-- xcoord: 纬度坐标变量，仅用于点标注的map。Lattitude variable, only for point-marking map.
-- ycoord: 经度坐标变量，仅用于点标注的map。Longitude variable, only for point-marking map.
+- xcoord: 纬度坐标变量，仅用于点/线标注的map。Lattitude variable, only for point/line-marking map.
+- ycoord: 经度坐标变量，仅用于点/线标注的map。Longitude variable, only for point/line-marking map.
+- x1: 备用自变量，仅用于线标注的地图。Backup x variable, only for line-marking map.
+- xcoord1: 备用纬度坐标变量，仅用于线标注的map。Backup lattitude variable, only for line-marking map.
+- ycoord1: 备用经度坐标变量，仅用于线标注的map。Backup Longitude variable, only for line-marking map.
 - type: 默认 default `scatter`，可选 options 'scatter', 'bubble', 'bar', 'line', 'linesmooth', 'map', 'k', 'pie', 'ring', 'rose','area', 'areasmooth', 'chord', 'force', 'tree', 'treemap', 'wordcloud', 'heatmap', 'histogram', 'funnel', 'pyramid', 'radar', 'radarfill'
-    - 如选择map，则控制项必须写作一个长度为3的向量：c('map',`mapType`,`area/point`)。mapType可选'world'、'china'，或简体中文表示的具体中国地名。area/point为area时，用区块颜色表示效应大小；为point时，用点在地图上做标注。默认为c('map','china','area')。If `map` was chosen, the control option should be a vector of length 3: c('map',`mapType`,`area/point`). `mapType` could be either 'world' or 'china', of which simplified Chinese names are required for 'china'. When `area/point` equals to 'area', the function colors polygons to show the effects; while equals to 'point', it ticks droplets on the map.
+    - 如选择map，则控制项必须写作一个长度为3的向量：c('map',`mapType`,`markType`)。mapType可选'world'、'china'，或简体中文表示的具体中国地名。`markType`为area时，用区块颜色表示效应大小；为point时，用点在地图上做标注；为line时，用线条在地图上做标注。默认为c('map','china','area')。If `map` was chosen, the control option should be a vector of length 3: c('map',`mapType`,`markType`). `mapType` could be either 'world' or 'china', of which simplified Chinese names are required for 'china'. When `markType` equals to 'area', the function colors polygons to show the effects; while equals to 'point', it ticks pins on the map; while equals to 'line', it ticks lines on the map.
 - stack: 默认FALSE，是否堆积。用于制作堆积条图、柱图、线图和面积图等直角坐标系图形。Default to FALSE (do not stack). Used in stacked column, bar, line and area chart, etc.
 - title: 标题 title of the figure
 - subtitle: 副标题 subtitle of the figure
@@ -101,7 +107,7 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
         - 规定色板的同时跟个数限定，限定色板颜色的个数，如`palette='calc(3)'`，会从calc色板中**随机**取3种颜色。Set `palette=palette name(number)` to restrict number of colors within the palette (e.g., `palette='calc(3)'` picks 3 colors out of 'calc' **RANDOMLY**)
         - 可以`palette=c(color1,color2,color3,...)`自定义色板向量，向量可以是颜色名，也可以是Hex表达式。可以用`colors()`函数查看所有支持的颜色名称，`demo(colors)`查看颜色效果。Set `palette=c(color1,color2,color3,...)` to define a palette vector, made of which either color names or Hex expressions. Use `colors()` to check available color names and check the effects using `demo(colors)`.
 - tooltip: 默认TRUE，鼠标指针特效。Mouse tip effects swtich. Default to TRUE.
-- legend: 默认TRUE，是否显示图例。Whether show the legend. Default to TRUE.
+- legend: 图例，默认TRUE。可以写作一个长度为2的列表，`list(mode='single/multiple',select=选中的系列)`。如`list(mode='single',select='Male')`表示单选，初始仅选中显示Male系列。`legend=FALSE`则不显示图例。Whether to show the legend. Default to TRUE. Can also be a list length 2: `list(mode='single/multiple',select=vector(...))`. E.g., `list(mode='single',select='Male')` means singular choice, with series 'Male' selected at the initial view. `legend=FALSE` closes legend.
 - toolbox: 默认TRUE，是否显示工具箱。Echarts Tool box switch. Default to TRUE.
 - calculable: 默认TRUE，是否支持拖曳重算(Echarts专利) Calculable switch (Echarts patent).
 - asImage: 默认FALSE，是否显示为静态图。renderAsImage switch.Deafult to FALSE.
@@ -110,35 +116,38 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
     
     series name/index * | line name | Line type | Light effect
     :-------------------|-----------|------------|-------------
-    String or number   | String / NA | min/max/average/lm | TRUE/FALSE
+    String or number   | String / NA | min/max/average/lm | TRUE / FALSE
 
     - 完整格式 Full form :
     
     series name/index * | line name | Value | P0 x | P0 y | P1 x| P1 y | Light effect
     :------------------|-----------|-------|-------|------|-----|------|-----------
-    String or number  | String/NA | num  | x val | y val | x val| y val | TRUE/FALSE 
+    String or number  | String/NA | num | x val | y val | x val| y val | TRUE / FALSE 
 
     - 例子 Examples
     1. 如`t(c('male',NA,'average',F))`或`t(c(1,NA,'average',F))`都可表示male数据系列平均值标线，只用于line, linesmooth, bar, scatter, bubble。`lm`可出线性回归标线，只用于散点或气泡图。如`t(c(1,NA,'average',T))`则表示male系列开启炫光特效。E.g., both `t(c('male',NA,'average',F))` and `t(c(1,NA,'average',F))` refer to an average markline of the series 'male', only available for line, linesmooth, bar, scatter, bubble charts. 'lm' refers to linear regresson markline which is only available for scatters and bubbles. `t(c(1,NA,'average',T))` opens light effects of series 'male'.
-    1. 如`t(c('male',NA,100,0,5,100,5,F))`表示在'male'数据系列中画一条穿越P0(0,5)和P1(100,5)的直线。E.g., `t(c('male',NA,100,0,5,100,5,F))` refers to a markline through P0(0,5) and P1(100,5) as of sereis 'male'. 在line, bar, k, scatter图中，'P0 x','P0 y','P1 x','P1 y'均被理解为直角坐标系的定位。在map中，这些坐标值必须写作经纬度。 `t(c('male',NA,100,0,5,100,5,T))`可打开male系列的炫光特效。 In line, bar, k and scatter charts, 'P0 x','P0 y','P1 x','P1 y' are comprehended as coordinates. In map charts, these coordinates should be lattitudes and longitudes. `t(c('male',NA,100,0,5,100,5,T))` opens light effects of series 'male'.
+    1. 如`t(c('male',NA,100,0,5,100,5,F))`表示在'male'数据系列中画一条经过P0(0,5)和P1(100,5)的直线。E.g., `t(c('male',NA,100,0,5,100,5,F))` refers to a markline through P0(0,5) and P1(100,5) as of sereis 'male'. 在line, bar, k, scatter图中，'P0 x','P0 y','P1 x','P1 y'均被理解为直角坐标系的定位。在map中，这些坐标值必须写作经纬度。 `t(c('male',NA,100,0,5,100,5,T))`可打开male系列的炫光特效。 In line, bar, k and scatter charts, 'P0 x','P0 y','P1 x','P1 y' are comprehended as coordinates. In map charts, these coordinates should be lattitudes and longitudes. `t(c('male',NA,100,0,5,100,5,T))` opens light effects of series 'male'.
     
+- markLinesmooth: 如要用平滑标线，可用markLinesmooth替代markLine。语法完全一样。Used this instead of `markLine` for smooth marklines with totally identical grammar.
 - markPoint: 显示标注点，默认不显示。格式写作一个4或6列的数据框或矩阵 Show markpoints, default to NULL. The grammar is a data.frame or matrix with 4 or 6 columns:
     - 缩略格式 Short form ：
     
     series name/index * | Point name | Point type | Light effect
     -------------------|-----------|------------|-------------
-    String or number   | String / NA | min/max/ | TRUE/FALSE
+    String or number   | String / NA | min/max  | TRUE / FALSE
     
     - 完整格式 Full form :
     
     series name/index * | Point name | Value | P x | P y | Light effect
     ------------------|------------|--------|-----|-----|------------
-    String or number  | String / NA | num   | x val | y val | TRUE/FALSE
+    String or number  | String / NA | num   | x val | y val | TRUE / FALSE
 
     - 例子 Examples
     1. 如`t(c('male',NA,'min',F))`或`t(c(1,NA,'min',F))`都可表示male数据系列最小值标注，只用于line, linesmooth, bar, scatter, bubble。`t('male',NA,'min',T)`则表示male系列开启炫光特效。E.g., both `t(c('male',NA,'min',F))` and `t(c(1,NA,'min',F))` refer to a min markpoint of the series 'male', only available for line, linesmooth, bar, scatter, bubble charts. `t(c('male',NA,'min',T))` opens light effects of series 'male'.
-    1. 如`t(c('male',NA,100,0,5,F))`表示在'male'数据系列中标注点P(0,5)。E.g., `t(c('male',NA,100,0,5,F))` refers to a markpoint at P(0,5) as of sereis 'male'. 在line, bar, k, scatter图中，'P x','P y', ...均被理解为直角坐标系的定位。在map中，这些坐标值必须写作经纬度。 `t(c('male',NA,100,0,5,T))`可打开male系列的炫光特效。 In line, bar, k and scatter charts, 'P x','P y',... are comprehended as coordinates. In map charts, these coordinates should be lattitudes and longitudes. `t(c('male',NA,100,0,5,T))` opens light effects of series 'male'.
+    1. 如`t(c('male',NA,100,0,5,F))`表示在'male'数据系列中标注点P(0,5)。E.g., `t(c('male',NA,100,0,5,F))` refers to a markpoint at P(0,5) as of sereis 'male'. 在line, bar, k, scatter图中，'P x','P y', ... 均被理解为直角坐标系的定位。在map中，这些坐标值必须写作经纬度。 `t(c('male',NA,100,0,5,T))`可打开male系列的炫光特效。 In line, bar, k and scatter charts, 'P x','P y',... are comprehended as coordinates. In map charts, these coordinates should be lattitudes and longitudes. `t(c('male',NA,100,0,5,T))` opens light effects of series 'male'.
     
+- theme: 主题元素设置，语法为`theme=list(backgroundColor=color name/value, borderColor=color name/value)`，默认均为NULL。
+
 # Examples 示例
 
 ```{r import R scripts,results='hide'}
@@ -523,16 +532,24 @@ dtgdp$Year<- as.factor(dtgdp$Year)
 
 ### Area 区块标注
 
-开启数据漫游，并定义色板。`subtitle_url`链接为本例数据源。
+开启数据漫游，并定义色板。`subtitle_url`链接为本例数据源。通过`markPoint`参数也可以在区块标注地图中标注某些点，但效果并不是很好。
 
 ```{r china map area}
+top3 <- dcast(dtgdp[dtgdp$Prov %in% c("广东","江苏","山东"),c("Prov","GDP")],
+              Prov~., sum)
+top3 <- cbind(top3,rep("Top3",3),c(32.04,23.16,36.65),c(118.78,113.23,117.00),
+              rep(T,3))
+top3 <- top3[,c(3,1,2,4:6)]
+names(top3) <- c("Series","Prov","GDP","Xcoord","Ycoord","Effect")
+for (i in 1:2) top3[,i]<-as.character(top3[,i])
+
 echartR(dtgdp, x = ~Prov, y = ~GDP, series= ~Year, 
         type=c('map','china','area'), palette='gdocs',
         title="GDPs of China Provinces, 2012-2014 (Million USD)",
         subtitle='(source: Wikipedia)',
         subtitle_url="https://raw.githubusercontent.com/madlogos/Shared_Doc/master/Shared_Documents/ChinaGDP.txt",
         dataRangePalette=c('red','orange','yellow','green','limegreen'),
-        dataRange=c('High',"Low"),pos=list(toolbox=3))
+        dataRange=c('High',"Low"),pos=list(toolbox=3),markPoint=top3)
 ```
 
 用世界GDP前20粗糙演示世界地图。漫游轴切分为10档(`splitNumber=10`)。
@@ -576,8 +593,81 @@ echartR(chinapm25, x=~City, y=~PM25, xcoord=~xcoord, ycoord=~ycoord,
         markPoint=top5)
 ```
 
+### Line 线标注
+线标注地图比较特殊，数据集要包括y（数量）、x（起点地名）、x1（终点地名）、series（数据系列）、xcoord（起点纬度）、ycoord（起点经度）、xcoord1（终点纬度）、ycoord1（终点经度）。额外标注的话，`markLine`数据集格式变为下表（第2列格式为'起点'/'终点'）：
+
+series name/index * | Path | Value | P0 x | P0 y | P1 x| P1 y | Light effect
+------------------|-----------|-------|-------|------|-----|------|-----------
+String or number  | From/To | num | x val | y val | x val| y val | TRUE / FALSE
+
+下载[南航航班.txt](https://raw.githubusercontent.com/madlogos/Shared_Doc/master/Shared_Documents/CZflight.txt)到本地。`readLines`读入1-2行。
+作点标注的时候，按`markPoint`语法将数据集处理成6列：series, name, value, xcoord, ycoord, effect。
+
+```{r map line}
+flight <- readLines("CZflight.txt")[1]
+flight <- as.data.frame(matrix(unlist(strsplit(flight,",")),byrow=T,ncol=2),
+                        stringsAsFactors=F)
+names(flight) <- c("From","To")
+flightCoord <- readLines("CZflight.txt")[2]
+flightCoord <- as.data.frame(matrix(unlist(strsplit(flightCoord,",")),byrow=T,ncol=3),
+                             stringsAsFactors=F)
+for (i in 2:3) flightCoord[,i] <- as.numeric(flightCoord[,i])
+names(flightCoord) <- c("City","Ycoord","Xcoord")
+flight <- merge(flight,flightCoord,by.x="From",by.y="City",all.x=T)
+flight <- merge(flight,flightCoord,by.x="To",by.y="City",all.x=T)
+Tier1 <- dcast(flight,From~.,length)
+Tier1 <- merge(Tier1,unique(flight[,c("From","Xcoord.x","Ycoord.x")]),by="From",all.x=T)
+Tier1$effect <- T
+Tier1 <- Tier1[,c(1,1:5)]
+
+flight$y <- NA
+echartR(flight, x=~From, x1=~To, y=~y, series=~From, xcoord=~Xcoord.x, ycoord=~Ycoord.x,
+        xcoord1=~Xcoord.y, ycoord1=~Ycoord.y, type=c('map','china','line'),
+        pos=list(toolbox=3), title="南方航空公司主要航班线路",markPoint=Tier1)
+```
+
+上个例子只作标线而未注数量。也可以对这些标线的数值进行渲染。仍以CZflight.txt为例，读取3-5行（我偷懒了，存在同一个文件里）。本例通过`theme`设置背景为灰黑色(#1b1b1b)，边界线为暗蓝色royalblue4。legend中设置单选模式，初始选中数据系列'北京'。数据集处理的具体策略是x - ycoord1变量放背景数据集，包含所有迁徙关系；markLine放三个突出系列的数量，markPoint则放终点的数据。最后的效果同时包括了背景标线、突出标线和点标。全部打开炫光特效。
+```{r map line with value}
+migrate <- as.data.frame(matrix(unlist(strsplit(readLines("CZflight.txt")[3],",")),
+                                byrow=T,ncol=2),stringsAsFactors=F)
+names(migrate) <- c("From","To")
+migrateCoord <- as.data.frame(matrix(unlist(strsplit(readLines("CZflight.txt")[4],",")),
+                                byrow=T,ncol=3),stringsAsFactors=F)
+for (i in 2:3) migrateCoord[,i] <- as.numeric(migrateCoord[,i])
+names(migrateCoord) <- c("City","Ycoord","Xcoord")
+migrate <- merge(migrate,migrateCoord,by.x="From",by.y="City",all.x=T)
+migrate <- merge(migrate,migrateCoord,by.x="To",by.y="City",all.x=T)
+migrate$series <- "全国"
+# markLine source data
+migrateEm <- as.data.frame(matrix(unlist(strsplit(readLines("CZflight.txt")[5],",")),
+                                byrow=T,ncol=3),stringsAsFactors=F)
+migrateEm[,3] <- as.numeric(migrateEm[,3])
+names(migrateEm) <- c("From","To","Val")
+#migrate <- merge(migrate,migrateEm,by=c("From","To"),all.x=T)
+#migrate$Val[is.na(migrate$Val)] <- "-"
+migrate$Val <- NA
+migrateEm <- merge(migrateEm, migrateCoord, by.x="From",by.y="City",all.x=T)
+migrateEm <- merge(migrateEm, migrateCoord, by.x="To",by.y="City",all.x=T)
+# markLine dataset (8 col)
+markline <- migrateEm[,c(2,1,3,5,4,7,6)]
+markline$To <- paste(markline$From,markline$To,sep="/")
+markline$effect <- F
+# markPoint dataset (6 col)
+markpoint <- migrateEm[,c(2,1,3,7,6)]
+markpoint$effect <- T
+# plot
+echartR(migrate, x=~From, x1=~To, y=~Val, series=~series, xcoord=~Xcoord.x,
+          ycoord=~Ycoord.x, xcoord1=~Xcoord.y, ycoord1=~Ycoord.y,
+        type=c('map','china','line'), palette=c("Gray","Orange","Green","Purple"),
+        pos=list(toolbox=3), title="百度迁徙（模拟数据）", dataRange=c("High","Low"),
+        dataRangePalette=c("red","orange",'gold','green1','aquamarine2','royalblue4'),
+        legend=list(mode='single',select=c('北京')), 
+        markLinesmooth=markline, markPoint=markpoint, 
+        theme=list(backgroundColor="#1b1b1b", borderColor="royalblue4"))
+```
+
 ## Wordcloud 词云
-直接knitr时readLines读取网页会报错，此例将网页 'http://top.baidu.com/buzz?b=1' 的源代码保存为本地txt后再读取。
+直接knitr时readLines读取网页会报错，此例将[百度热词榜网页](http://top.baidu.com/buzz?b=1) 的源代码保存为本地txt后再读取。
 
 ```{r word cloud data}
 #baiduhot <- paste0(readLines("http://top.baidu.com/buzz?b=1"),collapse="")
@@ -601,9 +691,45 @@ echartR(hotword[1:30,], x=~Keyword, y=~Freq, type="wordcloud",
 ```
 
 ## Chord 和弦图
+### Simple chord 简单和弦图
+和弦图需要用到x,x1和y变量。其中x和x1是连接关系，y为权重。
+
+```{r simple chord}
+deutsch <- data.frame(player=c('Kruse','Kramer','Neuer','Boateng','Lahm','Kroos',
+                               'Muller','Gotze','Badstuber','Hummels','Weidenfeller',
+                               'Reus','Gundogan'),
+                      club=c(rep('Monchengladbach',2),rep('Bayern',7),rep('Dortmund',4)),
+                      weight=rep(1,13), stringsAsFactors=F)
+echartR(deutsch,x=~player, y=~weight, x1=~club, type='chord', 
+          title='Deutsch Soccer Team - Clubs')
+```
+
+```{r simple chord 2}
+grpmtx <- matrix(c(11975, 5871, 8916, 2868, 1951, 10048, 2060, 6171, 8010, 16145, 8090,
+                 8045, 1013, 990, 940, 6907),byrow=T,nrow=4)
+dimnames(grpmtx) <- list(LETTERS[1:4],LETTERS[1:4])
+grpmtx <- melt(grpmtx)
+echartR(grpmtx,x=~Var1, y=~value, x1=~Var2, type='chord', 
+          title='Group A-D mutual transition')
+```
+
+### Multi-series chord 多系列和弦图
+
 
 
 ## Force 力导向布局图
+
+
+## Candlestick K线图
+
+
+## Tree 树状图
+
+
+## Heatmap 热力图
+
+
+## Gauge 仪表盘
 
 
 # Recognized Issues 已知的问题
