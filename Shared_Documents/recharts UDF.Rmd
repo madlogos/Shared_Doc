@@ -111,7 +111,8 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
         pos=list(title=6, legend=11, toolbox=1, dataZoom=6, dataRange=8, roam=2),
         calculable=TRUE, asImage=FALSE,
         markLine=NULL, markLinesmooth=NULL, markPoint=NULL, 
-        theme=list(backgroundColor=NULL, borderColor=NULL),
+        theme=list(backgroundColor=NULL, borderColor=NULL,
+                borderWidth=1),
         ...))
 ```
 
@@ -202,7 +203,7 @@ echartR(data, x=NULL, y, z=NULL, series=NULL, weight=NULL,
     1. 如`t(c('male',NA,'min',F))`或`t(c(1,NA,'min',F))`都可表示male数据系列最小值标注，只用于line, linesmooth, bar, scatter, bubble。`t('male',NA,'min',T)`则表示male系列开启炫光特效。E.g., both `t(c('male',NA,'min',F))` and `t(c(1,NA,'min',F))` refer to a min markpoint of the series 'male', only available for line, linesmooth, bar, scatter, bubble charts. `t(c('male',NA,'min',T))` opens light effects of series 'male'.
     1. 如`t(c('male',NA,100,0,5,F))`表示在'male'数据系列中标注点P(0,5)。E.g., `t(c('male',NA,100,0,5,F))` refers to a markpoint at P(0,5) as of sereis 'male'. 在line, bar, k, scatter图中，'P x','P y', ... 均被理解为直角坐标系的定位。在map中，这些坐标值必须写作经纬度。 `t(c('male',NA,100,0,5,T))`可打开male系列的炫光特效。 In line, bar, k and scatter charts, 'P x','P y',... are comprehended as coordinates. In map charts, these coordinates should be lattitudes and longitudes. `t(c('male',NA,100,0,5,T))` opens light effects of series 'male'.
     
-- theme: 主题元素设置，语法为`theme=list(backgroundColor=color name/value, borderColor=color name/value)`，默认均为NULL。
+- theme: 主题元素设置，语法为`theme=list(backgroundColor=color name/value, borderColor=color name/value, borderWidth=1)`，color默认均为NULL，width默认为1。
 
 # Examples 示例
 
@@ -366,12 +367,10 @@ echartR(data = dtiris, x = ~Param, y = ~Mean,
 
 直方图是柱图的一种特例，只需要指定y变量。可通过`splitNumber`指定直方数(默认9)。`xyflip`设为TRUE则成为等价的横条图。
 
-> Echarts规定柱/条图和散点图的自变量轴均为category类型，因此暂时无法简单地做出传统外观的直方图。
-
 ```{r hist}
 echartR(airquality, y=~Temp, type='histogram', splitNumber=13,
         palette='pastel2', title='Histogram of temperature',
-        subtitle = '(source: airquality)', xAxis=list(rotate=45))
+        subtitle = '(source: airquality)')
 ```
 
 ## Pie 饼图
@@ -724,7 +723,8 @@ echartR(migrate, x=~From, x1=~To, y=~NFlights, series=~series, xcoord=~Xcoord.x,
         dataRangePalette=c("red","orange",'gold','green1','aquamarine2','royalblue4'),
         legend=list(mode='single',select=c('北京')), 
         markLinesmooth=markline, markPoint=markpoint, 
-        theme=list(backgroundColor="#1b1b1b", borderColor="royalblue4"))
+        theme=list(backgroundColor="#1b1b1b", borderColor="royalblue4",
+                   borderWidth=0.5))
 ```
 
 ## Wordcloud 词云
