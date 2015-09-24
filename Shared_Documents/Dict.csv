@@ -12,7 +12,7 @@ Project,pfourMarkBudg,Project budget at the Planning/Requirements Gate (waterfal
 Project,markedBudg,Marked Budget - see kickoff deck for description
 Project,actBudgVar,actCostTot - markedBudg
 Project,prePstDefTot,Total number of pre- and post-implentation defects
-Project,aetDefTot,The number of Aetna-only defects, which excludes defects logged to the Project in CQ on vendor applications (such as Benefitfocus).  This is the defect number used in the denominator of the Project Initial Build Quality metric.
+Project,aetDefTot,"The number of Aetna-only defects, which excludes defects logged to the Project in CQ on vendor applications (such as Benefitfocus).  This is the defect number used in the denominator of the Project Initial Build Quality metric."
 Project,defsPerMil,Total (pre and post) Defects per $ Million project cost
 Project,pstDefsPMil,Post-implementation defects per $ Million project cost
 Project,prDom,Project Domain
@@ -49,10 +49,10 @@ expBA
 expDev
 expQA
 expInf
-expPS",The average prior experience of the team as a whole and of each role type, expressed in terms of hours worked on other Aetna projects in the 24 months prior to joining the given project.
+expPS","The average prior experience of the team as a whole and of each role type, expressed in terms of hours worked on other Aetna projects in the 24 months prior to joining the given project."
 Project,hrsKurTot,Kurtosis statistic on the distribution of total monthly hours for the project.
-Project,hrsBAArchDevOffTot,Hours for the BA, Arch & Dev resources worked offshore.
-Project,pctBAArchDevOffsh,Percent of the BA, Arch & Dev hours that were worked offshore
+Project,hrsBAArchDevOffTot,"Hours for the BA, Arch & Dev resources worked offshore."
+Project,pctBAArchDevOffsh,"Percent of the BA, Arch & Dev hours that were worked offshore"
 Project,pr80PctDt,Date by which the project deployed 80 percent of its functionality as measured by scripts
 Project,prStartDayOfYear,The day of the year (1-365) that the project started.
 Application,apID,Application ID
