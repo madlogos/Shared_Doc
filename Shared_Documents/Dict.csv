@@ -1,6 +1,6 @@
 Table,Element,Description
 Project,prID,Project Identification number
-Project,prStatus,Current status of project (i.e. Complete, in progres, etc…)
+Project,prStatus,"Current status of project (i.e. Complete, in progres, etc…)"
 Project,StartDt,Start date of project
 Project,EndDt,End date of project
 Project,prCap,Project Capability Pattern (Blank values indicate Waterfall)
