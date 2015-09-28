@@ -1,36 +1,36 @@
 Table,Element,Description,,
-Project,prID,Project Identification number,,
-Project,prStatus,"Current status of project (i.e. Complete, in progres, etc…)",,
-Project,StartDt,Start date of project,,
-Project,EndDt,End date of project,,
-Project,prCap,Project Capability Pattern,,
-Project,PrimaryRel,Primary Release- for specified project,,
-Project,PrimaryApp,Primary Application,,
-Project,actCostTot,Total actual cost of project,,
-Project,workingFcst,Financial  working forecast,,
-Project,pfourMarkBudg,Phase four Marked Budget,,
-Project,markedBudg,Marked Budget,,
-Project,actBudgVar,Atual Budget Market,,
-Project,prePstDefTot,Total number of post implentation defects,,
-Project,aetDefTot,"The number of Aetna-only defects, which excludes defects logged to the Project in CQ on vendor applications (such as Benefitfocus).  This is the defect number used in the denominator of the Project Initial Build Quality metric.",,
-Project,defsPerMil,Defects per Million Lines of Code,,
-Project,pstDefsPMil,Post defects per Million Lines of Code,,
-Project,prDom,Project Domain*,,
-Project,prComp,Indicates if the project was a compliance project,,
-Project,baArchDevHrsPerDef,Project Initial Build Quality metric (BA architecure and development hours divided by total defects),,
-Project,p4VelGateDt,Phase 4 Gate Date,,
-Project,actCostLabor,Cost of Labor,,
-Project,actCostHWSW,Cost of Hardware and Software,,
-Project,actCostKBC,Cost of Knowledge Based Consultants,,
-Project,PCRCt,Project Change Request (PCR) count,,
-Project,invCateg,Investment Category,,
-Project,EBNCt,Expanded Business Needs count,,
-Project,hrsTot,Total Hours,,
+Project,prID,Project Identification number
+Project,prStatus,"Current status of project (i.e. Complete, in progres, etc…)"
+Project,StartDt,Start date of project
+Project,EndDt,End date of project
+Project,prCap,Project Capability Pattern
+Project,PrimaryRel,Primary Release- for specified project
+Project,PrimaryApp,Primary Application
+Project,actCostTot,Total actual cost of project
+Project,workingFcst,Financial  working forecast
+Project,pfourMarkBudg,Phase four Marked Budget
+Project,markedBudg,Marked Budget
+Project,actBudgVar,Atual Budget Market
+Project,prePstDefTot,Total number of post implentation defects
+Project,aetDefTot,"The number of Aetna-only defects, which excludes defects logged to the Project in CQ on vendor applications (such as Benefitfocus).  This is the defect number used in the denominator of the Project Initial Build Quality metric."
+Project,defsPerMil,Defects per Million Lines of Code
+Project,pstDefsPMil,Post defects per Million Lines of Code
+Project,prDom,Project Domain*
+Project,prComp,Indicates if the project was a compliance project
+Project,baArchDevHrsPerDef,Project Initial Build Quality metric (BA architecure and development hours divided by total defects)
+Project,p4VelGateDt,Phase 4 Gate Date
+Project,actCostLabor,Cost of Labor
+Project,actCostHWSW,Cost of Hardware and Software
+Project,actCostKBC,Cost of Knowledge Based Consultants
+Project,PCRCt,Project Change Request (PCR) count
+Project,invCateg,Investment Category
+Project,EBNCt,Expanded Business Needs count
+Project,hrsTot,Total Hours
 Project,"hrsTypeCons 
 hrsTypeFTE hrsTypeKBC
 hrsTypeOSVNear
 hrsTypeOSVOff
-hrsTypeOSVOn",Project hours by type of resource,,
+hrsTypeOSVOn",Project hours by type of resource
 Project,"hrsArch
 hrsBA
 hrsDev
@@ -38,25 +38,9 @@ hrsInf
 hrsOther
 hrsPM
 hrsPS
-hrsQA",Project hours broken out by resource Role type,,
-Project,hrsRsGeneric,SRs Generic,,
-Project,hrsRsNamed,SRs Named,,
-Project,hrsDom...,*Project hours summarized by the resource domain,,
-Project,"expTeam 
-expPM
-expBA
- expArch
-expDev
-expQA
-expInf
-expPS",The average prior experience of the team as a whole and of each role type.  The value is the average hours each named resource the given project logged to other Aetna ,,
-Project,hrsKurTot,Hours current total,,
-Project,hrsBAArchDevOffTot,"Similar to above but just includes hours for the BA, Arch & Dev resources.  These metrics are useful for analyzing the Project Initial Quality metric, which uses BA-Arch-Dev hours in the numerator as a measure of the functional size of the project.",,
-Project,pctBAArchDevOffsh,Percent of the BA-Arch-Dev hours that were worked offshore,,
-Project,pr80PctDt,,,
-Project,prStartDayOfYear,,,
-Project Application,Begins with “RCS”,These fields contain defect counts by Root Cause type,,
-Table,Elment,Description
+hrsQA",Project hours broken out by resource Role type
+Project,hrsRsGeneric,SRs Generic
+Project,hrsRsNamed,SRs Named
 Application,apID,Application ID
 Application,apDom,Application domain*
 Application,apSLAC,Service Level Class
