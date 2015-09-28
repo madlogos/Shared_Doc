@@ -1,36 +1,36 @@
-Table,Element,Description
-Project,prID,Project Identification number
-Project,prStatus,"Current status of project (i.e. Complete, in progres, etc…)"
-Project,StartDt,Start date of project
-Project,EndDt,End date of project
-Project,prCap,Project Capability Pattern (Blank values indicate Waterfall)
-Project,PrimaryRel,Primary Release- for specified project
-Project,PrimaryApp,Primary Application
-Project,actCostTot,Total actual cost of project
-Project,workingFcst,Financial  working forecast - the amount allocated to the project from Finance via a combination of the original budget and Project Change Requests.
-Project,pfourMarkBudg,Project budget at the Planning/Requirements Gate (waterfall) or Finance/Velocity Gate (agile)
-Project,markedBudg,Marked Budget - see kickoff deck for description
-Project,actBudgVar,actCostTot - markedBudg
-Project,prePstDefTot,Total number of pre- and post-implentation defects
-Project,aetDefTot,"The number of Aetna-only defects, which excludes defects logged to the Project in CQ on vendor applications (such as Benefitfocus).  This is the defect number used in the denominator of the Project Initial Build Quality metric."
-Project,defsPerMil,Total (pre and post) Defects per $ Million project cost
-Project,pstDefsPMil,Post-implementation defects per $ Million project cost
-Project,prDom,Project Domain
-Project,prComp,Indicates if the project was a compliance project
-Project,baArchDevHrsPerDef,Project Initial Build Quality metric
-Project,p4VelGateDt,Phase 4 Gate Date
-Project,actCostLabor,Cost of Labor
-Project,actCostHWSW,Cost of Hardware and Software
-Project,actCostKBC,Cost of Knowledge Based Consultants
-Project,PCRCt,Project Change Request (PCR) count
-Project,invCateg,Investment Category
-Project,EBNCt,Expanded Business Needs count
-Project,hrsTot,Total Hours
+Table,Element,Description,,
+Project,prID,Project Identification number,,
+Project,prStatus,"Current status of project (i.e. Complete, in progres, etc…)",,
+Project,StartDt,Start date of project,,
+Project,EndDt,End date of project,,
+Project,prCap,Project Capability Pattern,,
+Project,PrimaryRel,Primary Release- for specified project,,
+Project,PrimaryApp,Primary Application,,
+Project,actCostTot,Total actual cost of project,,
+Project,workingFcst,Financial  working forecast,,
+Project,pfourMarkBudg,Phase four Marked Budget,,
+Project,markedBudg,Marked Budget,,
+Project,actBudgVar,Atual Budget Market,,
+Project,prePstDefTot,Total number of post implentation defects,,
+Project,aetDefTot,"The number of Aetna-only defects, which excludes defects logged to the Project in CQ on vendor applications (such as Benefitfocus).  This is the defect number used in the denominator of the Project Initial Build Quality metric.",,
+Project,defsPerMil,Defects per Million Lines of Code,,
+Project,pstDefsPMil,Post defects per Million Lines of Code,,
+Project,prDom,Project Domain*,,
+Project,prComp,Indicates if the project was a compliance project,,
+Project,baArchDevHrsPerDef,Project Initial Build Quality metric (BA architecure and development hours divided by total defects),,
+Project,p4VelGateDt,Phase 4 Gate Date,,
+Project,actCostLabor,Cost of Labor,,
+Project,actCostHWSW,Cost of Hardware and Software,,
+Project,actCostKBC,Cost of Knowledge Based Consultants,,
+Project,PCRCt,Project Change Request (PCR) count,,
+Project,invCateg,Investment Category,,
+Project,EBNCt,Expanded Business Needs count,,
+Project,hrsTot,Total Hours,,
 Project,"hrsTypeCons 
 hrsTypeFTE hrsTypeKBC
 hrsTypeOSVNear
 hrsTypeOSVOff
-hrsTypeOSVOn",Project hours by type of resource
+hrsTypeOSVOn",Project hours by type of resource,,
 Project,"hrsArch
 hrsBA
 hrsDev
@@ -38,10 +38,10 @@ hrsInf
 hrsOther
 hrsPM
 hrsPS
-hrsQA",Project hours broken out by resource Role type
-Project,hrsRsGeneric,SRs Generic
-Project,hrsRsNamed,SRs Named
-Project,hrsDom...,Project hours summarized by the resource domain
+hrsQA",Project hours broken out by resource Role type,,
+Project,hrsRsGeneric,SRs Generic,,
+Project,hrsRsNamed,SRs Named,,
+Project,hrsDom...,*Project hours summarized by the resource domain,,
 Project,"expTeam 
 expPM
 expBA
@@ -49,50 +49,52 @@ expBA
 expDev
 expQA
 expInf
-expPS","The average prior experience of the team as a whole and of each role type, expressed in terms of hours worked on other Aetna projects in the 24 months prior to joining the given project."
-Project,hrsKurTot,Kurtosis statistic on the distribution of total monthly hours for the project.
-Project,hrsBAArchDevOffTot,"Hours for the BA, Arch & Dev resources worked offshore."
-Project,pctBAArchDevOffsh,"Percent of the BA, Arch & Dev hours that were worked offshore"
-Project,pr80PctDt,Date by which the project deployed 80 percent of its functionality as measured by scripts
-Project,prStartDayOfYear,The day of the year (1-365) that the project started.
+expPS",The average prior experience of the team as a whole and of each role type.  The value is the average hours each named resource the given project logged to other Aetna ,,
+Project,hrsKurTot,Hours current total,,
+Project,hrsBAArchDevOffTot,"Similar to above but just includes hours for the BA, Arch & Dev resources.  These metrics are useful for analyzing the Project Initial Quality metric, which uses BA-Arch-Dev hours in the numerator as a measure of the functional size of the project.",,
+Project,pctBAArchDevOffsh,Percent of the BA-Arch-Dev hours that were worked offshore,,
+Project,pr80PctDt,,,
+Project,prStartDayOfYear,,,
+Project Application,Begins with “RCS”,These fields contain defect counts by Root Cause type,,
+Table,Elment,Description
 Application,apID,Application ID
-Application,apDom,Application domain
+Application,apDom,Application domain*
 Application,apSLAC,Service Level Class
-Application,apDRC,disaster recovery class
-Application,apCritTr,Criticality tier
-Application,apWebCmp,application has web components
-Application,apMblCmp,application has mbl? Components
-Application,apMFCmp,application has mainframe components
-Application,apPHI,Application handles Protected Health Information
-Application,apPCI,Application handles Payment Card Information
-Application,apPII,Applications handles Personally Identifiable Information
+Application,apDRC,Disaster Recovery Class
+Application,apCritTr,Criticality Tier
+Application,apWebCmp,Application has web components
+Application,apMblCmp,Application has mobile components
+Application,apMFCmp,Application has mainframe components
+Application,apPHI,Protected Health Information
+Application,apPCI,Payment Card Information
+Application,apPII,Personally Identifiable Information
 Application,apSecurRiskCls,Security Risk Class
-Application,WebLyrs,weblayers
+Application,WebLyrs,Weblayers
 Application,DynCodeScn,Dynamic Code Scan
 Project Application,prID,Project Identification number
 Project Application,apID,Application Identifcation number 
 Project Application,dplCt,Deployment count
 Project Application,scripts,Scripts
-Project Application,preDefTot,Total Defects Detected Pre implementation
-Project Application,pstDefTot,Total Defects Detected Post implementation
-Project Application,prePstDefTot,Sum of pre- and post-release defects
-Project Application,apPctPrTotDefs,This application's percent of total defects for the project
-Project Application,scrPerPrePstDef,Initial Quality - scripts per pre- and post-implementation defects
-Project Application,RCS3Prty,Defect Count by Root Cause - Third Party Product
-Project Application,RCSAutoPMod,Defect Count by Root cause - Automated Process Models
-Project Application,RCSCodeMigr,Defect Count by Root Cause - Code Migration
-Project Application,RCSCode,Defect Count by Root Cause - Coding
-Project Application,RCSData,Defect count by Root Cause - Data
-Project Application,RCSDesign,Defect count by Root Cause - Design
-Project Application,RCSDup,
-Project Application,RCSEnvir,Defect count by Root Cause - Environment
-Project Application,RCSReqs,Defect count by Root Cause - Requirements
-Project Application,RCSTechSPc,Defect count by Root Cause - Technical Specifications
-Project Application,RCSTesting,Defect count by Root Cause - Testing
-Project Application,RCSBlank,Defect count by Root Cause - Root Cause left blank
-Project Application,RCSDefTot,Root cause by Defect Total
-Project Application,devScrperDef,Scripts per Development root cause defects
-Project Application,devRCSDefs,Development root cause defects
+Project Application,preDefTot,Defects total Pre release
+Project Application,pstDefTot,Defects total Post release
+Project Application,prePstDefTot,Pre and Post defect total
+Project Application,apPctPrTotDefs,Percantage of total defects for project associated wth the application
+Project Application,scrPerPrePstDef,Scripts per defect
+Project Application,RCS3Prty,Root Cause Third Party Product
+Project Application,RCSAutoPMod,Count of defects with the root cause of  Automated Process Models
+Project Application,RCSCodeMigr,Count of defects with the root cause of code migration
+Project Application,RCSCode,Count of defects with the root cause of coding
+Project Application,RCSData,Count of defects with the root cause of data
+Project Application,RCSDesign,Count of defects with the root cause of design
+Project Application,RCSDup,Count of defects with the root cause of duplication
+Project Application,RCSEnvir,Count of defects with the root cause of enviorment
+Project Application,RCSReqs,Count of defects with the root cause of design requisition 
+Project Application,RCSTechSPc,Count of defects with the root cause of design technical Specifications
+Project Application,RCSTesting,Count of defects with the root cause of testing
+Project Application,RCSBlank,Count of defects with the root cause of blank
+Project Application,RCSDefTot,Total of all defect root cause counts
+Project Application,devScrperDef,Scripts per Defect
+Project Application,devRCSDefs,Development root cuase defects
 Deployment,prType,Project Type
 Deployment,prID,Project Identification Number
 Deployment,srID,SR Identification Number
@@ -100,20 +102,17 @@ Deployment,apID,Application Identification Number
 Deployment,rlsDt,Release Date
 Deployment,prCap,Cabability Pattern
 Deployment,prComp,Indicates if the project was a compliance project
-Deployment,preFndTot,Pre-implementation findings
-Deployment,preDefTot,Pre-implementation defect total
-Deployment,pstDefTot,Post defects total
+Deployment,preFndTot,Pre implementation-finding total
+Deployment,preDefTot,Pre implementation-defect total
+Deployment,pstDefTot,Post implementation defects total
 Deployment,scripts,Scripts
 Deployment,prfTst,Performance Test
-Deployment,prEffRmi1Only,
-Deployment,prEffRmi2Only,
-Deployment,prEffRmi3Only,
-Deployment,prEffRmi4Only,
-Deployment,prEffRmi5Only,
-Deployment,prEffRmi6Only,
-Deployment,preDefRmi0Only,
-Deployment,preDefRmi1Only,
-Deployment,preDefRmi2Only,
-Deployment,preDefRmi3Only,
+Deployment,prEffRmi1Only…,"Project effort specifically for the ""x"" month preceding implementation of the release"
+Deployment,preDefRmi0Only,"Project defect count specifically for the ""x"" month preceding implementation of the release "
 Deployment,srWorkType,Service Request Work Type
 Deployment,srCreatedDt,Service Request Created Date
+SqAppScan,apID,Application Identification Number
+SqAppScan,scanDt,Scan Date
+SqAppScan,sqMetric,Sonarqube Metric
+SqAppScan,sqMetVal,Sonarqube Metric Value
+SqAppScan,sqMetricDesc,Sonarqube Metric Description
