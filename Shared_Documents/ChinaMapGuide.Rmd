@@ -1,0 +1,230 @@
+---
+title: "Draw China Maps Using `ggplot2`"
+author: "Aetna International"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    fig_caption: yes
+---
+```{r setup, include=FALSE}
+Sys.setlocale("LC_CTYPE", 'Chs')
+knitr::opts_chunk$set(fig.width=8, fig.height=5.5)
+fn = local({  ## counter for figures
+  i = 0
+  function(x, chap=NULL, renum=FALSE) {
+      ## params
+      ## x: chart title
+      ## chap: chapter number, if assigned, show "Figure chap-x""
+      ## renum: if TRUE, i be set 0
+    if (renum) i <<- 0
+    i <<- i + 1
+    paste('<b>Figure ', if (is.null(chap)) '' else paste0(chap, '-'), i, '</b>: ', 
+          x, sep = '')
+  }
+})
+tn = local({  ## counter for tables
+  j = 0
+  function(x, chap=NULL, renum=FALSE) {
+    if (renum) j <<- 0
+    j <<- j + 1
+    paste('<b>Table ', if (is.null(chap)) '' else paste0(chap, '-'), j, '</b>: ', 
+          x, sep = '')
+  }
+})
+```
+
+# Introduction
+
+You can always use `ggplot2` to draw maps. But when it comes to China maps, you might have a difficult time in getting map data. This document is to guide you to draw province-level and city-level China maps more easily.
+
+We provide 2 datasets containing level-1 and level-2 geodata for plotting: `cnMapL1.rds` and `cnMapL2.rds`. The meta data are `cnMapL1.csv` and `cnMapL2.csv`. 
+
+The files are stored in `//ship-oa-001/china_health_advisory/Analytics/GUIDE And TOOLS/Guideline/files`.
+
+## Structure of cnMapL1
+
+The foreign key 'id' of cnMapL1 is connected with the primary key 'NAME' in meta1.
+
+```{r mapL1 str, echo=FALSE}
+fpath <- '//ship-oa-001/china_health_advisory/Analytics/GUIDE And TOOLS/Guideline/files/'
+cnMapL1 <- readRDS(paste0(fpath, 'cnMapL1.rds'))
+meta1 <- read.csv(paste0(fpath, 'cnMapL1.csv'), stringsAsFactors=FALSE, encoding='CP936')
+str(cnMapL1)
+str(meta1)
+```
+
+## Structure of cnMapL2
+
+The foreign key 'id' of cnMapL2 is connected with the primary key 'NAME' in meta2.
+
+```{r mapL2 str, echo=FALSE}
+cnMapL2 <- readRDS(paste0(fpath, 'cnMapL2.rds'))
+meta2 <- read.csv(paste0(fpath, 'cnMapL2.csv'), stringsAsFactors=FALSE, encoding='CP936')
+str(cnMapL2)
+str(meta2)
+```
+
+Note that there are 5 pairs of duplicated names in cnMapL2, so the id are changed a bit:
+
+- Suzhou: 苏州 (Suzhou)、宿州 (Suzhou AH)
+- Fuzhou: 福州 (Fuzhou)、抚州 (Fuzhou JX)
+- Yichun: 伊春 (Yichun)、宜春 (Yichun JX)
+- Yulin: 榆林 (Yulin)、玉林 (Yulin GX)
+- Taizhou: 泰州 (Taizhou)、台州 (Taizhou ZJ)
+
+## Fetch More Data
+
+- Visit GADM site [^gadm] to get more datasets;
+- Download R datasets you want;
+- Use `readRDS` to read the S4 object from the rds file;
+- Use `broom::tidy` function to extract polygon data from the S4 object;
+- `<object name>@data` is the meta data.
+
+[^gadm]: http://http://gadm.org/ "Global Administrative Areas"
+
+Note that the GADM certificate forbids commercial use. 
+
+# Base Map
+
+Both `geom_map` and `geom_polygon` can be used to plot maps [^ggplot2].
+
+[^ggplot2]: Refer to ggplot2 official manual at http://docs.ggplot2.org.
+
+## Level-1 Base Map
+
+Use dataset `cnMapL1` to draw a level-1 China base map.
+
+```{r L1 basemap, fig.cap=fn('China Base Map - Province Level')}
+library(ggplot2)
+g <- ggplot(data=cnMapL1, aes(map_id=id)) + 
+    geom_map(map=cnMapL1, fill='white', colour='lightgray') +
+    expand_limits(x=cnMapL1$long, y=cnMapL1$lat)
+g
+```
+
+The syntax could also be:
+
+```r
+ggplot() + 
+    geom_map(aes(map_id=id), data=cnMapL1, map=cnMapL1, fill='white', 
+        colour='lightgray') +
+    expand_limits(x=cnMapL1$long, y=cnMapL1$lat)
+```
+
+You can apply `projection = 'albers'` or `polyconic`.
+
+```{r L1 basemap proj, fig.cap=fn("China Base Map with Albers Projection - Province Level")}
+g + coord_map(projection = 'albers', lat0 = 25, lat1 = 45)
+```
+
+You can attach `meta1` dataset to show the name labels of the provinces.
+
+```{r L1 basemap with lab, fig.cap=fn('China Base Map with Labels - Province Level')}
+g <- ggplot(meta1, aes(map_id=NAME)) +
+    geom_map(aes(map_id=id, group=group), data=cnMapL1, map=cnMapL1, fill='white', 
+        colour='lightgray') +
+    expand_limits(x=cnMapL1$long, y=cnMapL1$lat) +
+    geom_text(aes(x=PTX, y=PTY, label=NAME_LAB), size=3, colour="gray")
+g
+```
+
+## Level-2 Base Map
+
+```{r L2 basemap geom_map, fig.cap=fn('China Base Map - City Level')}
+g <- ggplot(data=cnMapL2, aes(map_id=id)) + 
+    geom_map(map=cnMapL2,  fill='white', colour='lightgray') +
+    expand_limits(x=cnMapL2$long, y=cnMapL2$lat) + xlab('Long') + ylab('Lat')
+g
+```
+
+It is the same with 
+
+```r
+ggplot() + geom_polygon(data=cnMapL2, aes(x=long, y=lat, group=group), 
+                        fill='white', colour='lightgray')
+```
+
+## Mixed Base Map
+
+By stacking geom_polygons, you can get two layers of borders.
+
+```{r mixed basemap, fig.cap=fn('China Base Map - Province & City Level')}
+g <- ggplot() + geom_polygon(data=cnMapL2, aes(x=long, y=lat, group=group), 
+                             fill='white', colour='lightgray', size=0.2)
+g <- g + geom_polygon(data=cnMapL1, aes(x=long, y=lat, group=group), 
+                 color='darkgray', alpha=0)
+g
+```
+
+## Partial Base Map
+
+You can also extract part of China to draw a map.
+
+```{r sub basemap, fig.cap=fn('China Base Map with Labels - GD, HK & MC')}
+part.prov <- c('Guangdong', 'Hong Kong', 'Macao')
+part.data <- meta2$NAME[meta2$NAME_1 %in% part.prov]
+submap <- cnMapL2[cnMapL2$id %in% part.data,]
+g <- ggplot(meta2[meta2$NAME_1 %in% part.prov,]) + 
+    geom_polygon(data=submap, aes(x=long, y=lat, group=group), 
+                 fill='white', colour='gray', size=0.2)
+g <- g + geom_text(aes(x=PTX, y=PTY, label=NAME_LAB), size=3, color='darkgray') + 
+    coord_equal()
+g
+```
+
+# Scatter Plot on Map
+
+Use embedded dataset 'world.cities' in `maps` to draw a scatterplot.
+
+```{r pop data, fig.cap=fn('Big Cities of China on Cartesian Coordinate System')}
+library(maps)
+data('world.cities')
+big.cities <- world.cities[world.cities$country.etc %in% c('China', 'Taiwan'),]
+ggplot(big.cities, aes(x=long, y=lat, size=pop)) + 
+    geom_point(color='red', alpha=0.3)
+```
+
+> Note that `geom_map` and `geom_polygon` apply WGS coordinate system. So if you have some data from Baidu, you should use `convBD2WGS` function in `asehms` package to convert the coordinates.
+
+
+We have got a scatterplot in cartesian coordinate system. Now let's plot it on top of the base map.
+
+```{r scatter on basemap, fig.cap=fn('Big Cities of China')}
+big.cities$capital <- as.factor(big.cities$capital)
+levels(big.cities$capital) <- c('City', 'Capital', 'Municipality', 'Province capital')
+g <- ggplot(big.cities, aes(x=long, y=lat, size=pop)) + 
+    geom_polygon(data=cnMapL1, aes(x=long, y=lat, group=group), fill='white',
+                 color='gray85', size=0.2) +
+    geom_point(aes(color=capital), alpha=0.5) + coord_map()
+g
+```
+
+Put a gray layer beneath the plot, to render the plot more '3-D'.
+
+```{r 3d scatter, fig.cap=fn('Big Cities of China - Shadow 3D')}
+g <- ggplot(big.cities, aes(x=long, y=lat, size=pop, color=capital)) + 
+    geom_polygon(data=cnMapL1, aes(x=long + 0.7, y=lat-0.5, group=group), 
+                 color='grey50', size=0.2, fill='grey50') + 
+    geom_polygon(data=cnMapL1, aes(x=long, y=lat, group=group), fill='white',
+                 color='gray85', size=0.2) + 
+    geom_point(alpha=0.5) + coord_map()
+g
+```
+
+# Choropleth Plot
+
+Use area of each city to plot a choropleth plot.
+
+We need to merge meta data and map data before plotting the choropleth. Note that you always need to type `group=group` in `aes` mapping parameter in the initiation command `ggplot()`.
+
+```{r choropleth, fig.cap=fn('Size of China Cities')}
+area.map <- merge(cnMapL2, meta2[,c("NAME", "AREA")], 
+                  by.x="id", by.y="NAME", sort=FALSE)
+g <- ggplot(area.map, aes(x=long, y=lat, group=group, fill=AREA)) +
+    geom_polygon(color='white', size=0.05) +
+    scale_fill_gradient(low='skyblue', high='darkgreen') +
+    theme_minimal() + coord_map('polyconic') 
+g
+```
+
+# References
